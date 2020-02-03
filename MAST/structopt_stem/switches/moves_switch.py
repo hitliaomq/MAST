@@ -11,17 +11,17 @@ def moves_switch(indiv, Optimizer):
     else:
         debug = False
     try:
-       exec "from MAST.structopt_stem.moves.{0} import {0}".format(scheme)
+       exec("from MAST.structopt_stem.moves.{0} import {0}".format(scheme))
        mutant = eval('{0}(indiv, Optimizer)'.format(scheme))
        mutant.energy = 0
        mutant.fitness = 0
-    except NameError, e:
+    except NameError as e:
         logger.warning('Specified mutation not one of the available options. Please check documentation and spelling! SKIPPING. Mutation : {0}. {1}'.format(scheme,e), exc_info=True)
-        print 'Mutation Name error: ',e
-        print scheme
+        print('Mutation Name error: ',e)
+        print(scheme)
         mutant = indiv
-    except Exception, e:
+    except Exception as e:
         logger.error('Problem with mutation! SKIPPING. Mutation = {0}. {1}'.format(scheme,e), exc_info=True)
-        print 'Mutation Exception: ', e
+        print('Mutation Exception: ', e)
         mutant = indiv
     return mutant, scheme

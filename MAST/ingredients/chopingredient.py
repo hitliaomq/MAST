@@ -308,7 +308,7 @@ class ChopIngredient(BaseIngredient):
                     bad_keys.append(lines[i].strip().lower())
                 
         my_input = MASTFile()
-        for key, value in okay_keys.iteritems():
+        for key, value in okay_keys.items():
             if not key in bad_keys:
                 my_input.data.append(str(key) + delimiter + str(value) + "\n")
         inputpath = os.path.join(self.keywords['name'],fname)
@@ -348,7 +348,7 @@ class ChopIngredient(BaseIngredient):
         else:
             okay_keys = self._get_allowed_non_mast_keywords(allowed_file, upperkey)
         keylist=list()
-        for key, value in okay_keys.iteritems():
+        for key, value in okay_keys.items():
             key = str(key)
             keynum = int(key.split(".")[0])
             keywordval = key.split(".")[1]
@@ -388,7 +388,7 @@ class ChopIngredient(BaseIngredient):
                 allowedpath = os.path.join(dirutil.get_mast_install_path(),
                             'ingredients','programkeys',allowed_file)
                 allowed_list = self._get_allowed_keywords(allowedpath, upperkey)
-        for key, value in self.keywords['program_keys'].iteritems():
+        for key, value in self.keywords['program_keys'].items():
             if not key[0:5] == "mast_":
                 if int(upperkey) == 1:
                     keytry = key.upper()
@@ -579,12 +579,12 @@ class ChopIngredient(BaseIngredient):
             intidx = pmg_nebmanlist.index(intitem)
             intsites.append(intidx)
 
-        print "ADDLSITES: %s, INTSITES: %s" % (addlsites, intsites)
+        print("ADDLSITES: %s, INTSITES: %s" % (addlsites, intsites))
 
-        print "S1:"
-        print s1
-        print "S2:"
-        print s2
+        print("S1:")
+        print(s1)
+        print("S2:")
+        print(s2)
         self.logger.info("intsites: %s" % intsites)
         # Interpolate
         #use a param for perf_stat or othe ing label for chgcar
@@ -770,7 +770,7 @@ class ChopIngredient(BaseIngredient):
     def write_singlerun_automesh(self):
         if not self.checker.has_starting_structure_file():
             raise MASTError(self.__class__.__name__,"No starting structure file for ingredient %s; write_singlerun_automesh cannot be used." % self.keywords['name']) 
-        if not 'mast_kpoint_density' in self.keywords['program_keys'].keys():
+        if not 'mast_kpoint_density' in list(self.keywords['program_keys'].keys()):
             raise MASTError(self.__class__.__name__,"No mast_kpoint_density ingredient keyword found for ingredient %s; write_singlerun_automesh cannot be used." % self.keywords['name'])
         self.checker.scale_mesh(self.checker.get_initial_structure_from_directory(self.keywords['name']),int(self.keywords['program_keys']['mast_kpoint_density']))
         self.checker.set_up_program_input()
@@ -1015,7 +1015,7 @@ class ChopIngredient(BaseIngredient):
             base_structure = self.keywords['structure'].copy()
             self.logger.warning("No parent structure detected for induce defect ingredient %s. Using initial structure of the recipe." % self.keywords['name'])
         scalextend = StructureExtensions(struc_work1=base_structure, name=self.keywords['name'])
-        if not 'mast_scale' in self.keywords['program_keys'].keys():
+        if not 'mast_scale' in list(self.keywords['program_keys'].keys()):
             raise MASTError(self.__class__.__name__,"No mast_scale ingredient keyword for scaling ingredient %s." % self.keywords['name'])
         scaled = scalextend.scale_structure(self.keywords['program_keys']['mast_scale'])
         defect = self.keywords['program_keys']['mast_defect_settings']
@@ -1332,7 +1332,7 @@ class ChopIngredient(BaseIngredient):
         import random
         disp = float(disp)
         childpath = self._fullpath_childname(childname)
-        print childpath,self.keywords['name']
+        print(childpath,self.keywords['name'])
         struct=mg.read_structure(self.keywords['name']+'/CONTCAR')
         for i in range(len(struct)):
             coords = struct[i].coords

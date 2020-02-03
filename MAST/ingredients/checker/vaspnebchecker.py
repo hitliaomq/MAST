@@ -59,7 +59,7 @@ class VaspNEBChecker(VaspChecker):
         """
         imct=0
         myname = self.keywords['name']
-        if 'mast_coordinates' in self.keywords['program_keys'].keys():
+        if 'mast_coordinates' in list(self.keywords['program_keys'].keys()):
             coordstrucs=self.get_coordinates_only_structure_from_input()
             newstrucs=list()
             sidx = 0 #ex. coordstrucs 0, 1, 2 for 3 images
@@ -72,7 +72,7 @@ class VaspNEBChecker(VaspChecker):
             num_str = str(imct).zfill(2)
             impath = os.path.join(myname, num_str)
             impospath = os.path.join(myname, "POSCAR_" + num_str)
-            if 'mast_coordinates' in self.keywords['program_keys'].keys():
+            if 'mast_coordinates' in list(self.keywords['program_keys'].keys()):
                 if imct == 0: #skip endpoint
                     pass 
                 elif imct == len(image_structures)-1: #skip other endpt

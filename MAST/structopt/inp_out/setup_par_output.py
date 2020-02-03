@@ -52,10 +52,10 @@ def setup_par_output(filename, restart, nindiv, indiv_defect_write, genealogy,
         os.mkdir(path)
     flist = [os.path.join(path,'indiv{0:02d}.xyz'.format(x)) for x in range(nindiv)]
     flist.append(os.path.join(path,'StructureSummary.txt'))
-    files = map(ofile,flist)
+    files = list(map(ofile,flist))
     if indiv_defect_write:
         iflist = [os.path.join(path,'indiv{0:02d}-iso.xyz'.format(x)) for x in range(nindiv)]
-        ifiles = map(ofile,iflist)
+        ifiles = list(map(ofile,iflist))
     else:
         ifiles = None
     outname = '{0}.txt'.format(filename)

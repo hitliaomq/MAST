@@ -17,7 +17,7 @@ import os
 import sys
 
 if len(sys.argv) < 2:
-    print "Call with a script name."
+    print("Call with a script name.")
     sys.exit()
 filename=""
 filename=sys.argv[1]
@@ -54,7 +54,7 @@ newfile.data.append("\n")
 for line in myfile.data:
     if "def " in line.strip()[0:4]:
         defline = line
-        print defline
+        print(defline)
         if not "self" in defline:
             partone = myfile.get_segment(defline,"def ","(").strip()
             parttwo = myfile.get_segment(defline,"(",":")

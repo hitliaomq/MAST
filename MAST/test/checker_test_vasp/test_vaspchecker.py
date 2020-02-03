@@ -189,7 +189,7 @@ class TestVaspChecker(unittest.TestCase):
         mymeta.data.append("kpoints = 3x1x7 G 0.5 0.2 .1\n")
         mymeta.to_file("childdir/metadata.txt")
         mymeta2=MASTFile("childdir/metadata.txt")
-        print mymeta2.data
+        print(mymeta2.data)
         myvc = VaspChecker(name="childdir",program_keys=kdict)
         mykpt = myvc._vasp_kpoints_setup()
         kpt_compare = Kpoints.from_file("files/KPOINTS_317G")
@@ -354,24 +354,24 @@ class TestVaspChecker(unittest.TestCase):
         myvc = VaspChecker(name="files")
         myvc.softlink_charge_density_file("childdir")
         myfiles=dirutil.walkfiles("childdir")
-        print myfiles
+        print(myfiles)
         #self.assertTrue("childdir/CHGCAR" in myfiles)
         listme=subprocess.Popen("ls -l childdir",stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         listres=listme.communicate()[0]
         listme.wait()
-        print listres
+        print(listres)
         self.assertTrue("files/CHGCAR" in listres)
     def test_softlink_wavefunction_file(self):
         import subprocess
         myvc = VaspChecker(name="files")
         myvc.softlink_wavefunction_file("childdir")
         myfiles=dirutil.walkfiles("childdir")
-        print myfiles
+        print(myfiles)
         #self.assertTrue("childdir/CHGCAR" in myfiles)
         listme=subprocess.Popen("ls -l childdir",stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         listres=listme.communicate()[0]
         listme.wait()
-        print listres
+        print(listres)
         self.assertTrue("files/WAVECAR" in listres)
 
     def test_forward_charge_density_file(self):
@@ -475,8 +475,8 @@ class TestVaspChecker(unittest.TestCase):
         shutil.move(os.path.join(testdir, "dynamics_split/XDATCAR_combined"),os.path.join(testdir,"childdir"))
         disp_compare = myvc.read_my_displacement_file(myvc.keywords['name'],"XDATCAR_compare")
         disp_combined = myvc.read_my_displacement_file("childdir","XDATCAR_combined")
-        print "COMPARE"
-        for key,value in disp_compare.iteritems():
+        print("COMPARE")
+        for key,value in disp_compare.items():
             self.assertEqual(value, disp_combined[key])
     def test_get_total_electrons(self):
         mypos = Poscar.from_file("structure/POSCAR_LTO")

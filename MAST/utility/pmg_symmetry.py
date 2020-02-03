@@ -7,7 +7,7 @@
 ##############################################################
 import optparse
 import pymatgen
-import dirutil
+from . import dirutil
 
 def main():
     """Takes a POSCAR file and finds its symmetry based on
@@ -24,43 +24,43 @@ def main():
     
     (myopt, myarg) = parser.parse_args()
     if myopt.debug == "on":
-        print myopt
-        print myarg
+        print(myopt)
+        print(myarg)
 
     if myopt.input == None:
-        print "An input file of VASP POSCAR-type is needed."
-        print "Please use -i <POSCAR-type file> and try again."
+        print("An input file of VASP POSCAR-type is needed.")
+        print("Please use -i <POSCAR-type file> and try again.")
         return
      
-    print "---------------------------------------------------"
-    print "Welcome to the MAterials Simulation Toolkit (MAST)"
-    print "    Pymatgen symmetry-finder wrapper tool"
-    print "Version: " + dirutil.get_version()
-    print "Installed in: " + dirutil.get_mast_install_path()
-    print "*** Pymatgen is produced by the Materials Project at"
-    print "materialsproject.org." 
-    print "---------------------------------------------------"
+    print("---------------------------------------------------")
+    print("Welcome to the MAterials Simulation Toolkit (MAST)")
+    print("    Pymatgen symmetry-finder wrapper tool")
+    print("Version: " + dirutil.get_version())
+    print("Installed in: " + dirutil.get_mast_install_path())
+    print("*** Pymatgen is produced by the Materials Project at")
+    print("materialsproject.org.") 
+    print("---------------------------------------------------")
     
     mystructure=""
 
     try:
         mystructure = pymatgen.io.vasp.Poscar.from_file(myopt.input).structure
     except ValueError:
-        print "Structure could not be obtained from %s." % myopt.input
-        print "Please check the file contents and try again."
+        print("Structure could not be obtained from %s." % myopt.input)
+        print("Please check the file contents and try again.")
         return
     if (mystructure == None) or (mystructure == ""):
-        print "Structure could not be obtained from %s." % myopt.input
-        print "Please check the file contents and try again."
+        print("Structure could not be obtained from %s." % myopt.input)
+        print("Please check the file contents and try again.")
         return
 
     mysf = pymatgen.symmetry.analyzer.SpacegroupAnalyzer(mystructure, float(myopt.tolerance))
 
-    print "Tolerance used: ", myopt.tolerance
-    print "Spacegroup:     ", mysf.get_spacegroup_symbol()
-    print "Spacegroup No.: ", mysf.get_spacegroup_number()
-    print "Hall No.:       ", mysf.get_hall()
-    print "Point group:    ", mysf.get_point_group()
+    print("Tolerance used: ", myopt.tolerance)
+    print("Spacegroup:     ", mysf.get_spacegroup_symbol())
+    print("Spacegroup No.: ", mysf.get_spacegroup_number())
+    print("Hall No.:       ", mysf.get_hall())
+    print("Point group:    ", mysf.get_point_group())
 
     return
 

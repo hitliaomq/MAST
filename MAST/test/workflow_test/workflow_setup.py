@@ -28,7 +28,7 @@ def verify_checks():
         if "Check" in myline:
             checkresult = myline.split(":")[1].strip()[0].lower()
             if checkresult == 'y':
-                print "Checks okay"
+                print("Checks okay")
             else:
                 raise MASTError("verify checks","Checks for workflow setup not verified. Check %s" % checkname)
     return
@@ -80,11 +80,11 @@ def generic_submit(inputfile):
     gproc = subprocess.Popen(mygsub, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     gproc.wait()
     if not (os.path.isfile(outputname)):
-        print "Sleep 5"
+        print("Sleep 5")
         time.sleep(5)
     if not (os.path.isfile(outputname)):
         raise OSError("Test did not create output %s" % outputname)
-    print "Output %s created" % outputname
+    print("Output %s created" % outputname)
     waitct=0
     tailcmd = "tail -n 3 %s" % outputname
     maxwait=502
@@ -99,7 +99,7 @@ def generic_submit(inputfile):
                 raise OSError("MAST command not found by test. See %s." % outputname)
         time.sleep(30)
         waitct = waitct + 1
-        print "Output not complete. Attempt %i/%i" % (waitct, maxwait)
+        print("Output not complete. Attempt %i/%i" % (waitct, maxwait))
     return ["Unfinished", mast_test_dir]
 
 def get_finished_recipe_dir(mast_test_dir):

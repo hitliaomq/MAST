@@ -28,12 +28,12 @@ def get_decomp(o_chem_pot, mycomp, verbose=1):
     """        
     a = MPRester("<YOUR_MPREST_API_KEY_HERE>")
     elements = mycomp.elements
-    ellist = map(str, elements)
+    ellist = list(map(str, elements))
     entries = a.get_entries_in_chemsys(ellist)
     #entries = a.get_entries_in_chemsys(['La', 'Mn', 'O', 'Fe'])
     pd = PhaseDiagram(entries)
     gppd = GrandPotentialPhaseDiagram(entries,{Element('O'): float(o_chem_pot)})
-    print gppd
+    print(gppd)
     #plotter = PDPlotter(gppd)
     #plotter.show()
 
@@ -52,13 +52,13 @@ def get_decomp(o_chem_pot, mycomp, verbose=1):
     #print mnprof
 
     if verbose:
-        for (entry,amount) in mydecompgppd.iteritems():
-            print "%s: %3.3f" % (entry.name, amount)
+        for (entry,amount) in mydecompgppd.items():
+            print("%s: %3.3f" % (entry.name, amount))
             #mymurangegppd = gppda.getmu_range_stability_phase(Composition(entry.name),Element('O'))
             #print mymurangegppd
         #for (entry,amount) in mydecomppd.iteritems():
         #    print "%s: %3.3f" % (entry.name, amount)
-        print ""
+        print("")
     return mydecompgppd
 
 mycomp = Composition(La=1,Mn=0.4,Fe=0.6,O=3)

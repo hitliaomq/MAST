@@ -22,7 +22,7 @@ def main():
     elif myopt.mode == "zip":
         zip_only_changed()
     else:
-        print "No option selected. Exiting."
+        print("No option selected. Exiting.")
     return
 
 def save_old_status_files():
@@ -85,8 +85,8 @@ def compare_old_and_new_status_files():
                     myidx = myidx + 1
         rdict[recipedir]["MAIN"]=mystatus
     rchangefile = MASTFile()
-    for rdir in rdict.keys():
-        for key, value in rdict[rdir].iteritems():
+    for rdir in list(rdict.keys()):
+        for key, value in rdict[rdir].items():
             rchangefile.data.append("%s:%s:%s\n" % (rdir,key,value))
     rchangefile.to_file(os.path.join(mastcontrol,"recipechangefile.txt"))
     return True

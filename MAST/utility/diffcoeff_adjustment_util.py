@@ -7,7 +7,7 @@
 ##############################################################
 import optparse
 import pymatgen
-import dirutil
+from . import dirutil
 import numpy as np
 from MAST.utility import MASTFile
 def main():
@@ -25,15 +25,15 @@ def main():
                         help="Melting temperature (K).")
     
     (myopt, myarg) = parser.parse_args()
-    print myopt
-    print myarg
+    print(myopt)
+    print(myarg)
 
-    print "---------------------------------------------------"
-    print "Welcome to the MAterials Simulation Toolkit (MAST)"
-    print "    Pymatgen symmetry-finder wrapper tool"
-    print "Version: " + dirutil.get_version()
-    print "Installed in: " + dirutil.get_mast_install_path()
-    print "---------------------------------------------------"
+    print("---------------------------------------------------")
+    print("Welcome to the MAterials Simulation Toolkit (MAST)")
+    print("    Pymatgen symmetry-finder wrapper tool")
+    print("Version: " + dirutil.get_version())
+    print("Installed in: " + dirutil.get_mast_install_path())
+    print("---------------------------------------------------")
    
     myfile = MASTFile(myopt.input)
     mylines = list(myfile.data)
@@ -60,24 +60,24 @@ def main():
             shortlist.append(parseditem)
     print("1/T and ln(D), and 1000/T and D within 0.4*Tmelt and 1.1*Tmelt:")
     for shortitem in shortlist:
-        print("%3.5E   %3.3E   %3.5E    %3.3E" % (shortitem[0],shortitem[1],
-                    shortitem[2],shortitem[3]))
+        print(("%3.5E   %3.3E   %3.5E    %3.3E" % (shortitem[0],shortitem[1],
+                    shortitem[2],shortitem[3])))
     shortarr = np.array(shortlist)
     xdata = shortarr[:,0]
     ydata = shortarr[:,1]
     [slope, intercept] = np.polyfit(xdata, ydata, 1)
     kboltz = 0.00008617 # eV/K
-    print "Slope %s and intercept %s" % (slope, intercept)
+    print("Slope %s and intercept %s" % (slope, intercept))
     qunadjusted = -1 * slope * kboltz
     dunadjusted = np.exp(intercept)
-    print("Undadjusted Q: %3.3f eV" % qunadjusted)
-    print("Undadjusted D0: %3.3f cm^2/sec" % dunadjusted)
+    print(("Undadjusted Q: %3.3f eV" % qunadjusted))
+    print(("Undadjusted D0: %3.3f cm^2/sec" % dunadjusted))
     hostqadjust = float(myopt.hostqadjust)
     hostdadjust = float(myopt.hostdadjust)
     qadjusted = qunadjusted + hostqadjust
     dadjusted = dunadjusted * hostdadjust
-    print("Adjusted Q: %3.3f eV" % qadjusted)
-    print("Adjusted D0: %3.3f cm^2/sec" % dadjusted)
+    print(("Adjusted Q: %3.3f eV" % qadjusted))
+    print(("Adjusted D0: %3.3f cm^2/sec" % dadjusted))
     return [qadjusted, dadjusted]
 
 if __name__ == '__main__':

@@ -267,7 +267,7 @@ class LammpsChecker(BaseChecker):
         else: #this is an originating run; mast should give it a structure
             my_data_structure = self.keywords['structure']
             self.logger.info("No DATA file found from a parent; base structure used for %s" % self.keywords['name'])
-        if 'mast_coordinates' in self.keywords['program_keys'].keys():
+        if 'mast_coordinates' in list(self.keywords['program_keys'].keys()):
             sxtend = StructureExtensions(struc_work1=my_data_structure, name=self.keywords['name'])
             coordstrucs=self.get_coordinates_only_structure_from_input()
             newstruc = sxtend.graft_coordinates_onto_structure(coordstrucs[0])
@@ -284,7 +284,7 @@ class LammpsChecker(BaseChecker):
         allowedpath = os.path.join(dirutil.get_mast_install_path(), 'MAST',
                         'ingredients','programkeys','lammps_allowed_keywords.py')
         allowed_list = self._lammps_input_get_allowed_keywords(allowedpath)
-        for key, value in self.keywords['program_keys'].iteritems():
+        for key, value in self.keywords['program_keys'].items():
             if not key[0:5] == "mast_":
                 keytry = key.upper()
                 if not (keytry in allowed_list):
@@ -603,7 +603,7 @@ def read_lammps_trajectory(filename, timestep=-1, atomlist=False,
                         at=Atom(symbol=sym,position=[float(sp[2]),float(sp[3]),float(sp[4])])
                         a.append(at)
                     else:
-                        symn = random.choice(range(1,100))
+                        symn = random.choice(list(range(1,100)))
                         at=Atom(symbol=symn,position=[float(sp[2]),float(sp[3]),float(sp[4])])
                         a.append(at)
                         atnum.append(sp[1])
@@ -724,7 +724,7 @@ def read_lammps_data(filename, atomlist=False, ratomlist=False, writefile=False)
                 at=Atom(symbol=sym,position=[float(sp[2]),float(sp[3]),float(sp[4])])
                 a.append(at)
             else:
-                symn = random.choice(range(1,100))
+                symn = random.choice(list(range(1,100)))
                 at=Atom(symbol=symn,position=[float(sp[2]),float(sp[3]),float(sp[4])])
                 a.append(at)
                 atnum.append(sp[1])
@@ -767,7 +767,7 @@ def read_lammps_log(lammps_log="LOG"):
                 if m:
                     # create a dictionary between each of the thermo_style args
                     # and it's corresponding value
-                    thermo_content.append(dict(zip(thermo_args, map(float, m.groups()))))
+                    thermo_content.append(dict(list(zip(thermo_args, list(map(float, m.groups()))))))
         else:
             line = f.readline()
     f.close()
@@ -852,7 +852,7 @@ def readable_lammps_parameters(parameters, structure):
             parameters['newton']+='\natom_style charge'
     else:
         parameters={'potential_file':None}
-        print 'WARNING: No LAMMPS potential recognized. Assuming Lennard Jones Potential'
+        print('WARNING: No LAMMPS potential recognized. Assuming Lennard Jones Potential')
     return parameters
 
 class prism:
@@ -940,9 +940,9 @@ class prism:
         # Two-stage fold, first into box, then into semi-open interval
         # (within the given precission).
         d = [x % (1-self.dir_prec) for x in 
-             map(dec.Decimal, map(repr, np.mod(self.car2dir(v) + self.eps, 1.0)))]
+             map(dec.Decimal, list(map(repr, np.mod(self.car2dir(v) + self.eps, 1.0))))]
         return tuple([self.f2qs(x) for x in 
-                      self.dir2car(map(float, d))])
+                      self.dir2car(list(map(float, d)))])
         
     def get_lammps_prism(self):
         A = self.A

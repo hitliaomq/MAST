@@ -16,7 +16,7 @@ from MAST.structopt_stem import post_processing as pp
 try:
     from ase import Atom, Atoms
 except ImportError:
-    print "NOTE: ASE is not installed. To use Structopt Optimizer.py, ASE must be installed."
+    print("NOTE: ASE is not installed. To use Structopt Optimizer.py, ASE must be installed.")
 try:
     from mpi4py import MPI
 except ImportError:
@@ -658,7 +658,7 @@ class Optimizer():
             outputlist.append([ind.fitness,ind.energy/ind[0].get_number_of_atoms()])
         fitness_min = min([fitness for fitness, eatom in outputlist])
         eatom_min = [one[1] for one in outputlist if one[0]==fitness_min][0]
-        print 'Gen,fitness,eatom,chi2', self.generation,fitness_min,eatom_min,fitness_min-eatom_min
+        print('Gen,fitness,eatom,chi2', self.generation,fitness_min,eatom_min,fitness_min-eatom_min)
 
         # Set new index values and write population
         index1 = 0
@@ -857,9 +857,9 @@ class Optimizer():
                         fls = [fl for fl in os.listdir(self.calc.tmp_dir) if '.' not in fl]
                         for one in fls:
                             os.remove(self.calc.tmp_dir+'/'+one)
-                except Exception, e:
+                except Exception as e:
                     logger.error('Print issue in removing files {0}.'.format(e),exc_info=True)
-                    print str(e)
+                    print(str(e))
                     pass
         self.population = pop
         return pop
@@ -1079,16 +1079,16 @@ class Optimizer():
                         else:
                             pp.get_lattice_concentration(os.path.join(os.getcwd(),'Bulkfile.xyz'),os.path.join(os.getcwd(),'indiv00.xyz'))
                         os.chdir(cwd)
-        except Exception, e:
+        except Exception as e:
             logger.error('Error in execution: {0}'.format(e),exc_info=True)
-            print '********ERROR IN EXECUTION********'
-            print str(e)
-            print 'CLEANING UP FILES'
+            print('********ERROR IN EXECUTION********')
+            print(str(e))
+            print('CLEANING UP FILES')
             try:
                 self.close_output()
             except:
                 pass
-            print 'EXITING PROGRAM'
+            print('EXITING PROGRAM')
     
     def read(self,optfile):
         parameters = inp_out.read_parameter_input(optfile,True)

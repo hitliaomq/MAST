@@ -32,13 +32,13 @@ def corrctReflection(relax,defect):
     # Correct periodically reflected atoms according to the perfect cell.
     # relax is the CONTCAR (after relaxation) and defect is the POSCAR (before relaxation).
     shift = array([0,0,0])
-    for ele in relax.keys():
+    for ele in list(relax.keys()):
         for i in range(len(relax[ele])):
             for j in range(3):
                 shift[j] = shift[j] + relax[ele][i][j] - defect[ele][i][j]
     shift = shift/len(mg.read_structure('POSCAR_defect'))
             
-    for ele in relax.keys(): 
+    for ele in list(relax.keys()): 
         for i in range(len(relax[ele])):
             for j in range(3):
                 relax[ele][i][j]=relax[ele][i][j]-shift[j]
@@ -51,14 +51,14 @@ def corrctReflection(relax,defect):
 
 def rescale(struct,size,Size): 
     # Necessary for fractional coordinates.
-    for ele in struct.keys():
+    for ele in list(struct.keys()):
         for i in range(len(struct[ele])):
             for k in range(3):
                 struct[ele][i][k] = struct[ele][i][k]*size[k]/Size[k]
     return struct
 
 def delete(supercell,chunk):
-    for ele in supercell.keys():
+    for ele in list(supercell.keys()):
         total=len(supercell[ele])
         i=0
         while i<total:
@@ -72,7 +72,7 @@ def delete(supercell,chunk):
     return supercell
 
 def embed(supercell,relax):
-    for ele in relax.keys():
+    for ele in list(relax.keys()):
         for i in range(len(relax[ele])):
             try: supercell[ele]
             except:  supercell[ele] = []
@@ -86,14 +86,14 @@ def write(out,supercell):
     for line in open('POSCAR_super','r'):
         if i>0 and i<=4: fp.write(line)
         i = i + 1
-    for ele in supercell.keys():
+    for ele in list(supercell.keys()):
         fp.write(ele + ' ')
     fp.write('\n')
-    for ele in supercell.keys():
+    for ele in list(supercell.keys()):
         fp.write(str(len(supercell[ele])) + ' ')
     fp.write('\n')
     fp.write('Direct\n')
-    for ele in supercell.keys():
+    for ele in list(supercell.keys()):
         for i in range(len(supercell[ele])):
             fp.write(str(supercell[ele][i][0])+' '+str(supercell[ele][i][1])+' '+str(supercell[ele][i][2])+'\n')
     fp.close()

@@ -1,5 +1,5 @@
 '''General functions for moves'''
-from ase_minimization import *
+from .ase_minimization import *
 # from atoms_add import *
 # from atoms_remove import *
 # from basin_hop_la import *

@@ -163,7 +163,7 @@ if __name__ == "__main__":
               3.97,3.08,3.48,2.9,2.5,3.22,2.84,2.42]
     
     for n in range(3,21):
-        print pickSubList(testlist,n)
+        print(pickSubList(testlist,n))
          
     sys.stdout = saved
     fout.close()   

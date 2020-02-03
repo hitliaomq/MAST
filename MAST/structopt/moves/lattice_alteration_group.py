@@ -39,7 +39,7 @@ def lattice_alteration_group(indiv, Optimizer):
         for i in range(len(atms)-1):
             dist.append(atms.get_distance(i,len(atms)-1))
         atms.pop()
-        dlist=zip(dist,atms)
+        dlist=list(zip(dist,atms))
         dlist=sorted(dlist, key=lambda one: one[0], reverse=True)
         # Select atoms closest to random point
         atmst=Atoms()

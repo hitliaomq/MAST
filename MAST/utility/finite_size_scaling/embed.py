@@ -21,14 +21,14 @@ def CenterMassnReflectionCorr(relax,defect):
     # Correct periodically reflected atoms according to the perfect cell.
     # relax is the CONTCAR (after relaxation) and defect is the POSCAR (before relaxation).
     shift = np.array([0,0,0])
-    for ele in relax.keys():
+    for ele in list(relax.keys()):
         for i in range(len(relax[ele])):
             for j in range(3):
                 shift[j] = shift[j] + relax[ele][i][j] - defect[ele][i][j]
     #shift = shift/len(mg.read_structure('POSCAR_defect'))
     shift = shift/relax.composition.num_atoms 
             
-    for ele in relax.keys(): 
+    for ele in list(relax.keys()): 
         for i in range(len(relax[ele])):
             for j in range(3):
                 relax[ele][i][j]=relax[ele][i][j]-shift[j]
@@ -40,7 +40,7 @@ def CenterMassnReflectionCorr(relax,defect):
     return relax
 
 def delete(supercell,chunk):
-    for ele in supercell.keys():
+    for ele in list(supercell.keys()):
         total=len(supercell[ele])
         i=0
         while i<total:
@@ -54,7 +54,7 @@ def delete(supercell,chunk):
     return supercell
 
 def embed(supercell,relax):
-    for ele in relax.keys():
+    for ele in list(relax.keys()):
         for i in range(len(relax[ele])):
             try: supercell[ele]
             except:  supercell[ele] = []
@@ -63,7 +63,7 @@ def embed(supercell,relax):
     
 def rescale(struct,size,Size): 
     # Necessary for fractional coordinates.
-    for ele in struct.keys():
+    for ele in list(struct.keys()):
         for i in range(len(struct[ele])):
             for k in range(3):
                 struct[ele][i][k] = struct[ele][i][k]*size[k]/Size[k]

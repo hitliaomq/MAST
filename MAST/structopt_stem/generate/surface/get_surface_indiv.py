@@ -4,7 +4,7 @@ from MAST.structopt_stem.switches import moves_switch
 try:
     from MAST.structopt_stem.generate.Individual import Individual
 except NameError:
-    print "NOTE: ASE is not installed. ASE must be installed for Structopt Individual.py to work correctly."
+    print("NOTE: ASE is not installed. ASE must be installed for Structopt Individual.py to work correctly.")
 def get_surface_indiv(Optimizer):
     """
     Function to generate an structopt Individual class object containing as surface structure.

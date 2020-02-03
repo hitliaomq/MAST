@@ -2,7 +2,7 @@ try:
     from ase import Atom, Atoms
     from ase.calculators.neighborlist import NeighborList
 except ImportError:
-    print "NOTE: ASE is not installed. To use Structopt find_defects.py, ASE must be installed."
+    print("NOTE: ASE is not installed. To use Structopt find_defects.py, ASE must be installed.")
 import numpy
 import copy
 from MAST.structopt_stem.inp_out.write_xyz import write_xyz
@@ -25,7 +25,7 @@ def find_defects(solid, bulko, rcutoff, atomlistcheck=False, trackvacs=False, tr
     b.set_pbc(True)
     #Debug: Write solid and bulko to file
     if debug:
-        print len(bulko)
+        print(len(bulko))
         write_xyz(debug,b,'Find Ints: Solid and Bulko')
     # Identify nearest neighbor atoms for each atom in perfect structure
     ntot = len(bulko)
@@ -79,7 +79,7 @@ def find_defects(solid, bulko, rcutoff, atomlistcheck=False, trackvacs=False, tr
         b = cluster.copy()
         write_xyz(debug,b,'Find Ints: Cluster')
         debug.flush()
-        print 'Found cluster size = ',len(b)
+        print('Found cluster size = ',len(b))
     # Identify atoms surrounding the identified defects in the defected structure
     box=Atoms()
     bulki=Atoms()
@@ -192,6 +192,6 @@ def find_defects(solid, bulko, rcutoff, atomlistcheck=False, trackvacs=False, tr
         b=bulki.copy()
         write_xyz(debug,b,'Find Ints: New Bulki')
         debug.flush()
-        print len(bulko)
+        print(len(bulko))
     
     return indiv,bulki,vacant,swaps,stro

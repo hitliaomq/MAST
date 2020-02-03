@@ -36,13 +36,13 @@ def main(comp="La0.5Sr0.5MnO3", energy=-43.3610, ostart="", oend="", ostep=""):
     a = MPRester("wfmUu5VSsDCvIrhz")
     
     mycomp=Composition(comp)
-    print "Composition: ", mycomp
+    print("Composition: ", mycomp)
     myenergy=energy
-    print "Energy: ", myenergy
+    print("Energy: ", myenergy)
     myPDEntry = PDEntry(mycomp, myenergy)
 
     elements = mycomp.elements
-    ellist = map(str, elements)
+    ellist = list(map(str, elements))
     
     chemsys_entries = a.get_entries_in_chemsys(ellist)
     #For reference: other ways of getting entries
@@ -58,8 +58,8 @@ def main(comp="La0.5Sr0.5MnO3", energy=-43.3610, ostart="", oend="", ostep=""):
         #plotter.show()
         ppda = PDAnalyzer(pd)
         eabove=ppda.get_decomp_and_e_above_hull(myPDEntry)
-        print "Energy above hull: ", eabove[1]
-        print "Decomposition: ", eabove[0]
+        print("Energy above hull: ", eabove[1])
+        print("Decomposition: ", eabove[0])
         return eabove
     else: #Grand potential phase diagram
         orange = np.arange(ostart, oend+ostep, ostep) #add ostep because otherwise the range ends before oend
@@ -70,14 +70,14 @@ def main(comp="La0.5Sr0.5MnO3", energy=-43.3610, ostart="", oend="", ostep=""):
             gppd = GrandPotentialPhaseDiagram(entries,{Element('O'): float(o_chem_pot)})
             gppda = PDAnalyzer(gppd)
             geabove=gppda.get_decomp_and_e_above_hull(myGrandPDEntry, True)
-            print "******** Decomposition for mu_O = %s eV ********" % o_chem_pot
-            print "%30s%1.4f" % ("mu_O: ",o_chem_pot)
-            print "%30s%1.4f" % ("Energy above hull (eV): ",geabove[1])
+            print("******** Decomposition for mu_O = %s eV ********" % o_chem_pot)
+            print("%30s%1.4f" % ("mu_O: ",o_chem_pot))
+            print("%30s%1.4f" % ("Energy above hull (eV): ",geabove[1]))
             decomp=geabove[0]
             #print "Decomp: ", decomp
-            print "%30s" % "Decomposition: "
-            for dkey in decomp.keys():
-                print "%30s:%1.4f" % (dkey.composition,decomp[dkey])
+            print("%30s" % "Decomposition: ")
+            for dkey in list(decomp.keys()):
+                print("%30s:%1.4f" % (dkey.composition,decomp[dkey]))
     return
 
 if __name__=="__main__":

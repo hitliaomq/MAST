@@ -1,3 +1,7 @@
 numpy
 scipy
 matplotlib
+pymatgen
+custodian
+pandas
+ase

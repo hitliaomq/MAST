@@ -42,7 +42,7 @@ class BaseChecker(MASTObj):
             self.logger.error("No output filename given for is_frozen check")
             return False
         frozensec=21000
-        if "mast_frozen_seconds" in self.keywords['program_keys'].keys():
+        if "mast_frozen_seconds" in list(self.keywords['program_keys'].keys()):
             frozensec = int(self.keywords['program_keys']['mast_frozen_seconds'])
         st = os.stat(os.path.join(self.keywords['name'], output_filename)) 
         if time.time() - st.st_mtime > frozensec: 

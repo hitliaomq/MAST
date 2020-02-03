@@ -131,21 +131,21 @@ class TestAtomIndexing(unittest.TestCase):
         orig_coord=np.array([0.0,0.0,0.5],'float')
         self.assertRaises(MASTError, myai.find_frac_coord_in_atom_indices,
                 orig_coord,include_orig="only",element="")
-        print "subtest1 ok"
+        print("subtest1 ok")
         findtest2 = myai.find_frac_coord_in_atom_indices(orig_coord,
                 include_orig="only",element="",
                 scaling_label="",find_multiple=True)
         self.assertItemsEqual(findtest2, ["0000000000000x12","0000000000000xE2"])
-        print "subtest2 ok"
+        print("subtest2 ok")
         findtest3 = myai.find_frac_coord_in_atom_indices(orig_coord,
                 include_orig="only",element="He")
         self.assertEqual(findtest3, "0000000000000xE2")
-        print "subtest3 ok"
+        print("subtest3 ok")
         findtest4 = myai.find_frac_coord_in_atom_indices(orig_coord,
                 include_orig="only",element="Al",
             find_multiple=True, tol=0.01)
         self.assertItemsEqual(findtest4, ["0000000000000x12","0000000000000xTOL"])
-        print "subtest4 ok"
+        print("subtest4 ok")
         return
     
     def test_find_frac_coord_in_atom_indices(self):
@@ -159,22 +159,22 @@ class TestAtomIndexing(unittest.TestCase):
         relaxed_coord=np.array([-0.00501174,-0.00501174, 0.50707951],'float')
         self.assertRaises(MASTError, myai.find_frac_coord_in_atom_indices,
                 relaxed_coord, include_orig="no", element="")
-        print "subtest1 ok"
+        print("subtest1 ok")
         findtest2 = myai.find_frac_coord_in_atom_indices(relaxed_coord,
                 include_orig="no", element="",
                 scaling_label="",find_multiple=True)
         self.assertItemsEqual(findtest2, ["0000000000000x12","0000000000000xE2",
                 "0000000000000xTOL"])
-        print "subtest2 ok"
+        print("subtest2 ok")
         findtest3 = myai.find_frac_coord_in_atom_indices(relaxed_coord,
                 include_orig="no", element="He")
         self.assertEqual(findtest3, "0000000000000xE2")
-        print "subtest3 ok"
+        print("subtest3 ok")
         findtest4 = myai.find_frac_coord_in_atom_indices(relaxed_coord,
                 include_orig="no",element="Al",
                 find_multiple=True, tol=0.001)
         self.assertItemsEqual(findtest4, ["0000000000000x12","0000000000000xTOL"])
-        print "subtest4 ok"
+        print("subtest4 ok")
         return
     def test_write_defected_phonon_sd_manifests(self):
         #raise SkipTest
@@ -230,7 +230,7 @@ class TestAtomIndexing(unittest.TestCase):
         newstr = myai.graft_new_coordinates_from_manifest(mystr, "manifest__group1_","")
         comparestr = Poscar.from_file(os.path.join(testdir,"list_files","POSCAR_test1")).structure
         self.assertEqual(comparestr, newstr)
-        print "subtest1 ok"
+        print("subtest1 ok")
         test_sid = os.path.join(testdir,"list_files","structure_index_files_updated")
         myai = AtomIndex(input_options=myio, structure_index_directory=test_sid)
         [coordlist, elemlist]=myai.make_coordinate_and_element_list_from_manifest("manifest__group1_", "test2")
@@ -238,7 +238,7 @@ class TestAtomIndexing(unittest.TestCase):
         newstr = myai.graft_new_coordinates_from_manifest(mystr, "manifest__group1_","test2")
         comparestr = Poscar.from_file(os.path.join(testdir,"list_files","POSCAR_test2")).structure
         self.assertEqual(comparestr, newstr)
-        print "subtest2 ok"
+        print("subtest2 ok")
         test_sid = os.path.join(testdir,"list_files","structure_index_files_updated")
         myai = AtomIndex(input_options=myio, structure_index_directory=test_sid)
         [coordlist, elemlist]=myai.make_coordinate_and_element_list_from_manifest("manifest__group1_", "test3")
@@ -246,7 +246,7 @@ class TestAtomIndexing(unittest.TestCase):
         newstr = myai.graft_new_coordinates_from_manifest(mystr, "manifest__group1_","test3")
         comparestr = Poscar.from_file(os.path.join(testdir,"list_files","POSCAR_test3")).structure
         self.assertEqual(comparestr, newstr)
-        print "subtest3 ok"
+        print("subtest3 ok")
         test_sid = os.path.join(testdir,"list_files","structure_index_files_updated")
         myai = AtomIndex(input_options=myio, structure_index_directory=test_sid)
         [coordlist, elemlist]=myai.make_coordinate_and_element_list_from_manifest("manifest__group1_", "test4")
@@ -254,7 +254,7 @@ class TestAtomIndexing(unittest.TestCase):
         newstr = myai.graft_new_coordinates_from_manifest(mystr, "manifest__group1_","test4")
         comparestr = Poscar.from_file(os.path.join(testdir,"list_files","POSCAR_test4")).structure
         self.assertEqual(comparestr, newstr)
-        print "subtest4 ok"
+        print("subtest4 ok")
         return
 
     def test_guess_manifest_from_ingredient_metadata(self):
@@ -299,7 +299,7 @@ class TestAtomIndexing(unittest.TestCase):
         man1=MASTFile(os.path.join(wdir,"manifest_int2_unscrambled"))
         mancomp=MASTFile(os.path.join(testdir,"nebpathtest_files","manifest_int2_unscrambled"))
         self.assertItemsEqual(man1.data, mancomp.data)
-        print "subtest1 ok"
+        print("subtest1 ok")
         ###chop
         my_ing = ChopIngredient(name = myrp.ingred_input_options[ingname]['name'], 
             program_keys = myrp.ingred_input_options[ingname]['program_keys'], 
@@ -316,11 +316,11 @@ class TestAtomIndexing(unittest.TestCase):
         man1_test = MASTFile(os.path.join(my_ing.keywords['name'],'scrambledep_init'))
         man1_comp = MASTFile(os.path.join(testdir,"nebpathtest_files","scrambledep_init"))
         self.assertEqual(man1_test.data, man1_comp.data)
-        print "subtest 2.1 ok"
+        print("subtest 2.1 ok")
         man2_test = MASTFile(os.path.join(my_ing.keywords['name'],'scrambledep_fin'))
         man2_comp = MASTFile(os.path.join(testdir,"nebpathtest_files","scrambledep_fin"))
         self.assertEqual(man2_test.data, man2_comp.data)
-        print "subtest 2.2 ok"
+        print("subtest 2.2 ok")
         return
 
     def test_unscramble_a_scrambled_structure(self):
@@ -451,7 +451,7 @@ class TestAtomIndexing(unittest.TestCase):
         self.assertEqual(ing_label,ingp)
         [coordlist, elemlist]=myatomindex.make_coordinate_and_element_list_from_manifest(childmanifest, ing_label)
         for cidx in range(0, len(coordlist)):
-            print "%s, %s" % (elemlist[cidx], coordlist[cidx])
+            print("%s, %s" % (elemlist[cidx], coordlist[cidx]))
         #newstr = mystr.copy()
         #lenoldsites = len(newstr.sites)
         #newstr.remove_sites(range(0, lenoldsites))
@@ -492,9 +492,9 @@ class TestAtomIndexing(unittest.TestCase):
         os.environ['MAST_ARCHIVE']=wdir
         os.environ['MAST_CONTROL']=wdir
         dirutil.lock_directory(wdir)
-        print "Got lock."
+        print("Got lock.")
         mymon = MASTMon()
-        print "Set initial mastmon."
+        print("Set initial mastmon.")
         myrp = mymon.set_up_recipe_plan(rwdir, verbose=1)
         os.chdir(rwdir)
         myrp.check_recipe_status()
@@ -505,7 +505,7 @@ class TestAtomIndexing(unittest.TestCase):
         str2_1 = Poscar.from_file(os.path.join(rwdir,"defect_int2_q=p0_stat","POSCAR")).structure
         str2_comp = Poscar.from_file(os.path.join(testdir,"nebpathtest_files","POSCAR_defect_int2_stat")).structure
         self.assertEqual(str2_1,str2_comp)
-        print "Static setup subtest ok"
+        print("Static setup subtest ok")
         #mimic completion of statics
         for dnum in [1,2]:
             shutil.copy(os.path.join(rwdir,"defect_int%i_q=p0_opt2" % dnum,

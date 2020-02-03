@@ -15,8 +15,8 @@ def formationenergy(indiv, Optimizer):
     """
     if Optimizer.structure != 'Defect':
         if Optimizer.generation <1:
-            print 'WARNING: Formation Energy fitness calculator only available for Defect structure simulation.'
-            print '     Using total energy fitness calculator instead'
+            print('WARNING: Formation Energy fitness calculator only available for Defect structure simulation.')
+            print('     Using total energy fitness calculator instead')
         indiv = totalenfit(indiv,Optimizer)
         stro = ''
     else:
@@ -26,11 +26,11 @@ def formationenergy(indiv, Optimizer):
         cwd = os.getcwd()
         try:
             outs = eval_energy(Optimizer,indiv)
-        except Exception, e:
+        except Exception as e:
             logger.warn('Error in energy evaluation: {0}'.format(e), exc_info=True)
             stro = 'ERROR: Problem in Energy Evaluation'
-            print stro
-            print e
+            print(stro)
+            print(e)
             stro += '\n' + repr(e)
             os.chdir(cwd)
             f=open('problem-structures.xyz','a')
@@ -39,8 +39,8 @@ def formationenergy(indiv, Optimizer):
             write_xyz(f,totalsol,data='Starting structure hindex={0}'.format(indiv.history_index))
             indiv.energy = 10000
             f.close()
-            print '    Writing structure to problemstructures.xyz file. Structure (hindex) : '+indiv.history_index
-            print '    Setting individual energy to 50000.'
+            print('    Writing structure to problemstructures.xyz file. Structure (hindex) : '+indiv.history_index)
+            print('    Setting individual energy to 50000.')
             outs = [10000, starting.bulki, starting, stro]
         indiv.energy = outs[0]
         stro=outs[3]
@@ -55,8 +55,8 @@ def formationenergy(indiv, Optimizer):
             fit=10000
             message = 'Warning: Found oddly large energy from Lammps in structure HI={0}'.format(indiv.history_index)
             logger.warn(message)
-            print message
-            print '    Setting fitness to 10000'
+            print(message)
+            print('    Setting fitness to 10000')
             passflag=False
         if math.isnan(fit):
             logger.warn('Found NAN energy structure HI={0}'.format(indiv.history_index))

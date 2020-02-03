@@ -150,13 +150,13 @@ class RecipeTemplateParser(MASTObj):
         d_nebs          = self.input_options.get_item("neb","nebs")
         
         if needsscaling == 1:
-            scalingsize = d_scaling.keys()
+            scalingsize = list(d_scaling.keys())
             scalingsize.sort()
         else: scalingsize = ['1x1x1']
 
         for size in scalingsize:
             if needsdefects == 1:
-                mydefects=d_defects.keys()
+                mydefects=list(d_defects.keys())
                 mydefects.sort()
                 for defectname in mydefects:
                     for charge in d_defects[defectname]['charge']:
@@ -165,8 +165,8 @@ class RecipeTemplateParser(MASTObj):
                         else:
                             mycharge = 'q=p' + str(int(charge))
                         if needsphonons == 1:
-                            if len(d_defects[defectname]['phonon'].keys()) > 0:
-                                phononkeys = d_defects[defectname]['phonon'].keys()
+                            if len(list(d_defects[defectname]['phonon'].keys())) > 0:
+                                phononkeys = list(d_defects[defectname]['phonon'].keys())
                                 phononkeys.sort()
                                 for phonon in phononkeys:
                                     for line in origchunk:
@@ -186,7 +186,7 @@ class RecipeTemplateParser(MASTObj):
                                     newline = newline.replace("<S>",size)
                                 expandedchunk.append(newline)
             elif needsnebs == 1:
-                nebkeys = d_nebs.keys()
+                nebkeys = list(d_nebs.keys())
                 nebkeys.sort()
                 for neblabel in nebkeys:
                     defbegin = neblabel.split('-')[0]
@@ -200,8 +200,8 @@ class RecipeTemplateParser(MASTObj):
                         else:
                             mycharge = 'q=p' + str(int(charge))
                         if needsphonons == 1:
-                            if len(d_nebs[neblabel]['phonon'].keys()) > 0:
-                                phononkeys = d_nebs[neblabel]['phonon'].keys()
+                            if len(list(d_nebs[neblabel]['phonon'].keys())) > 0:
+                                phononkeys = list(d_nebs[neblabel]['phonon'].keys())
                                 phononkeys.sort()
                                 for phonon in phononkeys:
                                     for line in origchunk:
@@ -287,7 +287,7 @@ class RecipeTemplateParser(MASTObj):
         """replace <sys> with the system name from the input options
         """
         raise MASTError(self.__class__.__name__, "This function is obsolete.") 
-        for index in xrange(len(processing_lines)):
+        for index in range(len(processing_lines)):
             processing_lines[index] = processing_lines[index].replace('<sys>', system_name)
         return processing_lines
 
@@ -307,7 +307,7 @@ class RecipeTemplateParser(MASTObj):
         line=""
         for line in processing_lines:
             if "<n-n>" in line:
-                for neblabel in d_neblines.keys():
+                for neblabel in list(d_neblines.keys()):
                     n_line = line.replace('<n-n>', neblabel)
                     eval_lines.append(n_line)
                     if 'ingredient' in n_line and not '<' in n_line: 
@@ -330,7 +330,7 @@ class RecipeTemplateParser(MASTObj):
                     childsplit=evalsplit[1].split('_')
                     parsplit=evalsplit[0].split('_')
                     okay=1
-                    for neblabel in d_neblines.keys():
+                    for neblabel in list(d_neblines.keys()):
                         if okay == 1 and (neblabel in childsplit):
                             parlabels = neblabel.split('-')
                             #print "TTM DEBUG: parlabels: ",parlabels
@@ -355,7 +355,7 @@ class RecipeTemplateParser(MASTObj):
             return processing_lines
         for line in processing_lines:
             if '<img-n>' in line:
-                for index in xrange(n_images):
+                for index in range(n_images):
                     n_line = line.replace('<img-n>', str(index+1).zfill(2))
                     if 'ingredient' in n_line and not '<' in n_line: 
                         keyword = n_line.split()[1]
@@ -391,7 +391,7 @@ class RecipeTemplateParser(MASTObj):
         for line in processing_lines:
             #print 'GRJ DEBUG: line =', line
             if ('<n>' in line) or ('<q>' in line):
-                for defect_key in d_defects.keys():
+                for defect_key in list(d_defects.keys()):
                     #print 'GRJ DEBUG: defect_key =', defect_key
                     #defect_label = defect_key.split('_')[1] #defect_1, etc.
                     def_line = line.replace("<n>", defect_key)

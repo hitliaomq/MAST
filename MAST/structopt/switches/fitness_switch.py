@@ -22,15 +22,15 @@ def fitness_switch(input):
         scheme = Optimizer.fitness_scheme
         strn = ''
         try:
-            exec "from MAST.structopt.fitness.{0} import {0}".format(scheme)
+            exec("from MAST.structopt.fitness.{0} import {0}".format(scheme))
             indiv, strn = eval('{0}(indiv, Optimizer)'.format(scheme))
-        except NameError, e:
-            print e
-            print 'WARNING: Specified fitness not one of the available options. Please check documentation and spelling! Fitness : '+repr(scheme)
+        except NameError as e:
+            print(e)
+            print('WARNING: Specified fitness not one of the available options. Please check documentation and spelling! Fitness : '+repr(scheme))
             logger.warn('NameError in fitness switch for scheme = {0}. {1}'.format(scheme,e), exc_info=True)
-        except Exception, e:
-            print 'Error in Fitness fuction : '+repr(scheme)
-            print e
+        except Exception as e:
+            print('Error in Fitness fuction : '+repr(scheme))
+            print(e)
             logger.warn('Exception in fitness switch for {0} scheme: {1}'.format(scheme,e),exc_info=True)
         stro+=strn
     return indiv,stro

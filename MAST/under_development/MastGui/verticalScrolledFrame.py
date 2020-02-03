@@ -4,8 +4,8 @@
 # Maintainer: Kumaresh Visakan Murugan
 # Last updated: 2014-01-01
 ##############################################################
-from Tkinter import *
-import Tkinter as ttk
+from tkinter import *
+import tkinter as ttk
 
 class VerticalScrolledFrame(Frame):
     """A pure Tkinter scrollable frame that actually works!

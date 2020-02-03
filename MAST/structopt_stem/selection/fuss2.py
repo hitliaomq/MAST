@@ -7,7 +7,7 @@ def fuss2(pop, nkeep, Optimizer):
 	"""
     newpop = []
     fits = [ind.fitness for ind in pop]
-    minindex = min(xrange(len(fits)), key=fits.__getitem__)
+    minindex = min(range(len(fits)), key=fits.__getitem__)
     minf = min(fits)
     maxf = max(fits)
     if abs(maxf - minf) > fusslimit:
@@ -31,7 +31,7 @@ def fuss2(pop, nkeep, Optimizer):
         if loopcount > 100:
             indexl = [l for l in range(len(pop)) if l not in indices]
             if len(indexl)==0:
-                randi = random.choice(range(len(pop)))
+                randi = random.choice(list(range(len(pop))))
                 newpop.append(pop[randi])
                 indices.append(randi)
             else:

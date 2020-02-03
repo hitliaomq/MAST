@@ -3,7 +3,7 @@ try:
     from ase.calculators.vasp import Vasp
     from ase.calculators.lj import LennardJones
 except ImportError:
-    print "NOTE: ASE is not installed. To use Structopt setup_calculator.py, ASE must be installed."
+    print("NOTE: ASE is not installed. To use Structopt setup_calculator.py, ASE must be installed.")
 import os
 try:
     from mpi4py import MPI
@@ -169,7 +169,7 @@ def setup_calculator(Optimizer):
                 logger.warn('No LAMMPS potential recognized. Setting up LAMMPS calculator with Lennard Jones potential')
             parameters={}
             filesL=None
-            print 'WARNING: No LAMMPS potential recognized. Assuming Lennard Jones Potential'
+            print('WARNING: No LAMMPS potential recognized. Assuming Lennard Jones Potential')
         if Optimizer.lammps_min != None:
             if debug:
                 logger.info('Adding local energy minimizer to LAMMPS calculator')

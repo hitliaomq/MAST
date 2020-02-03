@@ -40,7 +40,7 @@ def cxtpa(ind1, ind2, Optimizer):
         sym1=one.symbol
         listpos=[i for i,value in enumerate(symlist) if value==sym1][0]
         if len(seplist[listpos]) > 0:
-            pos = random.choice(range(len(seplist[listpos])))
+            pos = random.choice(list(range(len(seplist[listpos]))))
             group2.append(seplist[listpos][pos])
             indices2.append(seplist[listpos][pos].index)
             del seplist[listpos][pos]
@@ -74,11 +74,11 @@ def cxtpa(ind1, ind2, Optimizer):
     ind2[0]=indi2n
     #Debug options
     if debug:
-        print 'DEBUG CX: Number of atoms exchanged from Individual 1 = ', len(group1)
-        print 'DEBUG CX: Number of atoms exchanged from Individual 2 = ', len(group2)
+        print('DEBUG CX: Number of atoms exchanged from Individual 1 = ', len(group1))
+        print('DEBUG CX: Number of atoms exchanged from Individual 2 = ', len(group2))
         for s,c,m,u in Optimizer.atomlist:
-            print 'DEBUG CX: Individual 1 has ', len([atm for atm in indi1n if atm.symbol==s]), ' atoms of structure ', s
-            print 'DEBUG CX: Individual 2 has ', len([atm for atm in indi2n if atm.symbol==s]), ' atoms of structure ', s
-        print 'DEBUG CX: Number of atoms in Individual 1 = ', len(indi1n)
-        print 'DEBUG CX: Number of atoms in Individual 2 = ', len(indi2n)
+            print('DEBUG CX: Individual 1 has ', len([atm for atm in indi1n if atm.symbol==s]), ' atoms of structure ', s)
+            print('DEBUG CX: Individual 2 has ', len([atm for atm in indi2n if atm.symbol==s]), ' atoms of structure ', s)
+        print('DEBUG CX: Number of atoms in Individual 1 = ', len(indi1n))
+        print('DEBUG CX: Number of atoms in Individual 2 = ', len(indi2n))
     return ind1, ind2

@@ -11,7 +11,7 @@ def restart_output(Optimizer):
         outpar = eval('Optimizer.{0}'.format(one))
         if outpar:
             outfiles[one] = eval("open({0},'a')".format(repr(outpar)))
-    outfiles['files'] = map(ofile,Optimizer.files)
+    outfiles['files'] = list(map(ofile,Optimizer.files))
     if Optimizer.indiv_defect_write:
-        outfiles['ifiles'] = map(ofile,Optimizer.ifiles)
+        outfiles['ifiles'] = list(map(ofile,Optimizer.ifiles))
     return outfiles

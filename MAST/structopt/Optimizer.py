@@ -822,9 +822,9 @@ class Optimizer():
                         fls = [fl for fl in os.listdir(self.calc.tmp_dir) if '.' not in fl]
                         for one in fls:
                             os.remove(self.calc.tmp_dir+'/'+one)
-                except Exception, e:
+                except Exception as e:
                     logger.error('Print issue in removing files {0}.'.format(e),exc_info=True)
-                    print str(e)
+                    print(str(e))
                     pass
         self.population = pop
         return pop
@@ -1044,16 +1044,16 @@ class Optimizer():
                         else:
                             pp.get_lattice_concentration(os.path.join(os.getcwd(),'Bulkfile.xyz'),os.path.join(os.getcwd(),'indiv00.xyz'))
                         os.chdir(cwd)
-        except Exception, e:
+        except Exception as e:
             logger.error('Error in execution: {0}'.format(e),exc_info=True)
-            print '********ERROR IN EXECUTION********'
-            print str(e)
-            print 'CLEANING UP FILES'
+            print('********ERROR IN EXECUTION********')
+            print(str(e))
+            print('CLEANING UP FILES')
             try:
                 self.close_output()
             except:
                 pass
-            print 'EXITING PROGRAM'
+            print('EXITING PROGRAM')
     
     def read(self,optfile):
         parameters = inp_out.read_parameter_input(optfile,True)

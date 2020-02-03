@@ -27,13 +27,13 @@ class DefectLevels:
         efermi=np.linspace(0.0,gap,bins)
         eforms=dict()
         cross = dict()
-        for N in DFE.keys():
+        for N in list(DFE.keys()):
             eforms[N] = np.zeros(bins)
             chg = [None]*1001
             cross[N] = dict()      
             for i in range(bins):
                 tmp = dict()
-                for Q in DFE[N].keys():
+                for Q in list(DFE[N].keys()):
                     if np.isnan(DFE[N][Q][id]): continue
                     charge = self.Q2charge(Q)
                     tmp[Q] = DFE[N][Q][id]+efermi[i]*charge
@@ -72,7 +72,7 @@ class DefectLevels:
         Data = pandas.DataFrame(eforms,efermi,defects)
         fw.write(Data.to_string(float_format=lambda x: '%.4f' % x)+'\n\n')
         fw.write('Transition levels\n')
-        for N in cross.keys():
+        for N in list(cross.keys()):
             fw.write('%s\n'%N)
             charge = sorted(cross[N],key=cross[N].get)
             ranges = []
@@ -88,8 +88,8 @@ class DefectLevels:
     def stretch(self,efermi,eforms,cross,gap):
         for i in range(len(efermi)):
             efermi[i] = efermi[i]*gap[1]/gap[0]
-        for N in cross.keys():
-            for Q in cross[N].keys():
+        for N in list(cross.keys()):
+            for Q in list(cross[N].keys()):
                 cross[N][Q][0][0] = cross[N][Q][0][0]*gap[1]/gap[0]
                 cross[N][Q][1][0] = cross[N][Q][1][0]*gap[1]/gap[0]      
         return [efermi,eforms,cross]
@@ -108,24 +108,24 @@ class DefectLevels:
             [efermi,eforms,crossid] = self.get_eforms(DFE,self.XC[id]['gap']['mygap'][0],id)
             cross.append(crossid)
             name = "%s_%s"%(self.inputfile.split('.')[0],self.XC[id]['tag'])
-            self.plot_style(DFE.keys(),efermi,eforms,name+'.eps')
-            self.write_txt(DFE.keys(),efermi,eforms,cross[id],name+'.txt')
+            self.plot_style(list(DFE.keys()),efermi,eforms,name+'.eps')
+            self.write_txt(list(DFE.keys()),efermi,eforms,cross[id],name+'.txt')
             if len(self.XC[id]['gap']['mygap'])>=2:
                 for j in range(1,len(self.XC[id]['gap']['mygap'])):
                     [efermi,eforms,cross[id]] = self.stretch(efermi,eforms,cross[id],self.XC[id]['gap']['mygap'])
                     name = "%s_%s_stretched%s"%(self.inputfile.split('.')[0],self.XC[id]['tag'],j)
-                    self.plot_style(DFE.keys(),efermi,eforms,name+'.eps')
-                    self.write_txt(DFE.keys(),efermi,eforms,cross[id],name+'.txt')
+                    self.plot_style(list(DFE.keys()),efermi,eforms,name+'.eps')
+                    self.write_txt(list(DFE.keys()),efermi,eforms,cross[id],name+'.txt')
                     
 
 if __name__ == "__main__":
     try: opts, args = getopt.getopt(sys.argv[1:],"hi:",["ifile="])
     except getopt.GetoptError:
-        print 'defectlevels.py -i <inputfile>'
+        print('defectlevels.py -i <inputfile>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'defectlevels.py -i <inputfile>'
+            print('defectlevels.py -i <inputfile>')
             sys.exit()
         elif opt == "-i":
             inputfile = arg

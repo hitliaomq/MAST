@@ -54,7 +54,7 @@ class IndepLoopInputParser(MASTObj):
         indepdict=self.scan_for_loop(self.indeploop)
         pegdict1 = self.scan_for_loop(self.pegloop1)
         pegdict2 = self.scan_for_loop(self.pegloop2)
-        if len(indepdict.keys()) == 0 and len(pegdict1.keys()) == 0 and len(pegdict2.keys()) == 0:
+        if len(list(indepdict.keys())) == 0 and len(list(pegdict1.keys())) == 0 and len(list(pegdict2.keys())) == 0:
             return dict()
         alldict = dict(indepdict)
         alldict.update(pegdict1)
@@ -107,7 +107,7 @@ class IndepLoopInputParser(MASTObj):
                 loopdict[lidx]['looplist'] = split2[0].split(self.loop_delim)
             lidx = lidx + 1
         #print "TTM DEBUG: ", loopdict
-        if len(loopdict.keys()) == 0:
+        if len(list(loopdict.keys())) == 0:
             return dict()
         return loopdict
     
@@ -138,7 +138,7 @@ class IndepLoopInputParser(MASTObj):
             stopiter = 0
             while not stopiter:
                 try:
-                    mycomb = prod_list.next()
+                    mycomb = next(prod_list)
                 except StopIteration:
                     stopiter = 1
                 if stopiter == 0:
@@ -200,7 +200,7 @@ class IndepLoopInputParser(MASTObj):
                 mylist <list of str>
         """
         for myitem in mylist:
-            print myitem
+            print(myitem)
         return
 
 
@@ -237,7 +237,7 @@ class IndepLoopInputParser(MASTObj):
             newdata = list(self.baseinput.data)
             loopedlines = dict()
             loopedlines = self.prepare_looped_lines(alldict, allcombs[combct])
-            for lvalidx in loopedlines.keys():
+            for lvalidx in list(loopedlines.keys()):
                 newdata[lvalidx] = loopedlines[lvalidx]
             datasets_dict[combct] = newdata
             combct = combct + 1
@@ -260,7 +260,7 @@ class IndepLoopInputParser(MASTObj):
         createdfiles=list()
         if dirstem == "":
             dirstem = os.getcwd()
-        dkeys = datasets_dict.keys()
+        dkeys = list(datasets_dict.keys())
         dkeys.sort()
         dct=1
         for didx in dkeys:

@@ -40,18 +40,18 @@ class GapPlot:
             self.threshold = step
 
         for condition in self.dfe:
-            print 'Plotting levels for %s conditions' % condition
+            print('Plotting levels for %s conditions' % condition)
             for defect in self.dfe[condition]:
-                print 'Analyzing levels for defect %s.' % defect
+                print('Analyzing levels for defect %s.' % defect)
                 state = self.dfe[condition][defect]
                 data = self.plot_defect(state, step)
 
-                print 'Writing energies and grid to file %s-%s%s.txt' % (defect, condition.replace(' ', '_'), append)
+                print('Writing energies and grid to file %s-%s%s.txt' % (defect, condition.replace(' ', '_'), append))
                 with open('%s-%s%s.txt' % (defect, condition.replace(' ', '_'), append), 'w') as datafile:
                     for datum in data:
                         datafile.write('%10.5f%10.5f\n' % (datum[0], datum[1]))
 
-                print str()
+                print(str())
 
     def plot_defect(self, state, step):
         # Start by finding the lost energy charge state
@@ -72,9 +72,9 @@ class GapPlot:
                 transition = self.get_transition(state1, state2)
                 #print transition, state1, state2
                 if state2[0] > state1[0]:
-                    print 'The transition %s at %.2f is losing electrons as Fermi level increases.' % (transition[0], transition[1])
+                    print('The transition %s at %.2f is losing electrons as Fermi level increases.' % (transition[0], transition[1]))
                     #print 'This is unphysical, please check your DFE\'s and run again.'
-                    print 'Skipping this transition'
+                    print('Skipping this transition')
                     #raise MASTError(self.__class__.__name__, 'Unphysical defect transition levels')
                     # Since state2 is higher in energy, we neglect here, and continue on from state1
                     final_state = state1
@@ -85,7 +85,7 @@ class GapPlot:
                     while not switch:
                         #if (abs(energy - state2[1]) <= self.threshold):
                         if (abs(level - transition[1]) < self.threshold):
-                            print 'Transition %s found at %4.2f eV.' % (transition[0], transition[1])
+                            print('Transition %s found at %4.2f eV.' % (transition[0], transition[1]))
                             #print 'DFE = %4.2f eV' % energy
                             #print transition[1], energy
                             switch = True

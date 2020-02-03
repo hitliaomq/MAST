@@ -158,7 +158,7 @@ class InputParser(MASTObj):
             else:
                 mast_dict[line[0]] = line[1]
 
-        for key, value in mast_dict.items():
+        for key, value in list(mast_dict.items()):
             options.set_item(section_name, key, value)
         
     def parse_scaling_section(self, section_name, section_content, options):
@@ -177,7 +177,7 @@ class InputParser(MASTObj):
                     size_dict['mast_kpoints'] = ' '.join(opt[1:])
             elif ('end' in line):
                 scaling_dict[size_name] = size_dict
-        for key,value in scaling_dict.items():
+        for key,value in list(scaling_dict.items()):
             options.set_item(section_name, key, value)
 
 
@@ -270,7 +270,7 @@ class InputParser(MASTObj):
         # TM
         element_map = dict()
         atom_list = list()
-        for key, value in subsection_dict.items():
+        for key, value in list(subsection_dict.items()):
             if (key == 'coordinates'):
                 value = np.array(value)
                 # Here we use .title() to re-capitalize the first letter of all 
@@ -293,13 +293,13 @@ class InputParser(MASTObj):
         if len(element_map) > 0 and len(atom_list) > 0:
             new_atom_list = list()
             for atomval in atom_list:
-                if atomval.upper() in element_map.keys():
+                if atomval.upper() in list(element_map.keys()):
                     new_atom_list.append(element_map[atomval])
                 else:
                     new_atom_list.append(atomval)
             structure_dict['atom_list'] = new_atom_list
 
-        for key, value in structure_dict.items():
+        for key, value in list(structure_dict.items()):
             options.set_item(section_name, key, value)
     def parse_defects_section(self, section_name, section_content, options):
         """Parses the defects section and populates the options.
@@ -339,8 +339,8 @@ class InputParser(MASTObj):
                         lin = lin.split('=')
                         if (lin[0] == 'charge'):
                             charge_range = lin[1].split(',')
-                            charge = range(int(charge_range[0]),
-                                           int(charge_range[1])+1)
+                            charge = list(range(int(charge_range[0]),
+                                           int(charge_range[1])+1))
                         elif (lin[0] == 'label'):
                             label = lin[1]
 
@@ -379,8 +379,8 @@ class InputParser(MASTObj):
                 multidefect = False
             elif ('charge' in line[0]):
                 charge_range = line[0].split('=')[-1].split(',')
-                defect['charge'] = range(int(charge_range[0]),
-                                         int(charge_range[1])+1)
+                defect['charge'] = list(range(int(charge_range[0]),
+                                         int(charge_range[1])+1))
             elif ('phonon' in line[0]):
                 plabel = line[1]
                 p_center = ' '.join(line[2:5])
@@ -423,7 +423,7 @@ class InputParser(MASTObj):
         else:
             recipe_dict['recipe_file'] = section_content
 
-        for key, value in recipe_dict.items():
+        for key, value in list(recipe_dict.items()):
             options.set_item(section_name, key, value)
 
     def parse_personal_recipe_section(self, section_name, section_content, options):
@@ -437,7 +437,7 @@ class InputParser(MASTObj):
         else:
             personal_recipe_dict['personal_recipe_list'] = section_content
 
-        for key, value in personal_recipe_dict.items():
+        for key, value in list(personal_recipe_dict.items()):
             options.set_item(section_name, key, value)
 
     def parse_ingredients_section(self, section_name, section_content, options):
@@ -482,7 +482,7 @@ class InputParser(MASTObj):
                 # print opt
                 if (opt[0] == 'mast_kpoints'):
                     try: 
-                        kpts = map(int, opt[1].split('x'))
+                        kpts = list(map(int, opt[1].split('x')))
                         if len(opt) > 2:
                             kpts.append(opt[2])
                     except ValueError: 
@@ -543,7 +543,7 @@ class InputParser(MASTObj):
 
         # Each value in ingredients_dict is a dictionary containing the relevant
         # ingredient and option(s).
-        for ing_key, ing_value in ingredients_dict.items():
+        for ing_key, ing_value in list(ingredients_dict.items()):
             options.set_item(section_name, ing_key, ing_value)
 
         options.set_item(section_name, 'global', global_dict)
@@ -661,7 +661,7 @@ class InputParser(MASTObj):
             elif ('end' in line):
                 chempot_dict[condition_name] = condition_dict
 
-        for key, value in chempot_dict.items():
+        for key, value in list(chempot_dict.items()):
             options.set_item(section_name, key, value)
 
 
@@ -733,20 +733,20 @@ class InputParser(MASTObj):
             return
         if 'defects' in input_options.get_sections():
             defdict = input_options.get_item('defects','defects')
-            for dkey in defdict.keys():
-                for sdkey in defdict[dkey].keys():
+            for dkey in list(defdict.keys()):
+                for sdkey in list(defdict[dkey].keys()):
                     if 'subdefect' in sdkey:
                         symbol = defdict[dkey][sdkey]['symbol'].upper()
-                        if symbol in eldict.keys():
+                        if symbol in list(eldict.keys()):
                             defdict[dkey][sdkey]['symbol'] = eldict[symbol]
         if 'neb' in input_options.get_sections():
             nebdict = input_options.get_item('neb','nebs')
-            for nebkey in nebdict.keys():
+            for nebkey in list(nebdict.keys()):
                 nlinenum = len(nebdict[nebkey]['lines'])
                 nlinect=0
                 while nlinect < nlinenum:
                     symbol = nebdict[nebkey]['lines'][nlinect][0].upper()
-                    if symbol in eldict.keys():
+                    if symbol in list(eldict.keys()):
                         nebdict[nebkey]['lines'][nlinect][0] = eldict[symbol]
                     nlinect = nlinect + 1
         return
@@ -759,7 +759,7 @@ class InputParser(MASTObj):
                 input_options <InputOptions>
         """
         have_exec = False
-        for ingredient, options in input_options.get_item('ingredients').items():
+        for ingredient, options in list(input_options.get_item('ingredients').items()):
             if 'mast_exec' in options:
                 have_exec = True
                 break
@@ -813,5 +813,5 @@ class InputParser(MASTObj):
             line = line.split()
             mast_dict.setdefault(line[0], []).append(line[1].strip())
 
-        for key, value in mast_dict.items():
+        for key, value in list(mast_dict.items()):
             options.set_item(section_name, key, value)

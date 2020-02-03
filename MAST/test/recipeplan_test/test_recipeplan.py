@@ -59,8 +59,8 @@ class TestRecipeplan(unittest.TestCase):
 
     def test___init__(self):
         rp = RecipePlan("recipedir")
-        self.assertEquals(rp.working_directory,"recipedir")
-        self.assertEquals(rp.status,"I")
+        self.assertEqual(rp.working_directory,"recipedir")
+        self.assertEqual(rp.status,"I")
         #self.assertEquals(rp.name,"test_recipe")
         #raise SkipTest
         #self.testclass.__init__(name, working_directory)
@@ -153,7 +153,7 @@ class TestRecipeplan(unittest.TestCase):
         rp.run_methods['ing2b']=[['run_singlerun']]
         rp.run_ingredient('ing2b')
         mysubmit = MASTFile("test_control/submitlist")
-        self.assertEquals(mysubmit.data[0],"recipedir/ing2b\n")
+        self.assertEqual(mysubmit.data[0],"recipedir/ing2b\n")
         #self.testclass.run_ingredient(iname)
 
     def test_update_children(self):
@@ -235,7 +235,7 @@ class TestRecipeplan(unittest.TestCase):
         rp.ready_methods['ing3']=[['ready_structure']]
         rp.fast_forward_check_complete()
         #self.assertTrue(rp.complete_ingredient('ing1'))
-        self.assertEquals(rp.ingredients, {'ing1':'C','ing2a':'I','ing2b':'I','ing3':'I'})
+        self.assertEqual(rp.ingredients, {'ing1':'C','ing2a':'I','ing2b':'I','ing3':'I'})
         self.assertTrue(rp.ready_ingredient('ing2a'))
         self.assertTrue(rp.ready_ingredient('ing2b'))
         #self.testclass.fast_forward_check_complete()
@@ -251,7 +251,7 @@ class TestRecipeplan(unittest.TestCase):
         rp.parents_to_check['ing2b']=[]
         rp.parents_to_check['ing1']=[]
         rp.check_if_have_parents()
-        self.assertEquals(rp.ingredients,{'ing1':'S','ing2a':'W','ing2b':'S','ing3':'W'})
+        self.assertEqual(rp.ingredients,{'ing1':'S','ing2a':'W','ing2b':'S','ing3':'W'})
         #self.testclass.check_if_have_parents()
 
     def test_check_if_ready_to_proceed_are_complete(self):
@@ -285,8 +285,8 @@ class TestRecipeplan(unittest.TestCase):
         rp.ready_methods['ing2a']=[['ready_structure']]
         rp.check_if_ready_to_proceed_are_complete()
         self.assertTrue(rp.ready_ingredient('ing2a'))
-        self.assertEquals
-        self.assertEquals(rp.ingredients,{'ing1':'C','ing2a':'I','ing2b':'I','ing3':'I'})
+        self.assertEqual
+        self.assertEqual(rp.ingredients,{'ing1':'C','ing2a':'I','ing2b':'I','ing3':'I'})
         #self.testclass.check_if_ready_to_proceed_are_complete()
 
     def test_check_if_parents_are_complete(self):
@@ -300,7 +300,7 @@ class TestRecipeplan(unittest.TestCase):
         rp.parents_to_check['ing2b']=[]
         rp.parents_to_check['ing1']=[]
         rp.check_if_parents_are_complete()
-        self.assertEquals(rp.ingredients,{'ing1':'C','ing2a':'S','ing2b':'I','ing3':'I'})
+        self.assertEqual(rp.ingredients,{'ing1':'C','ing2a':'S','ing2b':'I','ing3':'I'})
         #self.testclass.check_if_parents_are_complete()
 
     def test_run_staged_ingredients(self):
@@ -329,8 +329,8 @@ class TestRecipeplan(unittest.TestCase):
         rp.complete_methods['ing2b']=[['complete_singlerun']]
         rp.run_staged_ingredients()
         mysubmit = MASTFile("test_control/submitlist")
-        self.assertEquals(mysubmit.data[0],"recipedir/ing2b\n")
-        self.assertEquals(rp.ingredients,{'ing1':'C','ing2a':'W','ing2b':'P','ing3':'W'})
+        self.assertEqual(mysubmit.data[0],"recipedir/ing2b\n")
+        self.assertEqual(rp.ingredients,{'ing1':'C','ing2a':'W','ing2b':'P','ing3':'W'})
         #self.testclass.run_staged_ingredients()
 
     def test_check_recipe_status(self):
@@ -501,6 +501,6 @@ class TestRecipeplan(unittest.TestCase):
         rp.get_statuses_from_file()
         statusdict=dict()
         statusdict={'ing1':'alpha','ing2a':'beta','ing2b':'gamma','ing3':'delta'}
-        self.assertEquals(rp.ingredients, statusdict)
+        self.assertEqual(rp.ingredients, statusdict)
         #self.testclass.get_statuses_from_file()
 

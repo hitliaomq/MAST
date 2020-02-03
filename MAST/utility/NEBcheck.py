@@ -6,7 +6,7 @@
 ##############################################################
 import pymatgen as mg
 from numpy import *
-import create_paths
+from . import create_paths
 import os, getopt, sys, re
 
 argv = sys.argv[1:]
@@ -26,7 +26,7 @@ def add_structure():
         i=i+1; rp.insert(i,str(vec[j][0])+' '+str(vec[j][1])+' '+str(vec[j][2])+' \n')   
     while not 'begin coordinates' in rp[i]: i=i+1
     while not 'end' in rp[i+1]: del rp[i+1]
-    for ele in xyz.keys():
+    for ele in list(xyz.keys()):
         for j in range(len(xyz[ele])):
             i=i+1; rp.insert(i,ele+' '+str(xyz[ele][j][0])+' '+str(xyz[ele][j][1])+' '+str(xyz[ele][j][2])+'\n')
     while not '$site' in rp[i]: i=i+1
@@ -63,7 +63,7 @@ def add_defects():
     rp.append('$defects\nthreshold 1e-4\ncoord_type fractional\n')
     for i in range(len(ends)):   
         rp.append('begin '+types[i]+'\n')
-        rp.append('interstitial '+str(ends[i][0])+' '+str(ends[i][1])+' '+str(ends[i][2])+' '+'X'+str(len(xyz.keys())+1)+'\n')
+        rp.append('interstitial '+str(ends[i][0])+' '+str(ends[i][1])+' '+str(ends[i][2])+' '+'X'+str(len(list(xyz.keys()))+1)+'\n')
         rp.append('end\n')
     rp.append('$end\n\n')
     rp.append('$neb\n')
@@ -74,7 +74,7 @@ def add_defects():
             if ends[j]==path['T'][i][3]:   
                 finish=j
         rp.append('begin '+types[start]+'-'+types[finish]+' #'+str(path['T'][i][1])+'NN\n')
-        rp.append('X'+str(len(xyz.keys())+1)+', '+str(ends[start][0])+' '+str(ends[start][1])+' '+str(ends[start][2])+', '+str(ends[finish][0])+' '+str(ends[finish][1])+' '+str(ends[finish][2])+'\n')
+        rp.append('X'+str(len(list(xyz.keys()))+1)+', '+str(ends[start][0])+' '+str(ends[start][1])+' '+str(ends[start][2])+', '+str(ends[finish][0])+' '+str(ends[finish][1])+' '+str(ends[finish][2])+'\n')
         rp.append('images 1\n')
         mid=[0,0,0]
         for k in range(3): 

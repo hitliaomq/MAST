@@ -37,8 +37,8 @@ def newclus(ind1, ind2, Optimizer):
     #Find max neighborsize of circle cut
     r = random.uniform(0,min(nat1,nat2)/5.0)
     if debug:
-        print 'DEBUG CX: Point one =', pt1.position
-        print 'DEBUG CX: Point two =', pt2.position
+        print('DEBUG CX: Point one =', pt1.position)
+        print('DEBUG CX: Point two =', pt2.position)
     #Find atoms within sphere of neighborsize r for both individuals
     #Make sure that crossover is only selection of atoms not all
     while True:
@@ -53,7 +53,7 @@ def newclus(ind1, ind2, Optimizer):
         else:
             r = r*0.8
     if debug:
-        print 'Neighborsize of box = '+repr(r)+'\nPosition in solid1 = '+repr(pt1.position)+'\nPosition in solid2 = '+repr(pt2.position)
+        print('Neighborsize of box = '+repr(r)+'\nPosition in solid1 = '+repr(pt1.position)+'\nPosition in solid2 = '+repr(pt2.position))
     group1 = Atoms(cell=solid1.get_cell(),pbc=solid1.get_pbc())
     group1.append(pt1)
     indices1a=[pt1.index]
@@ -97,7 +97,7 @@ def newclus(ind1, ind2, Optimizer):
             sym1=one.symbol
             listpos=[i for i,s in enumerate(symlist) if s==sym1][0]
             if len(seplist[listpos]) > 0:
-                pos = random.choice(range(len(seplist[listpos])))
+                pos = random.choice(list(range(len(seplist[listpos]))))
                 group2n.append(seplist[listpos][pos])
                 indices2n.append(indices2[seplist[listpos][pos].index])
                 del seplist[listpos][pos]
@@ -163,10 +163,10 @@ def newclus(ind1, ind2, Optimizer):
             nc=len([atm for atm in nsolid1 if atm.symbol==sym])
             oc=len([atm for atm in solid1 if atm.symbol==sym])
         Optimizer.output.write('CX(clustbx):New solid1 contains '+repr(nc)+' '+repr(sym)+' atoms\n')
-        if debug: print 'DEBUG CX: New solid1 contains '+repr(nc)+' '+repr(sym)+' atoms'
+        if debug: print('DEBUG CX: New solid1 contains '+repr(nc)+' '+repr(sym)+' atoms')
         if oc != nc:
             #pdb.set_trace()
-            print 'CX: Issue in maintaining atom concentration\n Dropping new individual'
+            print('CX: Issue in maintaining atom concentration\n Dropping new individual')
             Optimizer.output.write('CX: Issue in maintaining atom concentration\n Dropping new individual 1\n')
             nsolid1 = solid1
     for sym,c,m,u in Optimizer.atomlist:
@@ -179,10 +179,10 @@ def newclus(ind1, ind2, Optimizer):
             nc=len([atm for atm in nsolid2 if atm.symbol==sym])
             oc=len([atm for atm in solid2 if atm.symbol==sym])
         Optimizer.output.write('CX(clustbx):New solid2 contains '+repr(nc)+' '+repr(sym)+' atoms\n')
-        if debug: print 'DEBUG CX: New solid2 contains '+repr(nc)+' '+repr(sym)+' atoms'
+        if debug: print('DEBUG CX: New solid2 contains '+repr(nc)+' '+repr(sym)+' atoms')
         if oc != nc:
             #pdb.set_trace()
-            print 'CX: Issue in maintaining atom concentration\n Dropping new individual'
+            print('CX: Issue in maintaining atom concentration\n Dropping new individual')
             Optimizer.output.write('CX: Issue in maintaining atom concentration\n Dropping new individual 2\n')
             solid2.pop()
             nsolid2 = solid2

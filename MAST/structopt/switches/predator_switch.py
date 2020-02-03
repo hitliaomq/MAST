@@ -14,18 +14,18 @@ def predator_switch(pop,Optimizer):
     logger.info('Applying predator to population with initial size = {0}'.format(len(pop)))
     STR = 'PREDATOR\n'
     try:
-       exec "from MAST.structopt.predator.{0} import {0}".format(scheme)
+       exec("from MAST.structopt.predator.{0} import {0}".format(scheme))
        pop, STR = eval('{0}(pop, Optimizer)'.format(scheme))
        passflag = True
-    except NameError, e:
+    except NameError as e:
         logger.warning('Specified predator not one of the available options. Please check documentation and spelling! Predator : {0}. {1}'.format(scheme,e), exc_info=True)
         passflag = False
         STR+='Specified predator not one of the available options. Please check documentation and spelling! Predator : '+repr(scheme)
         STR+=repr(e)+'\n'
-    except Exception, e:
+    except Exception as e:
         logger.error('ERROR: Issue in Predator Scheme. Predator = {0}. {1}'.format(scheme,e), exc_info=True)
-        print 'ERROR: Issue in Predator Scheme. Predator = '+repr(scheme)
-        print e
+        print('ERROR: Issue in Predator Scheme. Predator = '+repr(scheme))
+        print(e)
         passflag = False
         STR+=''
     if not passflag:

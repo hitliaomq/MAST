@@ -5,7 +5,7 @@ This module defines a Drone to assimilate vasp data and insert it into a
 Mongo database.
 """
 
-from __future__ import division
+
 
 __author__ = "Shyue Ping Ong"
 __copyright__ = "Copyright 2012, The Materials Project"
@@ -156,7 +156,7 @@ class VaspToDbTaskDrone(AbstractDrone):
             return tid
         except Exception as ex:
             import traceback
-            print traceback.format_exc(ex)
+            print(traceback.format_exc(ex))
             logger.error(traceback.format_exc(ex))
             return False
 
@@ -368,7 +368,7 @@ class VaspToDbTaskDrone(AbstractDrone):
             for key in ["Total CPU time used (sec)", "User time (sec)",
                         "System time (sec)", "Elapsed time (sec)"]:
                 overall_run_stats[key] = sum([v[key]
-                                              for v in run_stats.values()])
+                                              for v in list(run_stats.values())])
             run_stats["overall"] = overall_run_stats
         except:
             logger.error("Bad run stats for {}.".format(fullpath))
@@ -414,7 +414,7 @@ class VaspToDbTaskDrone(AbstractDrone):
                     else:
                         d["run_type"] = "GGA"
                 except Exception as ex:
-                    print str(ex)
+                    print(str(ex))
                     logger.error("Unable to parse INCAR for killed run {}."
                                  .format(dir_name))
             elif fnmatch(f, "KPOINTS*"):
@@ -505,13 +505,13 @@ class VaspToDbTaskDrone(AbstractDrone):
             #Defensively copy the additional fields first.  This is a MUST.
             #Otherwise, parallel updates will see the same object and inserts
             #will be overridden!!
-            d = {k: v for k, v in additional_fields.items()} \
+            d = {k: v for k, v in list(additional_fields.items())} \
                 if additional_fields else {}
             d["dir_name"] = fullpath
             d["schema_version"] = VaspToDbTaskDrone.__version__
             d["calculations"] = [
                 cls.process_vasprun(dir_name, taskname, filename, parse_dos)
-                for taskname, filename in vasprun_files.items()]
+                for taskname, filename in list(vasprun_files.items())]
             d1 = d["calculations"][0]
             d2 = d["calculations"][-1]
 
@@ -525,7 +525,7 @@ class VaspToDbTaskDrone(AbstractDrone):
             d["input"] = {"crystal": d1["input"]["crystal"]}
             vals = sorted(d2["reduced_cell_formula"].values())
             d["anonymous_formula"] = {string.ascii_uppercase[i]: float(vals[i])
-                                      for i in xrange(len(vals))}
+                                      for i in range(len(vals))}
             d["output"] = {
                 "crystal": d2["output"]["crystal"],
                 "final_energy": d2["output"]["final_energy"],
@@ -535,7 +535,7 @@ class VaspToDbTaskDrone(AbstractDrone):
                                      "labels": d2["input"]["potcar"]}
 
             if len(d["calculations"]) == 2 or \
-                    vasprun_files.keys()[0] != "relax1":
+                    list(vasprun_files.keys())[0] != "relax1":
                 d["state"] = "successful" if d2["has_vasp_completed"] \
                     else "unsuccessful"
             else:
@@ -551,7 +551,7 @@ class VaspToDbTaskDrone(AbstractDrone):
                                 0.1)
             d["spacegroup"] = {"symbol": sg.get_spacegroup_symbol(),
                                "number": sg.get_spacegroup_number(),
-                               "point_group": unicode(sg.get_point_group(),
+                               "point_group": str(sg.get_point_group(),
                                                       errors="ignore"),
                                "source": "spglib",
                                "crystal_system": sg.get_crystal_system(),
@@ -774,20 +774,20 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
     def generate_doc(cls, dir_name, vasprun_files, parse_dos,
                      additional_fields):
         """Process aflow style and NEB runs."""
-        print "TTM DEBUG: In generate_doc for NEB task drone."
+        print("TTM DEBUG: In generate_doc for NEB task drone.")
         try:
             fullpath = os.path.abspath(dir_name)
             #Defensively copy the additional fields first.  This is a MUST.
             #Otherwise, parallel updates will see the same object and inserts
             #will be overridden!!
-            d = {k: v for k, v in additional_fields.items()} \
+            d = {k: v for k, v in list(additional_fields.items())} \
                 if additional_fields else {}
             d["dir_name"] = fullpath
-            print "TTM DEBUG: fullpath: ", fullpath
+            print("TTM DEBUG: fullpath: ", fullpath)
             d["schema_version"] = NEBToDbTaskDrone.__version__
             d["calculations"] = [
                 cls.process_vasprun(dir_name, taskname, filename, parse_dos)
-                for taskname, filename in vasprun_files.items()]
+                for taskname, filename in list(vasprun_files.items())]
             d1 = d["calculations"][0]
             d2 = d["calculations"][-1]
 
@@ -801,7 +801,7 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
             d["input"] = {"crystal": d1["input"]["crystal"]}
             vals = sorted(d2["reduced_cell_formula"].values())
             d["anonymous_formula"] = {string.ascii_uppercase[i]: float(vals[i])
-                                      for i in xrange(len(vals))}
+                                      for i in range(len(vals))}
             d["output"] = {
                 "crystal": d2["output"]["crystal"],
                 "final_energy": d2["output"]["final_energy"],
@@ -811,7 +811,7 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
                                      "labels": d2["input"]["potcar"]}
 
             if len(d["calculations"]) == 2 or \
-                    vasprun_files.keys()[0] != "relax1":
+                    list(vasprun_files.keys())[0] != "relax1":
                 d["state"] = "successful" if d2["has_vasp_completed"] \
                     else "unsuccessful"
             else:
@@ -827,7 +827,7 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
                                 0.1)
             d["spacegroup"] = {"symbol": sg.get_spacegroup_symbol(),
                                "number": sg.get_spacegroup_number(),
-                               "point_group": unicode(sg.get_point_group(),
+                               "point_group": str(sg.get_point_group(),
                                                       errors="ignore"),
                                "source": "spglib",
                                "crystal_system": sg.get_crystal_system(),
@@ -838,19 +838,19 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
             # Some useful values are calculated.
 
             # Number of NEB images
-            print "TTM DEBUG: At NEB processing stage."
+            print("TTM DEBUG: At NEB processing stage.")
             image_list = []
-            for i in xrange(0,9):
+            for i in range(0,9):
                 append = "0"+str(i)
                 newpath = os.path.join(fullpath,append)
                 if os.path.exists(newpath):
                     image_list.append(newpath)
             d["num_images"] = len(image_list)
-            print "TTM DEBUG: Image list:", image_list
+            print("TTM DEBUG: Image list:", image_list)
             # Image energies and magnetic moments for specific folders
             list_image_energies = []
             list_image_mags = []
-            for i in xrange(0,len(image_list)):
+            for i in range(0,len(image_list)):
                 append = "0"+str(i)
                 oszicar = os.path.join(fullpath,append,"OSZICAR")
                 if not os.path.isfile(oszicar):
@@ -861,7 +861,7 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
                 d["mag_"+append]= val_mag
                 list_image_energies.append(val_energy)
                 list_image_mags.append(val_mag)
-            print "TTM DEBUG: first occurrence list_image_mags", list_image_mags
+            print("TTM DEBUG: first occurrence list_image_mags", list_image_mags)
             # List of image energies and magnetic moments in order 
             image_energies = ' '.join(map(str,list_image_energies))
             d["image_energies"] = image_energies
@@ -870,7 +870,7 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
             energy_contour = "-x-"
             if len(image_list)==0:
                 return None
-            for i in xrange(1,len(image_list)):
+            for i in range(1,len(image_list)):
                 if(list_image_energies[i]>list_image_energies[i-1]):
                     energy_contour += "/-x-"
                 elif list_image_energies[i]<list_image_energies[i-1]:
@@ -878,7 +878,7 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
                 else:
                     energy_contour += "=-x-"
             d["energy_contour"] = energy_contour
-            print "TTM DEBUG: energy contour:", energy_contour
+            print("TTM DEBUG: energy contour:", energy_contour)
 
             # Difference between the first and maximum energies and magnetic moments
             deltaE_firstmax = max(list_image_energies) - list_image_energies[0] 
@@ -902,7 +902,7 @@ class NEBToDbTaskDrone(VaspToDbTaskDrone):
                 mag_contour = "-o-"
                 if len(image_list)==0:
                     return None
-                for i in xrange(1,len(image_list)):
+                for i in range(1,len(image_list)):
                     if(list_image_mags[i]>list_image_mags[i-1]):
                         mag_contour += "/-o-"
                     elif list_image_mags[i]<list_image_mags[i-1]:

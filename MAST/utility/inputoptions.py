@@ -48,8 +48,8 @@ class InputOptions:
     def update_item(self, section, key, value):
         """Updates the key/value dict item in the option."""
         section_dict = self.options.setdefault(section, dict())
-        if key in section_dict.keys():
-            print "Changing value of %s, %s." % (section, key)
+        if key in list(section_dict.keys()):
+            print("Changing value of %s, %s." % (section, key))
         if 'path' in key:
             section_dict.__setitem__(key, os.path.expanduser(value))
         else:
@@ -59,14 +59,14 @@ class InputOptions:
     def get_sections(self):
         """Return the available sections in the input options.
         """
-        return self.options.keys()
+        return list(self.options.keys())
 
     def get_section_keys(self, section):
         """Return the available keys under a section."""
         if not section in self.get_sections():
             raise MASTError(self.__class__.__name__,
                 section + " was not parsed from the input file.")
-        return self.options[section].keys()
+        return list(self.options[section].keys())
 
     def reset(self):
         """Option to reset the dict values
@@ -103,12 +103,12 @@ class InputOptions:
         if not type(secname) == str:
             errorstr = "Section name " + str(secname) + "must be a string."
             raise MASTError(self.__class__.__name__, errorstr)
-        if not secname in self.options.keys():
+        if not secname in list(self.options.keys()):
             errorstr = "No section " + str(secname) + "in self.options."
             raise MASTError(self.__class__.__name__, errorstr)
         initheader=secname
         pln.append(initheader + " = dict()")
-        for key1, val1 in self.options[secname].iteritems():
+        for key1, val1 in self.options[secname].items():
             if key1 == 'structure':
                 pln.append("#ignoring created structure")
                 continue
@@ -155,7 +155,7 @@ class InputOptions:
             seconddict <dict>: dictionary that was key1's value
         """
         pln=list()
-        for key2, val2 in seconddict.iteritems():
+        for key2, val2 in seconddict.items():
             if type(key2) == str:
                 header = initheader1 + "[" + "'" + key2 + "'" + "]"
             else:
@@ -195,7 +195,7 @@ class InputOptions:
             thirddict <dict>: dictionary that was key2's value
         """
         pln=list()
-        for key3, val3 in thirddict.iteritems():
+        for key3, val3 in thirddict.items():
             if type(key3) == str:
                 header = initheader2 + "[" + "'" + key3 + "'" + "]"
             else:
@@ -235,7 +235,7 @@ class InputOptions:
             thirddict <dict>: dictionary that was key2's value
         """
         pln=list()
-        for key3, val3 in thirddict.iteritems():
+        for key3, val3 in thirddict.items():
             if type(key3) == str:
                 header = initheader2 + "[" + "'" + key3 + "'" + "]"
             else:

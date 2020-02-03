@@ -28,11 +28,11 @@ def main():
 
     (mastopt, mastarg) = parser.parse_args()
     
-    print "---------------------------------------------------"
-    print "Welcome to the MAterials Simulation Toolkit (MAST)"
-    print "Version: " + dirutil.get_version()
-    print "Installed in: " + dirutil.get_mast_install_path()
-    print "---------------------------------------------------"
+    print("---------------------------------------------------")
+    print("Welcome to the MAterials Simulation Toolkit (MAST)")
+    print(("Version: " + dirutil.get_version()))
+    print(("Installed in: " + dirutil.get_mast_install_path()))
+    print("---------------------------------------------------")
 
     # Set mode to input if an input file is given
     if (mastopt.input is not None):
@@ -71,25 +71,25 @@ def submit_and_monitor(only=0):
     display_displayme_lines()
     mastscratch = dirutil.get_mast_scratch_path()
     if dirutil.directory_is_locked(mastscratch):
-        print "The $MAST_SCRATCH directory is locked by a MAST monitor. Please wait for that monitor to complete, or check the $MAST_CONTROL/errormast file."
+        print("The $MAST_SCRATCH directory is locked by a MAST monitor. Please wait for that monitor to complete, or check the $MAST_CONTROL/errormast file.")
         return
     dirutil.lock_directory(dirutil.get_mast_scratch_path(), 1) 
-    print "Moving log file."
+    print("Moving log file.")
     move_log()
     if only==2:
         pass
     else: 
-        print "Submitting from submission list."
+        print("Submitting from submission list.")
         subdict=queue_commands.submit_from_submission_list()
-        print "Clearing submission list."
+        print("Clearing submission list.")
         queue_commands.clear_submission_list(subdict)
         display_recent_submissions()
-        print "Getting queue snapshot."
+        print("Getting queue snapshot.")
         clear_and_get_queue_snapshot()
     dirutil.unlock_directory(dirutil.get_mast_scratch_path())
     if only == 1:
         return
-    print "Locking directory and submitting MAST monitor."
+    print("Locking directory and submitting MAST monitor.")
     dirutil.lock_directory(dirutil.get_mast_scratch_path(), 1)
     mycwd=os.getcwd()
     mast_control = os.getenv("MAST_CONTROL")
@@ -120,8 +120,8 @@ def process_input_file(myinputfile):
     from MAST.controllers.mastinput import MASTInput
     mast = MASTInput(inputfile=myinputfile, outputfile="mastoutput.txt")
     mast.check_independent_loops()
-    print "Finished processing input file. Check $MAST_CONTROL/mast.log for logged information."
-    print mast.working_directory
+    print("Finished processing input file. Check $MAST_CONTROL/mast.log for logged information.")
+    print(mast.working_directory)
 
 def move_log():
     """Move logfile to archive.timestamp.log
@@ -153,21 +153,21 @@ def display_errors():
             dirutil.unlock_directory(mastscratch)
         return 0
     if len(myerrormast.data) > 0:
-        print "--------------------------"
-        print "Errors below indicate that MAST errored out the last time it ran."
-        print "Please take the following steps:"
-        print "1. Correct the error(s). Some errors may have been automatically corrected."
-        print "2. Remove the $MAST_CONTROL/errormast file."
-        print "3. Re-run MAST."
-        print ""
+        print("--------------------------")
+        print("Errors below indicate that MAST errored out the last time it ran.")
+        print("Please take the following steps:")
+        print("1. Correct the error(s). Some errors may have been automatically corrected.")
+        print("2. Remove the $MAST_CONTROL/errormast file.")
+        print("3. Re-run MAST.")
+        print("")
         for eline in myerrormast.data:
-            print eline.strip()
-        print "--------------------------"
-        print "Please take the following steps:"
-        print "1. Correct the error(s). Some errors may have been automatically corrected."
-        print "2. Remove the $MAST_CONTROL/errormast file."
-        print "3. Re-run MAST."
-        print ""
+            print(eline.strip())
+        print("--------------------------")
+        print("Please take the following steps:")
+        print("1. Correct the error(s). Some errors may have been automatically corrected.")
+        print("2. Remove the $MAST_CONTROL/errormast file.")
+        print("3. Re-run MAST.")
+        print("")
         shutil.copy(errorpath, "%s/archive.errormast.%s" % (os.getenv("MAST_CONTROL"),time.strftime('%Y%m%dT%H%M%S')))
         if dirutil.directory_is_locked(mastscratch):
             dirutil.unlock_directory(mastscratch)
@@ -177,11 +177,11 @@ def display_recent_submissions():
     """Display recent submissions to the queue."""
     justsubmitted=MASTFile(os.path.join(os.getenv("MAST_CONTROL"),'just_submitted'))
     if len(justsubmitted.data) > 1:
-        print "--------------------------"
-        print "Jobs submitted to the queue: (%s/just_submitted):" % os.getenv("MAST_CONTROL")
-        print "--------------------------"
+        print("--------------------------")
+        print("Jobs submitted to the queue: (%s/just_submitted):" % os.getenv("MAST_CONTROL"))
+        print("--------------------------")
         for line in justsubmitted.data:
-            print line.strip()
+            print(line.strip())
 
 def display_displayme_lines():
     """Display all lines from the previous mast.log logfile.
@@ -189,13 +189,13 @@ def display_displayme_lines():
     logpath = os.path.join(os.getenv("MAST_CONTROL"),'mast.log')
     if not os.path.isfile(logpath):
         return
-    print "-------------------------"
-    print " Recipe information from previous MAST run:"
-    print "-------------------------"
+    print("-------------------------")
+    print(" Recipe information from previous MAST run:")
+    print("-------------------------")
     alllog=MASTFile(os.path.join(os.getenv("MAST_CONTROL"),'mast.log'))
     for line in alllog.data:
         displine=line.strip()
-        print displine
+        print(displine)
     #    rname=displine[2]
     #    rmsg=displine[3]
     #    if not rname in immeddict.keys():
@@ -240,7 +240,7 @@ def modify_recipe():
     from MAST.controllers.modifyrecipe import ModifyRecipe
     modrec = ModifyRecipe(recdir=curdir)
     modrec.modify_recipe()
-    print "Finished modifying recipe. Check folders, status.txt, and input.inp."
+    print("Finished modifying recipe. Check folders, status.txt, and input.inp.")
     return
 
 

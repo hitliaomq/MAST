@@ -69,7 +69,7 @@ class InputPythonCreator(MASTObj):
         pln.append("#MAST INPUT OPTIONS")
         pln.append("inputoptions = InputOptions()")
 
-        for sectionname,secvalue in inputoptions.options.iteritems():
+        for sectionname,secvalue in inputoptions.options.items():
             pln.append(" ")
             pln.append("###################################")
             pln.append("#Section: %3s" % sectionname)

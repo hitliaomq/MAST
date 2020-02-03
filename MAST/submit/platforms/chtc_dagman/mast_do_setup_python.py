@@ -28,8 +28,8 @@ def parse_arguments():
     recipe_name = recipe_name_raw
     ing_name = ing_name_raw
     sys.stdout.write("Parse arguments.\n")
-    print "RECIPE: %s" % recipe_name
-    print "ING: %s" % ing_name
+    print("RECIPE: %s" % recipe_name)
+    print("ING: %s" % ing_name)
     return recipe_name, ing_name
 
 def main():

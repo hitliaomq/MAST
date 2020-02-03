@@ -48,33 +48,33 @@ def read_recipe(rawrlist, verbose=0):
     howtorun=dict()
     parentstocheck=dict()
     howtoupdate=dict()
-    for subkey in subrdict.keys():
+    for subkey in list(subrdict.keys()):
         idict = make_indentation_dictionary(subrdict[subkey])
         if verbose == 1:
-            ikeys = idict.keys()
+            ikeys = list(idict.keys())
             ikeys.sort()
             for indentkey in ikeys:
                 logger.info("Indent: %s" % indentkey)
                 for myitem in idict[indentkey]:
                     logger.info(myitem)
         [onehtu, oneptc, onehtr]=parse_indentation_dict(idict)
-        for pkey in onehtu.keys():
-            if not (pkey in howtoupdate.keys()):
+        for pkey in list(onehtu.keys()):
+            if not (pkey in list(howtoupdate.keys())):
                 howtoupdate[pkey]=dict()
-            for pmkey in onehtu[pkey].keys():
+            for pmkey in list(onehtu[pkey].keys()):
                 howtoupdate[pkey][pmkey]=onehtu[pkey][pmkey]
-        for ckey in oneptc.keys():
-            if not (ckey in parentstocheck.keys()):
+        for ckey in list(oneptc.keys()):
+            if not (ckey in list(parentstocheck.keys())):
                 parentstocheck[ckey]=list()
             parentstocheck[ckey].extend(oneptc[ckey])
             howtorun[ckey]=onehtr[ckey]
     if verbose==1:
         logger.info("How-to-update-children tree: ")
-        keylist = howtoupdate.keys()
+        keylist = list(howtoupdate.keys())
         keylist.sort()
         for htukey in keylist:
             logger.info("%s: %s" % (htukey, howtoupdate[htukey]))
-        clist = parentstocheck.keys()
+        clist = list(parentstocheck.keys())
         clist.sort()
         logger.info("Parents-to-check tree: ")
         for ckey in clist:
@@ -171,7 +171,7 @@ def parse_indentation_dict(idict):
     ptc=dict()
     htr=dict()
     iidx=0
-    ikeys = idict.keys()
+    ikeys = list(idict.keys())
     ikeys.sort()
     while iidx in ikeys:
         plen = len(idict[iidx])
@@ -180,7 +180,7 @@ def parse_indentation_dict(idict):
             lct = idict[iidx][pidx][0]
             pname = idict[iidx][pidx][1]
             pmethod = idict[iidx][pidx][2]
-            if not (pname in htu.keys()):
+            if not (pname in list(htu.keys())):
                 htu[pname]=dict()
             if not (iidx + 1) in ikeys: #no children
                 pass
@@ -201,11 +201,11 @@ def parse_indentation_dict(idict):
                                 addme=1
                     if addme == 1:
                         htu[pname][clname]=pmethod
-                        if not (clname in ptc.keys()):
+                        if not (clname in list(ptc.keys())):
                             ptc[clname]=list()
                             htr[clname]=clmethod 
                         ptc[clname].append(pname)
-            if not (pname in ptc.keys()):
+            if not (pname in list(ptc.keys())):
                 ptc[pname]=list() #add tree originator(s)
                 htr[pname]=pmethod
             pidx=pidx+1
@@ -226,10 +226,10 @@ def make_indentation_dictionary(subrlist):
     for line in subrlist:
         lct=lct+1
         indent = get_indent_level(line)
-        if not (indent in idict.keys()):
+        if not (indent in list(idict.keys())):
             idict[indent]=list()
         pdict = parse_for_name_and_instructions(line)
-        for parent in pdict.keys():
+        for parent in list(pdict.keys()):
             idict[indent].append([lct, parent, pdict[parent]])
     return idict
 

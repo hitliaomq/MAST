@@ -56,11 +56,11 @@ def rotct_rand_clus(ind1, ind2, Optimizer):
                     indi1c.rotate(rax,a=-1*rang,center=rpos, rotate_cell=False)
             indi2c.rotate(rax,a=rang,center=rpos,rotate_cell=False)
             if debug: 
-                print 'Group1 size = ', len(group1)
-                print 'Position = ', rpos
-                print 'Angle = ', rang
-                print 'Axis = ', rax
-                print 'Number of tries = ', n
+                print('Group1 size = ', len(group1))
+                print('Position = ', rpos)
+                print('Angle = ', rang)
+                print('Axis = ', rax)
+                print('Number of tries = ', n)
             if len(group1) != 0:
                 #Apply concentration forcing if needed
                 group2 = Atoms(cell=ind2[0].get_cell(),pbc=ind2[0].get_pbc())
@@ -80,7 +80,7 @@ def rotct_rand_clus(ind1, ind2, Optimizer):
                         sym1=one.symbol
                         listpos=[i for i,s in enumerate(symlist) if s==sym1][0]
                         if len(seplist[listpos]) > 0:
-                            pos = random.choice(range(len(seplist[listpos])))
+                            pos = random.choice(list(range(len(seplist[listpos]))))
                             group2n.append(seplist[listpos][pos])
                             indices2n.append(indices2[seplist[listpos][pos].index])
                             del seplist[listpos][pos]
@@ -143,7 +143,7 @@ def rotct_rand_clus(ind1, ind2, Optimizer):
                     write_xyz(Optimizer.debugfile, other1,'other1')
                     write_xyz(Optimizer.debugfile, group2,'group2')
                     write_xyz(Optimizer.debugfile, other2,'other2')
-                    print 'Length of group1 = ',len(group1),'Length of group2',len(group2)
+                    print('Length of group1 = ',len(group1),'Length of group2',len(group2))
 
                 #DEBUG: Check structure of atoms exchanged
                 for sym,c,m,u in Optimizer.atomlist:

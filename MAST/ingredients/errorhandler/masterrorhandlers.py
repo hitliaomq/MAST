@@ -115,13 +115,13 @@ class MASTMemoryErrorHandler(ErrorHandler):
         actions=list()
         multiplier = 4
         
-        if 'mast_nodes' in self.keywords['program_keys'].keys():
+        if 'mast_nodes' in list(self.keywords['program_keys'].keys()):
             currnodes = self.keywords['program_keys']['mast_nodes']
             newnodes = int(currnodes) * multiplier
             self.keywords['program_keys']['mast_nodes'] = newnodes
             actions.append("Multiplied mast_nodes by %i to get %i" % (multiplier, newnodes))
         
-        if 'mast_processors' in self.keywords['program_keys'].keys():
+        if 'mast_processors' in list(self.keywords['program_keys'].keys()):
             currprocs = self.keywords['program_keys']['mast_processors']
             newprocs = int(currprocs) * multiplier
             self.keywords['program_keys']['mast_processors'] = newprocs

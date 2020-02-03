@@ -6,7 +6,7 @@ try:
     from ase.units import GPa
     from ase.calculators.neighborlist import NeighborList
 except ImportError:
-    print "NOTE: ASE is not installed. To use Structopt eval_energy.py, ASE must be installed."
+    print("NOTE: ASE is not installed. To use Structopt eval_energy.py, ASE must be installed.")
 from MAST.structopt_stem.inp_out.write_xyz import write_xyz
 from MAST.structopt_stem.tools.setup_calculator import setup_calculator
 from MAST.structopt_stem.tools.find_defects import find_defects
@@ -18,7 +18,7 @@ import math
 try:
     from mpi4py import MPI
 except ImportError:
-    print "NOTE: mpi4py is not installed. To use certain features in Structopt eval_energy.py, mpi4py must be installed."
+    print("NOTE: mpi4py is not installed. To use certain features in Structopt eval_energy.py, mpi4py must be installed.")
 import logging
 import pdb
 import shutil
@@ -103,7 +103,7 @@ def eval_energy(Optimizer, individ):
             totalsol = indiv.copy()
             nat = len(totalsol)
         else:
-            print 'WARNING: In EvalEnergy. Optimizer.structure not recognized'
+            print('WARNING: In EvalEnergy. Optimizer.structure not recognized')
             logger.warning('Optimizer.structure not recognized')
         
         # Check for atoms that are too close or out of constrained location
@@ -173,7 +173,7 @@ def eval_energy(Optimizer, individ):
                   #  logger.info('M:start run_energy_eval')
                     totalsol, pea, energy, pressure, volume, STR = run_energy_eval(totalsol, Optimizer.calc_method, False, Optimizer.fitness_scheme, STR)
                     logger.info('M:finish run_energy_eval, energy = {0} @ rank ={1}'.format(energy,rank))
-        except Exception, e:
+        except Exception as e:
             logger.critical('Error in energy evaluation: {0}'.format(e), exc_info=True)
             path = os.path.join(cwd,'TroubledLammps')
             if not os.path.exists(path):
@@ -481,7 +481,7 @@ def check_min_dist(Optimizer, totalsol, type='Defect', nat=None, min_len=0.7, ST
              logger.info('M:iter {0}, closelist size {1}'.format(iter,len(closelist)))
          #    print "rank", rank, closelist
     else:
-        print 'WARNING: In Check_Min_Dist in EvalEnergy: Structure Type not recognized'
+        print('WARNING: In Check_Min_Dist in EvalEnergy: Structure Type not recognized')
     return totalsol, STR
 
 def get_cluster_volume(cluster):

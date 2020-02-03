@@ -4,8 +4,8 @@
 # Maintainer: Kumaresh Visakan Murugan
 # Last updated: 2014-01-01
 ##############################################################
-from Tkinter import *
-import Tkinter as ttk
+from tkinter import *
+import tkinter as ttk
 from verticalScrolledFrame import VerticalScrolledFrame 
 
 
@@ -41,13 +41,13 @@ class StructureSection:
 
         if self.structure_info['elementmap'][0]:
             content_lines += "begin elementmap\n"
-            for elt_key, elt_name in self.structure_info['elementmap'][0].iteritems():
+            for elt_key, elt_name in self.structure_info['elementmap'][0].items():
                 content_lines += "%s %s\n" % (elt_key, elt_name)
             content_lines += "end\n\n"
 
         if self.structure_info['coordinates'][0]:
             content_lines += "begin coordinates\n"
-            for elt_key, elt_coord in self.structure_info['coordinates'][0].iteritems():
+            for elt_key, elt_coord in self.structure_info['coordinates'][0].items():
                 coord_lines = elt_coord.split('\n')
                 for line in coord_lines:
                     if line:
@@ -91,7 +91,7 @@ class StructureSection:
            lattice_value = Label(self.summary_frame, text=self.structure_info['lattice'][0])
            lattice_value.grid(row=2, column=2, sticky=W, pady=5)
 
-           for row_num in xrange(self.num_elt_fields + 1):
+           for row_num in range(self.num_elt_fields + 1):
                if row_num == 0:
                    continue
                if self.structure_info['elementmap'][0]['X' + str(row_num)].strip() == "":
@@ -172,7 +172,7 @@ class StructureSection:
         coordinates_label = Label(self.elements_frame, text="COORDINATES")
         coordinates_label.grid(row=0, column=2, padx=10, pady=10, sticky=W)
 
-        for row_num in xrange(self.num_elt_fields + 1):
+        for row_num in range(self.num_elt_fields + 1):
             if row_num == 0:
                 continue
             self.create_element_fields(self.elements_frame, row_num)
@@ -188,7 +188,7 @@ class StructureSection:
         self.structure_info['coord_type'][0] = self.structure_info['coord_type'][1].get()
         self.structure_info['posfile'][0] = self.structure_info['posfile'][1].get()
         self.structure_info['lattice'][0] = self.structure_info['lattice'][1].get("1.0", END)
-        for row_num in xrange(self.num_elt_fields + 1):
+        for row_num in range(self.num_elt_fields + 1):
             if row_num == 0:
                 continue
             self.structure_info['elementmap'][0]['X'+str(row_num)] = self.structure_info['elementmap'][1]['X'+str(row_num)].get()

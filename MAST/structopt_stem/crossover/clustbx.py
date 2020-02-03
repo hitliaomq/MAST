@@ -59,7 +59,7 @@ def clustbx(ind1, ind2, Optimizer):
     elif r==0.0:
         r=1.0
     if debug:
-        print 'Radius of box = '+repr(r)+'\nPosition in solid1 = '+repr(pt1)+'\nPosition in solid2 = '+repr(pt2)
+        print('Radius of box = '+repr(r)+'\nPosition in solid1 = '+repr(pt1)+'\nPosition in solid2 = '+repr(pt2))
     
     #Find atoms within sphere of radius r
     solid1.append(Atom(position=pt1))

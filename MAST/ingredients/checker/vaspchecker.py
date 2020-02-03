@@ -254,7 +254,7 @@ class VaspChecker(BaseChecker):
         isstatic=False
         isphonon=False
         isMD=False
-        if 'ibrion' in self.keywords['program_keys'].keys():
+        if 'ibrion' in list(self.keywords['program_keys'].keys()):
             ibrionval = str(self.keywords['program_keys']['ibrion'])
             if ibrionval == "-1":
                 self.logger.info("ingredient %s IBRION -1 is static" % self.keywords['name'])
@@ -265,7 +265,7 @@ class VaspChecker(BaseChecker):
             elif ibrionval in ["5","6","7","8"]:
                 self.logger.info("ingredient %s IBRION %s is phonon" % (self.keywords['name'],ibrionval))
                 isphonon = True
-        if 'nsw' in self.keywords['program_keys'].keys():
+        if 'nsw' in list(self.keywords['program_keys'].keys()):
             nswval = str(self.keywords['program_keys']['nsw'])
             if nswval in ["0","1"]:
                 self.logger.info("ingredient %s NSW %s is static" % (self.keywords['name'],nswval))
@@ -367,7 +367,7 @@ class VaspChecker(BaseChecker):
                 new_pos=Poscar(newstr)
                 my_poscar=new_pos
             self.logger.info("No POSCAR found from a parent; base structure used for %s" % self.keywords['name'])
-        if 'mast_coordinates' in self.keywords['program_keys'].keys():
+        if 'mast_coordinates' in list(self.keywords['program_keys'].keys()):
             sxtend = StructureExtensions(struc_work1=my_poscar.structure, name=self.keywords['name'])
             coordstrucs=self.get_coordinates_only_structure_from_input()
             newstruc = sxtend.graft_coordinates_onto_structure(coordstrucs[0])
@@ -397,7 +397,7 @@ class VaspChecker(BaseChecker):
             try: kshift = (float(kpoints[2]),float(kpoints[3]),float(kpoints[4]))
             except IndexError: kshift = (0.0,0.0,0.0)
         else:
-            if 'mast_kpoints' in self.keywords['program_keys'].keys():
+            if 'mast_kpoints' in list(self.keywords['program_keys'].keys()):
                 kpoints = self.keywords['program_keys']['mast_kpoints']
             else:
                 raise MASTError(self.__class__.__name__,"k-point instructions need to be set either in ingredients keyword mast_kpoints or scaling section in structure ingredient: No k-point settings for the ingredient %s"% name)
@@ -431,12 +431,12 @@ class VaspChecker(BaseChecker):
         """Set up the POTCAR file."""
         name = self.keywords['name']
 
-        if 'mast_xc' in self.keywords['program_keys'].keys():
+        if 'mast_xc' in list(self.keywords['program_keys'].keys()):
             myxc = self.keywords['program_keys']['mast_xc'].upper() #Uppercase
         else:
             raise MASTError("vasp_checker, _vasp_potcar_setup","Exchange correlation functional needs to be specified in ingredients keyword mast_xc")
 
-        if ('mast_pp_setup' in self.keywords['program_keys'].keys()):
+        if ('mast_pp_setup' in list(self.keywords['program_keys'].keys())):
             sites = my_poscar.site_symbols
             setup = self.keywords['program_keys']['mast_pp_setup']
             pp_sites = list()
@@ -461,7 +461,7 @@ class VaspChecker(BaseChecker):
                         'ingredients',
                         'programkeys','vasp_allowed_keywords.py')
         allowed_list = self._vasp_incar_get_allowed_keywords(allowedpath)
-        for key, value in self.keywords['program_keys'].iteritems():
+        for key, value in self.keywords['program_keys'].items():
             if not key[0:5] == "mast_":
                 keytry = key.upper()
                 if not (keytry in allowed_list):
@@ -494,15 +494,15 @@ class VaspChecker(BaseChecker):
             myd.pop("IMAGES")
         except KeyError:
             pass
-        if 'mast_multiplyencut' in self.keywords['program_keys'].keys():
+        if 'mast_multiplyencut' in list(self.keywords['program_keys'].keys()):
             mymult = float(self.keywords['program_keys']['mast_multiplyencut'])
         else:
             mymult = 1.5
-        if 'ENCUT' in myd.keys():
+        if 'ENCUT' in list(myd.keys()):
             pass
         else:
             myd['ENCUT']=self._get_max_enmax_from_potcar(my_potcar)*mymult
-        if 'mast_setmagmom' in self.keywords['program_keys'].keys():
+        if 'mast_setmagmom' in list(self.keywords['program_keys'].keys()):
             magstr = str(self.keywords['program_keys']['mast_setmagmom'])
             magmomstr=""
             maglist = magstr.split()
@@ -515,7 +515,7 @@ class VaspChecker(BaseChecker):
             else:
                 magmomstr = magstr
             myd['MAGMOM']=magmomstr
-        if 'mast_charge' in self.keywords['program_keys'].keys():
+        if 'mast_charge' in list(self.keywords['program_keys'].keys()):
             myelectrons = self.get_total_electrons(my_poscar, my_potcar)
             newelectrons=0.0
             try:
@@ -706,7 +706,7 @@ class VaspChecker(BaseChecker):
             atom=int(thirdspl[0])
             disp=int(thirdspl[1])
             displine=' '.join(thirdspl[2:])
-            if not atom in dyndict['atoms'].keys():
+            if not atom in list(dyndict['atoms'].keys()):
                 dyndict['atoms'][atom]=dict()
             dyndict['atoms'][atom][disp]=dict()
             dyndict['atoms'][atom][disp]['displine'] = displine
@@ -730,10 +730,10 @@ class VaspChecker(BaseChecker):
         firstline=str(dyndict['numspec']) + " " + str(dyndict['numatoms']) + " " + str(dyndict['numdisp']) + "\n"
         dynwrite.data.append(firstline)
         dynwrite.data.append(dyndict['massline'])
-        atomlist=dyndict['atoms'].keys()
+        atomlist=list(dyndict['atoms'].keys())
         atomlist.sort()
         for atom in atomlist:
-            displist = dyndict['atoms'][atom].keys()
+            displist = list(dyndict['atoms'][atom].keys())
             displist.sort()
             for disp in displist:
                 thirdline = str(atom) + " " + str(disp) + " " + dyndict['atoms'][atom][disp]['displine'] + "\n"
@@ -759,10 +759,10 @@ class VaspChecker(BaseChecker):
         dynwrite.data=list()
         firstline=str(dyndict['numdisp']) + "\n"
         dynwrite.data.append(firstline)
-        atomlist=dyndict['atoms'].keys()
+        atomlist=list(dyndict['atoms'].keys())
         atomlist.sort()
         for atom in atomlist:
-            displist = dyndict['atoms'][atom].keys()
+            displist = list(dyndict['atoms'][atom].keys())
             displist.sort()
             for disp in displist:
                 thirdline = str(atom) + " " + dyndict['atoms'][atom][disp]['displine'] + "\n"
@@ -854,7 +854,7 @@ class VaspChecker(BaseChecker):
         xdatwrite.data.append(xdatdict['numline'])
         if not (xdatdict['type'] == ""):
             xdatwrite.data.append(xdatdict['type'])
-        configlist = xdatdict['configs'].keys()
+        configlist = list(xdatdict['configs'].keys())
         configlist.sort()
         for cfg in configlist:
             xdatwrite.data.append("Konfig=%1i\n" % cfg)
@@ -883,12 +883,12 @@ class VaspChecker(BaseChecker):
             dyndir = os.path.dirname(onedynmat)
             onedyn = self.read_my_dynamical_matrix_file(dyndir)
             totnumdisp = totnumdisp + onedyn['numdisp']
-            for atom in onedyn['atoms'].keys():
-                if not atom in largedyn['atoms'].keys():
+            for atom in list(onedyn['atoms'].keys()):
+                if not atom in list(largedyn['atoms'].keys()):
                     largedyn['atoms'][atom]=dict()
                     mydisp=1 #start at 1
-                for disp in onedyn['atoms'][atom].keys():
-                    if disp in largedyn['atoms'][atom].keys():
+                for disp in list(onedyn['atoms'][atom].keys()):
+                    if disp in list(largedyn['atoms'][atom].keys()):
                         mydisp=mydisp + 1 #increment
                     largedyn['atoms'][atom][mydisp]=dict()
                     largedyn['atoms'][atom][mydisp]['displine'] = str(onedyn['atoms'][atom][disp]['displine'])
@@ -918,7 +918,7 @@ class VaspChecker(BaseChecker):
         for onexdatmat in xdatlist:
             xdatdir = os.path.dirname(onexdatmat)
             onexdat = self.read_my_displacement_file(xdatdir)
-            for kfg in onexdat['configs'].keys():
+            for kfg in list(onexdat['configs'].keys()):
                 if kfg == 1: #skip config 1 until the end
                     pass
                 else:
@@ -949,8 +949,8 @@ class VaspChecker(BaseChecker):
         if len(dynmatlist) == 0:
             raise MASTError("pmgextend combine_dynmats", "No DYNMATs found under " + mydir)
         opendyn=""
-        print "DYNMATLIST:"
-        print dynmatlist
+        print("DYNMATLIST:")
+        print(dynmatlist)
         datoms=0
         for onedynmat in dynmatlist:
             dynlines=[]
@@ -965,7 +965,7 @@ class VaspChecker(BaseChecker):
                 topatom = int(dynlines[mycount].split()[0])
                 whichdir = int(dynlines[mycount].split()[1])
                 littlemat = dynlines[mycount+1:mycount+datoms+1]
-                print littlemat
+                print(littlemat)
                 act = 0
                 while act < datoms:
                     dactx=float(littlemat[act].split()[0])
@@ -979,15 +979,15 @@ class VaspChecker(BaseChecker):
                     myhess[colidx][act*3+2]=dactz
                     act = act + 1
                 mycount = mycount + datoms + 1
-                print mycount
-        print "UNALTERED HESSIAN:"
+                print(mycount)
+        print("UNALTERED HESSIAN:")
         print(myhess)
         #create mass matrix
         masses=dynlines[1].split()
-        print "MASSES:", masses
+        print("MASSES:", masses)
         massarr=np.zeros([datoms*3,1])
         act=0
-        print myposcar.natoms
+        print(myposcar.natoms)
         nspec=len(myposcar.natoms)
         totatoms=0
         while act < datoms:
@@ -999,18 +999,18 @@ class VaspChecker(BaseChecker):
                 if act < totatoms:
                     mymass = float(masses[nct])
                 nct = nct + 1
-            print mymass
+            print(mymass)
             massarr[act*3+0][0]=mymass
             massarr[act*3+1][0]=mymass
             massarr[act*3+2][0]=mymass
             act = act + 1
         massmat = massarr*np.transpose(massarr)
-        print "MASS MAT:"
-        print massmat
-        print "STEP:"
+        print("MASS MAT:")
+        print(massmat)
+        print("STEP:")
         step = float(dynlines[2].split()[2])
-        print step
-        print "HESSIAN * -1 / step / sqrt(mass1*mass2)"
+        print(step)
+        print("HESSIAN * -1 / step / sqrt(mass1*mass2)")
         normhess=np.zeros([natoms*3,natoms*3])
         cidx=0
         while cidx < natoms*3:
@@ -1019,19 +1019,19 @@ class VaspChecker(BaseChecker):
                 normhess[ridx][cidx]=-1*myhess[ridx][cidx]/step/np.sqrt(massmat[ridx][cidx])
                 ridx = ridx + 1
             cidx = cidx + 1
-        print normhess
-        print "EIGENVALUES:"
+        print(normhess)
+        print("EIGENVALUES:")
         myeig = np.linalg.eig(normhess)[0]
-        print myeig
-        print "SQRT of EIGENVALUES in sqrt(eV/AMU)/Angstrom/2pi:"
+        print(myeig)
+        print("SQRT of EIGENVALUES in sqrt(eV/AMU)/Angstrom/2pi:")
         myfreq = np.sqrt(myeig)
-        print myfreq
-        print "SQRT OF EIGENVALUES in THz:"
+        print(myfreq)
+        print("SQRT OF EIGENVALUES in THz:")
         myfreqThz = myfreq*15.633302
-        print myfreqThz
+        print(myfreqThz)
         myfreqThzsorted = myfreqThz
         myfreqThzsorted.sort()
-        print myfreqThzsorted
+        print(myfreqThzsorted)
         return myfreqThzsorted
 
     def get_total_electrons(self, myposcar, mypotcar):

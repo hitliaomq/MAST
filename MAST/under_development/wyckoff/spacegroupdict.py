@@ -26,16 +26,16 @@ def make_spacegroup_dict():
             myhall = lsplit[4].strip()
             myser = int(lsplit[0].strip())
         except IndexError:
-            print "Error in line %1i" % lct
+            print("Error in line %1i" % lct)
             continue
-        if myhall in spdict['hall_to_serial'].keys():
-            print "Duplicate hall key %s for line %1i" % (myhall, lct)
-            print "Existing entry is serial number %1i" % spdict['hall_to_serial'][myhall]
+        if myhall in list(spdict['hall_to_serial'].keys()):
+            print("Duplicate hall key %s for line %1i" % (myhall, lct))
+            print("Existing entry is serial number %1i" % spdict['hall_to_serial'][myhall])
         else:
             spdict['hall_to_serial'][myhall]=myser
-        if myser in spdict['serial_to_hall'].keys():
-            print "Duplicate serial key %1i for line %1i" % (myser, lct)
-            print "Existing entry is hall symbol %s" % spdict['serial_to_hall'][myser]
+        if myser in list(spdict['serial_to_hall'].keys()):
+            print("Duplicate serial key %1i for line %1i" % (myser, lct))
+            print("Existing entry is hall symbol %s" % spdict['serial_to_hall'][myser])
         else:
             spdict['serial_to_hall'][myser]=myhall
     return spdict
@@ -79,8 +79,8 @@ def make_wyckoff_dict():
             myserial = int(lsplit[1].strip())
             myletter=""
             mymult=0
-            if myserial in wkdict.keys():
-                print "Duplicate serial number %1i for line %1i." % (myserial, lct)
+            if myserial in list(wkdict.keys()):
+                print("Duplicate serial number %1i for line %1i." % (myserial, lct))
             else:
                 wkdict[myserial]=dict()
                 wkdict[myserial]['spacegroup']=myspace
@@ -88,8 +88,8 @@ def make_wyckoff_dict():
         elif ltype == "letter":
             mymult = int(lsplit[2].strip())
             myletter = lsplit[3].strip()
-            if myletter in wkdict[myserial]['letters'].keys():
-                print "Duplicate letter key %s for line %1i, serial number %1i. Appending to existing list." % (myletter, lct, myserial)
+            if myletter in list(wkdict[myserial]['letters'].keys()):
+                print("Duplicate letter key %s for line %1i, serial number %1i. Appending to existing list." % (myletter, lct, myserial))
                 for idx in range(5, len(lsplit)):
                     trypt = lsplit[idx].strip()
                     if not trypt == "":
@@ -121,7 +121,7 @@ def find_letters_for_max_multiplicity(wkdict, serialno, maxmult=10):
         Returns:
             letterlist <list of str>: List of letters.
     """
-    letterkeys = wkdict[serialno]['letters'].keys()
+    letterkeys = list(wkdict[serialno]['letters'].keys())
     letterkeys.sort()
     totmult=0
     mymult=0
@@ -136,8 +136,8 @@ def find_letters_for_max_multiplicity(wkdict, serialno, maxmult=10):
 
 myspdict=make_spacegroup_dict()
 mywkdict=make_wyckoff_dict()
-print mywkdict[523]
+print(mywkdict[523])
 myletterlist=find_letters_for_max_multiplicity(mywkdict,523,20)
-print myletterlist
+print(myletterlist)
 
 

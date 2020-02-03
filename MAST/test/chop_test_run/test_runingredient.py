@@ -78,7 +78,7 @@ class TestRunIngredient(unittest.TestCase):
         myri.run_singlerun()
         self.assertTrue(myri.checker.is_ready_to_run())
         mysubmit = MASTFile("%s/submitlist" % self.test_control)
-        self.assertEquals(mysubmit.data[0], "%s\n" % ingdir)
+        self.assertEqual(mysubmit.data[0], "%s\n" % ingdir)
         #self.testclass.run_singlerun(mode='serial')
 
     def test_run_neb_subfolders(self):
@@ -132,9 +132,9 @@ class TestRunIngredient(unittest.TestCase):
         self.assertTrue(myri.checker.is_ready_to_run())
         myri.checker.keywords['name'] = "%s/04" % ingdir
         self.assertFalse(myri.checker.is_ready_to_run()) #do not run endpoints again
-        self.assertEquals(mysubmit.data[0], "%s/01\n" % ingdir)
-        self.assertEquals(mysubmit.data[1], "%s/02\n" % ingdir)
-        self.assertEquals(mysubmit.data[2], "%s/03\n" % ingdir)
+        self.assertEqual(mysubmit.data[0], "%s/01\n" % ingdir)
+        self.assertEqual(mysubmit.data[1], "%s/02\n" % ingdir)
+        self.assertEqual(mysubmit.data[2], "%s/03\n" % ingdir)
         #self.testclass.run_neb_subfolders()
 
     def test_run_subfolders(self):
@@ -165,10 +165,10 @@ class TestRunIngredient(unittest.TestCase):
             myri.checker.keywords['name'] = subname
             self.assertTrue(myri.checker.is_ready_to_run())
         mysubmit = MASTFile("%s/submitlist" % self.test_control)
-        self.assertEquals(mysubmit.data[0], "%s/sub1\n" % ingdir)
-        self.assertEquals(mysubmit.data[1], "%s/sub2\n" % ingdir)
-        self.assertEquals(mysubmit.data[2], "%s/sub3\n" % ingdir)
-        self.assertEquals(mysubmit.data[3], "%s/sub4\n" % ingdir)
+        self.assertEqual(mysubmit.data[0], "%s/sub1\n" % ingdir)
+        self.assertEqual(mysubmit.data[1], "%s/sub2\n" % ingdir)
+        self.assertEqual(mysubmit.data[2], "%s/sub3\n" % ingdir)
+        self.assertEqual(mysubmit.data[3], "%s/sub4\n" % ingdir)
         #self.testclass.run_subfolders()
 
     def test_run_defect(self):
@@ -245,7 +245,7 @@ class TestRunIngredient(unittest.TestCase):
         #
         my_defected = Poscar.from_file("%s/CONTCAR" % ingdir).structure.get_sorted_structure()
         defected_compare = Poscar.from_file("files/POSCAR_multi").structure.get_sorted_structure()
-        self.assertEquals(my_defected, defected_compare)
+        self.assertEqual(my_defected, defected_compare)
         self.assertFalse(os.path.isfile("%s/submitlist" % self.test_control))
         #self.testclass.run_defect()
 
@@ -268,7 +268,7 @@ class TestRunIngredient(unittest.TestCase):
         myri.run_strain()
         my_strained = Poscar.from_file("%s/CONTCAR" % ingdir).structure
         strained_compare = Poscar.from_file("files/POSCAR_strained").structure
-        self.assertEquals(my_strained, strained_compare)
+        self.assertEqual(my_strained, strained_compare)
         self.assertFalse(os.path.isfile("%s/submitlist" % self.test_control))
         #self.testclass.run_strain()
 
@@ -334,7 +334,7 @@ class TestRunIngredient(unittest.TestCase):
         myri.run_defect()
         my_defected = Poscar.from_file("%s/CONTCAR" % ingdir).structure.get_sorted_structure()
         defected_compare = Poscar.from_file("files/POSCAR_scaled_defected").structure.get_sorted_structure()
-        self.assertEquals(my_defected, defected_compare)
+        self.assertEqual(my_defected, defected_compare)
     def test_run_scale(self):
         #raise SkipTest
         ingdir="%s/writedir/single_label1" % testdir
@@ -355,4 +355,4 @@ class TestRunIngredient(unittest.TestCase):
         myri.run_scale()
         my_scaled = Poscar.from_file("%s/CONTCAR" % ingdir).structure.get_sorted_structure()
         scaled_compare = Poscar.from_file("files/POSCAR_scaled").structure.get_sorted_structure()
-        self.assertEquals(my_scaled, scaled_compare)
+        self.assertEqual(my_scaled, scaled_compare)

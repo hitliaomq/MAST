@@ -12,7 +12,7 @@ def fussf(pop, nkeep, Optimizer):
 	newpop = []
 	# Collect fitnesses
 	fits = [ind.fitness for ind in pop]
-	minindex = min(xrange(len(fits)), key=fits.__getitem__)
+	minindex = min(range(len(fits)), key=fits.__getitem__)
 	fits = []
 	STR = 'Distances: \n'
 	for i in range(len(pop)):

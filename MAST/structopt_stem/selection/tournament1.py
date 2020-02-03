@@ -6,7 +6,7 @@ def tournament1(pop, nkeep, Optimizer):
     """
     tournsize = Optimizer.tournsize
     fits = [ind.fitness for ind in pop]
-    minindex = min(xrange(len(fits)), key=fits.__getitem__)
+    minindex = min(range(len(fits)), key=fits.__getitem__)
     newpop = []
     indices = []
     indexo = [ind.index for ind in pop]

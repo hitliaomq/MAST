@@ -4,7 +4,7 @@
 # Maintainer: Kumaresh Visakan Murugan
 # Last updated: 2014-01-01
 ##############################################################
-from Tkinter import *
+from tkinter import *
 
 class CanvasDemo(Frame):
     def __init__(self, width=200, height=200):

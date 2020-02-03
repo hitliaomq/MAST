@@ -22,14 +22,14 @@ def get_restart_population(Optimizer):
         try:
             indiv = read_xyz(Optimizer.files[i].name)
             successflag = True
-        except IOError,e:
+        except IOError as e:
             logger.error('Not enough files in restart to generate population. Resetting nindiv to {0}'.format(i-1),exc_info=True)
             Optimizer.output.write('WARNING: Not enough files in restart to generate population\n')
             Optimizer.nindiv=i-1
             Optimizer.output.write('Resetting nindiv = {0}\n'.format(Optimizer.nindiv))
             Optimizer.output.flush()
             break
-        except Exception,e:
+        except Exception as e:
             Optimizer.output.write('WARNING: Trouble reading file: {0}'.format(Optimizer.files[i].name),exc_info=True)
             Optimizer.output.write('Error: {0}'.format(e))
             Optimizer.output.flush()

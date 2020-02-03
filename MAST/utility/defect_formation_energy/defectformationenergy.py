@@ -35,7 +35,7 @@ class DefectFormationEnergy:
         self.e_defects = dict()
     def _calculate_defect_formation_energies(self,scsize):
         perf_dirs = []
-        ingredients = self.recipe_plan.ingredients.keys()
+        ingredients = list(self.recipe_plan.ingredients.keys())
         for i in range(len(ingredients)):
             if 'perfect' in ingredients[i]:
                 perf_dirs.append(ingredients[i])
@@ -67,7 +67,7 @@ class DefectFormationEnergy:
 
         #print 'Perfect composition: ', perf_species
         #First Loop through the conditions for the defects
-        for conditions, potentials in chempot.items():
+        for conditions, potentials in list(chempot.items()):
             self.e_defects[conditions] = dict()
             # Loop through each defect
             for ddir in sorted(def_dir):
@@ -92,7 +92,7 @@ class DefectFormationEnergy:
                     # Find the differences in the number of each atom type
                     # between the perfect and the defect
                     struct_diff = dict()
-                    for specie, number in def_species.items():
+                    for specie, number in list(def_species.items()):
                         try:
                             nperf = perf_species[str(specie)]
                         except KeyError:
@@ -103,7 +103,7 @@ class DefectFormationEnergy:
                     alignment = self.get_potential_alignment(perf_dir, ddir)
                     # Calculate the base DFE energy
                     e_def = energy - e_perf # E_defect - E_perf
-                    for specie, number in struct_diff.items():
+                    for specie, number in list(struct_diff.items()):
                         mu = potentials[str(specie)]
                         e_def -= (number * mu)
                     e_def += charge * (efermi + alignment) # Add in the shift here!
@@ -180,15 +180,15 @@ class DefectFormationEnergy:
         if not self.e_defects:
             self._calculate_defect_formation_energies(scsize)
         myfile = MASTFile()
-        for conditions, defects in self.e_defects.items():
+        for conditions, defects in list(self.e_defects.items()):
             myfile.data.append('\n\nDefect formation energies for %s conditions.\n' % conditions.upper())
             myfile.data.append('%-20s | %10s\n' % ('Defect', 'DFE'))
             myfile.data.append('---------------------------------\n')
-            for defect, energies in defects.items():
+            for defect, energies in list(defects.items()):
                 for energy in energies:
                     myfile.data.append('%-14s(q=%2i) | %8.4f\n' % (defect, energy[0], energy[1]))
                 myfile.data.append(str()) # Add a blank line here
             myfile.data.append('---------------------------------\n')
         myfile.to_file(os.path.join(os.getcwd(),"dfe.txt"))
         for line in myfile.data:
-            print line.strip()
+            print(line.strip())

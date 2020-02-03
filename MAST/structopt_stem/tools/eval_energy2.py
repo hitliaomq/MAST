@@ -259,20 +259,20 @@ def eval_energy(input):
                         totalsol.set_pbc(True)
                         if Optimizer.fixed_region:
                             if debug:
-                                print 'Energy of fixed region calc = ', OUT['thermo'][-1]['pe']
+                                print('Energy of fixed region calc = ', OUT['thermo'][-1]['pe'])
                             totalsol.set_calculator(Optimizer.static_calc)
                             OUT=totalsol.calc.calculate(totalsol)
                             totalsol=OUT['atoms']
                             totalsol.set_pbc(True)
                             if debug:
-                                print 'Energy of static calc = ', OUT['thermo'][-1]['pe']
+                                print('Energy of static calc = ', OUT['thermo'][-1]['pe'])
                         en=OUT['thermo'][-1]['pe']
                         stress=numpy.array([OUT['thermo'][-1][i] for i in ('pxx','pyy','pzz','pyz','pxz','pxy')])*(-1e-4*GPa)
                         #force=numpy.maximum.reduce(abs(totalsol.get_forces()))
                         if debug:
                             write_xyz(Optimizer.debugfile,totalsol,'After Lammps Minimization')
                             Optimizer.debugfile.flush()
-                    except Exception, e:
+                    except Exception as e:
                         os.chdir(cwd)
                         STR+='WARNING: Exception during energy eval:\n'+repr(e)+'\n'
                         f=open('problem-structures.xyz','a')

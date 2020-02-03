@@ -4,16 +4,16 @@
 # Maintainer: Kumaresh Visakan Murugan
 # Last updated: 2014-01-01
 ##############################################################
-from Tkinter import *
-import Tkinter as ttk
+from tkinter import *
+import tkinter as ttk
 
-from verticalScrolledFrame import VerticalScrolledFrame 
-from sections.mast import MastSection 
-from sections.structure import StructureSection
-from sections.defects import DefectsSection
-from sections.neb import NEBSection
-from sections.ingredients import IngredientsSection
-from sections.phonon import PhononSection
+from .verticalScrolledFrame import VerticalScrolledFrame 
+from .sections.mast import MastSection 
+from .sections.structure import StructureSection
+from .sections.defects import DefectsSection
+from .sections.neb import NEBSection
+from .sections.ingredients import IngredientsSection
+from .sections.phonon import PhononSection
 
 class MastGui:
     def __init__(self):

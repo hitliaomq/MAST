@@ -52,7 +52,7 @@ def extract_submitted_jobid(string):
             <int> = job ID as integer
     """
     findstr = string.strip()
-    print findstr
+    print(findstr)
     return int(findstr.split()[3])
 
 def queue_snap_command():

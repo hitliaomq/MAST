@@ -49,12 +49,12 @@ class GenericChecker(BaseChecker):
     def is_complete(self):
         """Check for the existence of mast_complete_file (default), or
             for a certain string, given by mast_complete_search"""
-        if not 'mast_complete_file' in self.keywords['program_keys'].keys():
+        if not 'mast_complete_file' in list(self.keywords['program_keys'].keys()):
             raise MASTError(self.__class__.__name__, "No completion file indicated by mast_complete_file keyword for %s. Cannot determine whether run is complete." % self.keywords['name'])
             return False
         checkfile = os.path.join(self.keywords['name'],self.keywords['program_keys']['mast_complete_file'])
         searchstr = None
-        if 'mast_complete_search' in self.keywords['program_keys'].keys():
+        if 'mast_complete_search' in list(self.keywords['program_keys'].keys()):
             searchstr = self.keywords['program_keys']['mast_complete_search']
         if searchstr == "None":
             searchstr = None
@@ -81,7 +81,7 @@ class GenericChecker(BaseChecker):
         notready=0
         if not(os.path.isfile(dirname + "/input.txt")):
             notready = notready + 1
-        if 'mast_copy_files' in self.keywords['program_keys'].keys():
+        if 'mast_copy_files' in list(self.keywords['program_keys'].keys()):
             myfiles = self.keywords['program_keys']['mast_copy_files'].split()
             for myfile in myfiles:
                 fname = os.path.basename(myfile)
@@ -99,7 +99,7 @@ class GenericChecker(BaseChecker):
             mast_copy_files //home/user/f1 //home/user/f2
         """
         dirname = self.keywords['name']
-        if 'mast_copy_files' in self.keywords['program_keys'].keys():
+        if 'mast_copy_files' in list(self.keywords['program_keys'].keys()):
             myfiles = self.keywords['program_keys']['mast_copy_files'].split()
             for myfile in myfiles:
                 fname = os.path.basename(myfile)
@@ -138,7 +138,7 @@ class GenericChecker(BaseChecker):
         #allowedpath = os.path.join(dirutil.get_mast_install_path(), 'MAST',
         #                'ingredients','programkeys','phon_allowed_keywords.py')
         #allowed_list = self._phon_inphon_get_allowed_keywords(allowedpath)
-        for key, value in self.keywords['program_keys'].iteritems():
+        for key, value in self.keywords['program_keys'].items():
             if not key[0:5] == "mast_":
                 input_dict[key]=value
         return input_dict
@@ -151,13 +151,13 @@ class GenericChecker(BaseChecker):
         myd = dict()
         myd = self._input_get_non_mast_keywords()
         my_input = MASTFile()
-        if not 'mast_delimiter' in self.keywords['program_keys'].keys():
+        if not 'mast_delimiter' in list(self.keywords['program_keys'].keys()):
             delim = " "
         else:
             delim = self.keywords['program_keys']['mast_delimiter']
             if delim == "None":
                 delim = " "
-        for key, value in myd.iteritems():
+        for key, value in myd.items():
             my_input.data.append(str(key) + delim + str(value) + "\n")
         my_input.to_file(name + "/input.txt")
         self._copy_over_any_files()
@@ -177,7 +177,7 @@ class GenericChecker(BaseChecker):
             the queue. For the generic program, a signal file must
             be specified in the ingredients keywords as mast_started_file
         """
-        if not 'mast_started_file' in self.keywords['program_keys'].keys():
+        if not 'mast_started_file' in list(self.keywords['program_keys'].keys()):
             raise MASTError(self.__class__.__name__, "No file indicated by mast_started_file keyword for %s. Cannot determine whether run has started." % self.keywords['name'])
             return False
         checkfile = os.path.join(self.keywords['name'],self.keywords['program_keys']['mast_started_file'])

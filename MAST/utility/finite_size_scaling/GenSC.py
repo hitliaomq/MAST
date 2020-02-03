@@ -18,8 +18,8 @@ import pymatgen as mg
 from pymatgen.analysis import ewald
 from pymatgen.io.vasp import Poscar, Potcar, Kpoints, Incar
 
-import EneVsVm 
-import uniformPick    
+from . import EneVsVm 
+from . import uniformPick    
 
 class writer:
     """
@@ -114,12 +114,12 @@ def genLMNs(primordial_struct,minDefDist=8,maxNumAtoms=300,numStructAsked=6):
     supercell may have, and how many LxMxN scaling factors to outpout
     """   
     maxLMN=int((maxNumAtoms/primordial_struct.composition.num_atoms)**(1/3.0))
-    print ("Generating candidate supercells with the scaling factors"+
-           " L/M/N less than or equal to "+str(maxLMN)+".")
-    print ("If you want to explore larger scaling factors L/M/N, "+ 
-            "please rerun with larger maxNumAtoms input parameter.")
+    print(("Generating candidate supercells with the scaling factors"+
+           " L/M/N less than or equal to "+str(maxLMN)+"."))
+    print(("If you want to explore larger scaling factors L/M/N, "+ 
+            "please rerun with larger maxNumAtoms input parameter."))
     print (" ")
-    print maxLMN
+    print(maxLMN)
     #####The following section generates a list of candidates LMN's######   
     Vm_LMN_dict={}
     print ("The following are candiate supercells:")   
@@ -136,19 +136,19 @@ def genLMNs(primordial_struct,minDefDist=8,maxNumAtoms=300,numStructAsked=6):
                             dummy_Vm=np.asscalar(EneVsVm.CalcV_M(dummy_sc))
 
                             alreadyExist=False
-                            for vmraw in Vm_LMN_dict.keys():
+                            for vmraw in list(Vm_LMN_dict.keys()):
                                 if abs(vmraw-dummy_Vm)<0.01:
                                     alreadyExist=True
                                     break                                                                                     
                             if not alreadyExist:
                                 Vm_LMN_dict[dummy_Vm]=[L,M,N]
                                 #print(str([L,M,N]) +"   "+ str(round(dummy_Vm,2)))
-                                print(str([L,M,N]) +"   %4.2f" % dummy_Vm)
-    print""   
+                                print((str([L,M,N]) +"   %4.2f" % dummy_Vm))
+    print("")   
     
     #####The following section selects "Good" LMN's from the candidates list######
-    LMN_list_raw=Vm_LMN_dict.values()
-    Vm_list_raw=Vm_LMN_dict.keys()
+    LMN_list_raw=list(Vm_LMN_dict.values())
+    Vm_list_raw=list(Vm_LMN_dict.keys())
     
     if len(LMN_list_raw) < numStructAsked:
         LMN_list=LMN_list_raw
@@ -176,8 +176,8 @@ def genLMNs(primordial_struct,minDefDist=8,maxNumAtoms=300,numStructAsked=6):
     for j in range(len(LMN_list)):
         dummystruct=primordial_struct.copy()
         dummystruct.make_supercell(LMN_list[j])
-        print (str(LMN_list[j])+"   %4.2f" % EneVsVm.CalcV_M(dummystruct)) 
-    print ""
+        print((str(LMN_list[j])+"   %4.2f" % EneVsVm.CalcV_M(dummystruct))) 
+    print("")
     return LMN_list
 
 def gensc(LMN_list,perf_primordial_struct, 
@@ -194,7 +194,7 @@ def gensc(LMN_list,perf_primordial_struct,
                 "please manually reset MAGMOM in the supercell INCAR "
                 "to match it to the number of atoms. Otherwise the job will crash.")
     
-    print""               
+    print("")               
        
     cwdir = os.getcwd()
     print("To run the following supercells:")
@@ -210,7 +210,7 @@ def gensc(LMN_list,perf_primordial_struct,
                 (1/def_primordial_struct.composition.num_atoms))        
         dummykpnt=Kpoints.automatic_density(dummystruct,kppra)
         dummykpnt.style=def_primordial_kpnt.style
-        print (str(LMN_list[j])+"   " \
+        print((str(LMN_list[j])+"   " \
                #    +"%4.2f"      %EneVsVm.CalcV_M(dummystruct)+"   "+
               +str(dummykpnt.kpts[0][0])+"x"+ \
                str(dummykpnt.kpts[0][1])+"x"+ \
@@ -220,7 +220,7 @@ def gensc(LMN_list,perf_primordial_struct,
               +str(LMN_list[j][0])+"x"+ \
                str(LMN_list[j][1])+"x"+ \
                str(LMN_list[j][2])               
-               )
+               ))
  
         os.chdir(cwdir)
         

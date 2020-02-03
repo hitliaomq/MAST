@@ -15,7 +15,7 @@ import pymatgen as mg
 from pymatgen.analysis import ewald
 from pymatgen.io.vasp import Oszicar, Outcar, Poscar
 
-import GenSC
+from . import GenSC
 '''
 class writer :
         def __init__(self, *writers) :
@@ -106,10 +106,10 @@ if __name__ == "__main__":
     import shutil, os
   
 
-    print '\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-    print '% Defect Formation Energy vs. Madelung Potential %'
-    print '%    from MAST (MAterials Simulation Toolbox)    %'
-    print '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'
+    print('\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+    print('% Defect Formation Energy vs. Madelung Potential %')
+    print('%    from MAST (MAterials Simulation Toolbox)    %')
+    print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
  
     dfe = DFE('..')
     fp = open('DFE_vs_VM.log', 'w')
@@ -117,7 +117,7 @@ if __name__ == "__main__":
     Eform = dict()
     scalingsize = dfe.input_options.get_item('structure','scaling')
 #    ingredients = dfe.recipe_plan.ingredients.keys()
-    for size_label in scalingsize.keys():
+    for size_label in list(scalingsize.keys()):
         dfe = DFE('..')
         dfe._calculate_defect_formation_energies("[%s]"%scalingsize[size_label][0])
         Ef = dfe.get_defect_formation_energies("[%s]"%scalingsize[size_label][0])
@@ -127,14 +127,14 @@ if __name__ == "__main__":
                 struct = Poscar.from_file('../%s/POSCAR'%folder).structure
                 v_m[size_label] = CalcV_M(struct)
                 break
-    sizes = Eform.keys()
+    sizes = list(Eform.keys())
     sizes.sort()
     chempot = dfe.input_options.get_item('chemical_potentials')
-    conditions = chempot.keys()
-    defects = Eform[sizes[0]][conditions[0]].keys()
+    conditions = list(chempot.keys())
+    defects = list(Eform[sizes[0]][conditions[0]].keys())
     defects.sort()
     
-    print Eform
+    print(Eform)
     charge_defects = dict()
     for DEF in defects:
         try: charge_defects[DEF.split('_q=')[0]].append(DEF.split('_q='))
@@ -142,7 +142,7 @@ if __name__ == "__main__":
     efermi=np.linspace(0.0,6.0,num=100)
     for CON in conditions:
         plt.figure()
-        for DEF in charge_defects.keys():
+        for DEF in list(charge_defects.keys()):
             eforms=np.zeros(100)
             for i in range(100):
                 intercept = []

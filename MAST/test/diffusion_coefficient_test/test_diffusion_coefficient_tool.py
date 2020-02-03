@@ -62,7 +62,7 @@ class TestDiffusionCoefficientTool(unittest.TestCase):
         plotname = os.path.join(rwdir, 'Diffusivity.png')
         os.remove(outputname) #remove test output
         os.remove(plotname) #remove test output
-        print(os.listdir(rwdir))
+        print((os.listdir(rwdir)))
         #run the utility
         dctool_input = os.path.join(rwdir, 'diffcoeff_input.txt')
         curdir=os.getcwd()
@@ -70,15 +70,15 @@ class TestDiffusionCoefficientTool(unittest.TestCase):
         DiffCoeff(dctool_input).calculatingD()
         os.chdir(curdir)
         #check output.
-        print "output in: %s" % (outputname)
+        print("output in: %s" % (outputname))
         with open(outputname, 'r') as opfile:
             olines = opfile.readlines()
         comparename = os.path.join(testdir,'files','diffcoeff_utility',
                                     'Diffusivity.txt')
         with open(comparename, 'r') as cfile:
             clines = cfile.readlines()
-        print clines
-        print olines
+        print(clines)
+        print(olines)
         self.assertEqual(len(clines),len(olines))
         for cidx in range(0, len(clines))[-5:]: #compare last few numeric lines
             [ctemp, cval] = clines[cidx].strip().split()
@@ -98,7 +98,7 @@ class TestDiffusionCoefficientTool(unittest.TestCase):
         plotname = os.path.join(rwdir, 'Diffusivity.png')
         os.remove(outputname) #remove test output
         os.remove(plotname) #remove test output
-        print(os.listdir(rwdir))
+        print((os.listdir(rwdir)))
         #run the utility
         curdir=os.getcwd()
         os.chdir(rwdir)
@@ -106,18 +106,18 @@ class TestDiffusionCoefficientTool(unittest.TestCase):
         dproc = subprocess.Popen(mycommand, shell=True,
                         stdout=subprocess.PIPE,stderr=subprocess.PIPE)
         dproc.wait()
-        print(dproc.communicate())
+        print((dproc.communicate()))
         os.chdir(curdir)
         #check output
-        print "output in: %s" % (outputname)
+        print("output in: %s" % (outputname))
         with open(outputname, 'r') as opfile:
             olines = opfile.readlines()
         comparename = os.path.join(testdir,'files','diffcoeff_utility',
                                     'Diffusivity.txt')
         with open(comparename, 'r') as cfile:
             clines = cfile.readlines()
-        print clines
-        print olines
+        print(clines)
+        print(olines)
         self.assertEqual(len(clines),len(olines))
         for cidx in range(0, len(clines))[-5:]: #compare last few numeric lines
             [ctemp, cval] = clines[cidx].strip().split()
@@ -137,7 +137,7 @@ class TestDiffusionCoefficientTool(unittest.TestCase):
         plotname = os.path.join(rwdir, 'Diffusivity.png')
         os.remove(outputname) #remove test output
         #os.remove(plotname) #remove test output
-        print(os.listdir(rwdir))
+        print((os.listdir(rwdir)))
         #run the utility
         dctool_input = os.path.join(rwdir, 'diffcoeff_input.txt')
         curdir=os.getcwd()
@@ -145,7 +145,7 @@ class TestDiffusionCoefficientTool(unittest.TestCase):
         DiffCoeff(dctool_input).calculatingD()
         os.chdir(curdir)
         #check output.
-        print "output in: %s" % (outputname)
+        print("output in: %s" % (outputname))
         with open(outputname, 'r') as opfile:
             olines = opfile.readlines()
         comparename = os.path.join(testdir,'files',
@@ -153,8 +153,8 @@ class TestDiffusionCoefficientTool(unittest.TestCase):
                             'Diffusivity.txt')
         with open(comparename, 'r') as cfile:
             clines = cfile.readlines()
-        print clines
-        print olines
+        print(clines)
+        print(olines)
         self.assertEqual(len(clines),len(olines))
         for cidx in range(0, len(clines))[-5:]: #compare last few numeric lines
             [ctemp, cval] = clines[cidx].strip().split()

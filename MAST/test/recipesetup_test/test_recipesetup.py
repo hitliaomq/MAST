@@ -48,7 +48,7 @@ class TestRecipeSetup(unittest.TestCase):
         iopt=MAST.parsers.inputparser.InputParser(inputfile='input.inp').parse()
         rfile = iopt.get_item('personal_recipe', 'personal_recipe_list')
         myrs=RecipeSetup(recipeFile=rfile, workingDirectory=wdir, inputOptions=iopt, structure=struc)
-        print iopt
+        print(iopt)
         self.assertEqual(type(myrs.metafile),MAST.utility.metadata.Metadata)
         #self.testclass.get_my_ingredient_options(name, ingredient_type)
 
@@ -80,7 +80,7 @@ class TestRecipeSetup(unittest.TestCase):
         myrs_metadata=MASTFile(os.path.join(wdir,'metadata.txt'))
         self.assertEqual(myrs_metadata.data, compare_metadata.data)
         dirlist=MAST.utility.dirutil.walkdirs(wdir)
-        print dirlist
+        print(dirlist)
         compare_dirlist=list()
         compare_dirlist.append('defect_1nn_q=p0_opt1')
         compare_dirlist.append('defect_1nn_q=p0_opt2')

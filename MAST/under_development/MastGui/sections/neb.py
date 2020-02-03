@@ -4,8 +4,8 @@
 # Maintainer: Kumaresh Visakan Murugan
 # Last updated: 2014-01-01
 ##############################################################
-from Tkinter import *
-import Tkinter as ttk
+from tkinter import *
+import tkinter as ttk
 from verticalScrolledFrame import VerticalScrolledFrame 
 
 
@@ -34,7 +34,7 @@ class NEBSection:
         content_lines = ""
 
         if self.neb_info['startdefect'][0]:
-            for n_id, s_defect in self.neb_info['startdefect'][0].iteritems():
+            for n_id, s_defect in self.neb_info['startdefect'][0].items():
                 if n_id not in self.neb_info['enddefect'][0]:
                     continue
                 content_lines += "begin %s-%s\n" % (s_defect.split('(', 1)[0].strip(), self.neb_info['enddefect'][0][n_id].split('(', 1)[0].strip())
@@ -72,7 +72,7 @@ class NEBSection:
            images_value = Label(self.summary_frame, text=self.neb_info['images'][0])
            images_value.grid(row=0, column=3, sticky=W, pady=5)
 
-           for rownum in xrange(self.num_neb_fields):
+           for rownum in range(self.num_neb_fields):
                if self.neb_info['startdefect'][0]['N' + str(rownum)].strip() == "":
                    continue
                id_label = Label(self.summary_frame, text='N'+ str(rownum))
@@ -148,7 +148,7 @@ class NEBSection:
         self.neb_entities_frame.grid(row=0, column=0, columnspan=3, padx=10, pady=10) 
         
          
-        for rownum in xrange(self.num_neb_fields):
+        for rownum in range(self.num_neb_fields):
             self.create_neb_fields(self.neb_entities_frame, rownum)  
 
         self.add_button = Button(self.neb_entities_frame, text="Add more neb", command=self.add_elements)
@@ -167,11 +167,11 @@ class NEBSection:
 
     def save(self):
         self.neb_info['images'][0] = self.neb_info['images'][1].get()
-        for rownum in xrange(self.num_neb_fields):
+        for rownum in range(self.num_neb_fields):
             self.neb_info['startdefect'][0]['N'+str(rownum)]    = self.neb_info['startdefect'][1]['N'+str(rownum)].get()
             self.neb_info['enddefect'][0]['N'+str(rownum)]      = self.neb_info['enddefect'][1]['N'+str(rownum)].get()
             num_fields = self.fields_hash.get('N' + str(rownum), 0)
-            for i in xrange(num_fields):
+            for i in range(num_fields):
                 if 'N' + str(rownum) in self.neb_info['elementmap'][0]:
                     if i < len(self.neb_info['elementmap'][0]['N' + str(rownum)]):
                         self.neb_info['elementmap'][0]['N' + str(rownum)][i] = self.neb_info['elementmap'][1]['N'+str(rownum)][i].get()
@@ -212,9 +212,9 @@ class NEBSection:
 
     def create_neb_fields(self, frame, rownum):
         elements_map = self.structure_section.get_elements_map()
-        elements_options = ["%s (%s)" % (value, key) for key, value in elements_map.iteritems()]
+        elements_options = ["%s (%s)" % (value, key) for key, value in elements_map.items()]
         defects_map = self.defects_section.get_defects_map()
-        defects_options = ["%s (%s)" % (value, key) for key, value in defects_map.iteritems()]
+        defects_options = ["%s (%s)" % (value, key) for key, value in defects_map.items()]
 
         num_fields = self.fields_hash.get('N' + str(rownum), 1)
         self.fields_hash['N' + str(rownum)] = num_fields
@@ -261,7 +261,7 @@ class NEBSection:
         self.add_options(e_option_menu, defects_options, end_defect, end_defect_val)
         self.neb_info['enddefect'][1]['N' + str(rownum)] = end_defect
 
-        for i in xrange(num_fields):
+        for i in range(num_fields):
             self.create_individual_fields(e_frame, elements_options, rownum, i + 1)
 
         #put the pos file input boxes
@@ -272,7 +272,7 @@ class NEBSection:
             pos_files_frame = Frame(p_frame)
             pos_files_frame.grid(row=0, column=1, sticky=W, pady=10, padx=10)
             #create boxes
-            for i in xrange(int(self.neb_info['images'][0])):
+            for i in range(int(self.neb_info['images'][0])):
                 entry_val = StringVar(pos_files_frame)
                 if 'N' + str(rownum) in self.neb_info['posfiles'][0] and len(self.neb_info['posfiles'][0]['N' + str(rownum)]) >= i + 1:
                     entry_val.set(self.neb_info['posfiles'][0]['N' + str(rownum)][i])

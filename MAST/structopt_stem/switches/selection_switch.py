@@ -11,16 +11,16 @@ def selection_switch(pop, nkeep, scheme, Optimizer):
     else:
         debug = False
     try:
-        exec "from MAST.structopt_stem.selection.{0} import {0}".format(scheme)
+        exec("from MAST.structopt_stem.selection.{0} import {0}".format(scheme))
         newpop = eval('{0}(pop, nkeep, Optimizer)'.format(scheme))
-    except NameError,e:
+    except NameError as e:
     	logger.warning('Selection scheme not one of the available options! Check Document and spelling. Selection Scheme : {0}. {1}'.format(scheme,e), exc_info=True)
     	logger.warning('No reordering or reduction applied')
     	newpop = pop
-    except Exception, e:
+    except Exception as e:
     	logger.error('Issue in Selection scheme. Selection Scheme : {0}. {1}'.format(scheme,e), exc_info=True)
     	logger.warning('No reordering or reduction applied')
-    	print 'ERROR: Issue in Selection scheme. Selection Scheme : '+repr(scheme)
-        print e
+    	print('ERROR: Issue in Selection scheme. Selection Scheme : '+repr(scheme))
+        print(e)
         newpop = pop
     return newpop

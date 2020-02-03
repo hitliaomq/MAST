@@ -65,7 +65,7 @@ def energy_cluster(pop, Optimizer):
         except:
             attemptcount-=1
             STR+='WARNING: PREDATOR: K-means cluster difficulty\n'
-            print 'WARNING: PREDATOR: K-means cluster difficulty'
+            print('WARNING: PREDATOR: K-means cluster difficulty')
     if passflag==True:
         #Select one individual from each cluster
         news = []

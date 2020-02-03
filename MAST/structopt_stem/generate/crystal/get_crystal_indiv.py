@@ -2,7 +2,7 @@ from MAST.structopt_stem.generate import gen_pop_box, gen_pop_sphere
 try:
     from MAST.structopt_stem.generate.Individual import Individual
 except NameError:
-    print "NOTE: ASE is not installed. ASE must be installed for Structopt Individual.py to work correctly."
+    print("NOTE: ASE is not installed. ASE must be installed for Structopt Individual.py to work correctly.")
 def get_crystal_indiv(Optimizer):
     """
     Function to generate an structopt Individual class object containing a crystal structure.

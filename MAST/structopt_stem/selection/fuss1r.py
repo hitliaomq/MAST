@@ -9,7 +9,7 @@ def fuss1r(pop, nkeep, Optimizer):
 	#Collect fitnesses
 	fits = [ind.fitness for ind in pop]
 	#Identify the minimum and maximum fitness and index
-	minindex = min(xrange(len(fits)), key=fits.__getitem__)
+	minindex = min(range(len(fits)), key=fits.__getitem__)
 	minf = min(fits)
 	maxf = max(fits)
 	#Scale fitnesses to range 0-1
@@ -17,9 +17,9 @@ def fuss1r(pop, nkeep, Optimizer):
 	indices = []
 	while len(newpop) < nkeep:
 		pt = random.random()
-		if debug: print pt
+		if debug: print(pt)
 		distances = [abs(pt-fit) for fit in fits]
-		index = min(xrange(len(distances)), key=distances.__getitem__)
+		index = min(range(len(distances)), key=distances.__getitem__)
 		if index not in indices:
 			newpop.append(pop[index])
 			indices.append(index)

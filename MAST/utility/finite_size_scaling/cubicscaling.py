@@ -119,12 +119,12 @@ class CubicScaling:
         elif self.method == 'L1L3':
             f_stats.write("Method: E = A1/L^3 + A2/L + E0\n\n")
         
-        for N in Eform.keys():
+        for N in list(Eform.keys()):
             f_results.write("%s\n"%N)
             f_stats.write("%s\n"%N)
             Results = []
             Stats = []
-            charge = self.sortQ(Eform[N].keys())
+            charge = self.sortQ(list(Eform[N].keys()))
             for Q in charge:
                 DFE = [np.array([]),None]
                 L = np.array([])
@@ -152,11 +152,11 @@ class CubicScaling:
 if __name__ == "__main__":
     try: opts, args = getopt.getopt(sys.argv[1:],"hi:o:",["ifile=","ofile="])
     except getopt.GetoptError:
-        print 'cubicscaling.py -i <inputfile>'
+        print('cubicscaling.py -i <inputfile>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print 'cubicscaling.py -i <inputfile>'
+            print('cubicscaling.py -i <inputfile>')
             sys.exit()
         elif opt == "-i":
             inputfile = arg

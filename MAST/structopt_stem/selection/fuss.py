@@ -11,7 +11,7 @@ def fuss(pop,nkeep, Optimizer):
 	newpop = []
 	# Collect fitnesses
 	fits = [ind.fitness for ind in pop]
-	minindex = min(xrange(len(fits)), key=fits.__getitem__)
+	minindex = min(range(len(fits)), key=fits.__getitem__)
 	#Find min and max fitness
 	minf = min(fits)
 	maxf = max(fits)

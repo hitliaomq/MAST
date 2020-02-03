@@ -85,7 +85,7 @@ class PhonChecker(BaseChecker):
         allowedpath = os.path.join(dirutil.get_mast_install_path(),
                         'ingredients','programkeys','phon_allowed_keywords.py')
         allowed_list = self._phon_inphon_get_allowed_keywords(allowedpath)
-        for key, value in self.keywords['program_keys'].iteritems():
+        for key, value in self.keywords['program_keys'].items():
             if not key[0:5] == "mast_":
                 keytry = key.upper()
                 if not (keytry in allowed_list):
@@ -114,9 +114,9 @@ class PhonChecker(BaseChecker):
         myd = dict()
         myd = self._phon_inphon_get_non_mast_keywords()
         my_inphon = MASTFile()
-        for key, value in myd.iteritems():
+        for key, value in myd.items():
             my_inphon.data.append(str(key) + "=" + str(value).upper() + "\n")
-        if not ("NTYPES" in myd.keys()) and not ("MASS" in myd.keys()):
+        if not ("NTYPES" in list(myd.keys())) and not ("MASS" in list(myd.keys())):
             [nline,massline] = self._phon_inphon_get_masses()
             my_inphon.data.append(nline + "\n")
             my_inphon.data.append(massline + "\n")
@@ -171,10 +171,10 @@ class PhonChecker(BaseChecker):
         numatoms = myforces['numatoms']
         myforces['numdisp'] = numatoms * 3 #full set of all blocks
         for atom in range(1, numatoms+1):
-            if not atom in myforces['atoms'].keys():
+            if not atom in list(myforces['atoms'].keys()):
                 myforces['atoms'][atom]=dict()
             for dispct in range(1, 4):
-                if not dispct in myforces['atoms'][atom].keys():
+                if not dispct in list(myforces['atoms'][atom].keys()):
                     myforces['atoms'][atom][dispct]=dict()
                     if dispct == 1:
                         displine = "0.0001 0 0"
@@ -217,14 +217,14 @@ class PhonChecker(BaseChecker):
         if not os.path.isfile(name + "/DYNMAT"):
             raise MASTError("checker/phon_checker", "No DYNMAT found in %s." % name)
         myforces=myvc.read_my_dynamical_matrix_file(name)
-        atomlist = myforces['atoms'].keys()
+        atomlist = list(myforces['atoms'].keys())
         atomlist.sort()
         #first disp needs kfg 2
         #second disp needs kfg 4
         #third disp needs kfg 6...
         dispct=0
         for atom in atomlist:
-            displist = myforces['atoms'][atom].keys()
+            displist = list(myforces['atoms'][atom].keys())
             displist.sort()
             for disp in displist:
                 dispct = dispct + 1

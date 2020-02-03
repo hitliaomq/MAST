@@ -2,7 +2,7 @@ from MAST.structopt_stem.inp_out import read_xyz
 try:
     from MAST.structopt_stem.generate.Individual import Individual
 except NameError:
-    print "NOTE: ASE is not installed. ASE must be installed for Structopt Individual.py to work correctly."
+    print("NOTE: ASE is not installed. ASE must be installed for Structopt Individual.py to work correctly.")
 from MAST.structopt_stem.tools import find_top_layer
 
 def get_crystal_restart_indiv(Optimizer, indiv):

@@ -19,11 +19,11 @@ def enthalpyfit(indiv,Optimizer):
     try:
         outs = eval_energy(Optimizer,indiv)
         passflag = True
-    except Exception, e:
+    except Exception as e:
         logger.warn('Error in energy evaluation: {0}'.format(e), exc_info=True)
         stro = 'ERROR: Problem in Energy Evaluation'
-        print stro
-        print e
+        print(stro)
+        print(e)
         stro += '\n' + repr(e)
         os.chdir(cwd)
         f=open('problem-structures.xyz','a')
@@ -32,8 +32,8 @@ def enthalpyfit(indiv,Optimizer):
         write_xyz(f,totalsol,data='Starting structure hindex={0}'.format(indiv.history_index))
         indiv.energy = 10000
         f.close()
-        print '    Writing structure to problemstructures.xyz file. Structure (hindex) : '+indiv.history_index
-        print '    Setting individual energy to 50000.'
+        print('    Writing structure to problemstructures.xyz file. Structure (hindex) : '+indiv.history_index)
+        print('    Setting individual energy to 50000.')
         outs = [10000, starting.bulki, starting, stro]
         passflag = False
     indiv.energy = outs[0]

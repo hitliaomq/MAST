@@ -46,7 +46,7 @@ def read_output(folder,genealogytree=False,natoms=None, loggername=None):
                     i+=1
     
             f.close()
-            generation=range(len(indenergies[0]))
+            generation=list(range(len(indenergies[0])))
             clist=[]
             for i in range(len(indenergies)):
                 clist.append(numpy.random.rand(3,1))
@@ -271,7 +271,7 @@ def read_output(folder,genealogytree=False,natoms=None, loggername=None):
             f.close()
             fig=plt.figure()
             ax1=fig.add_subplot(111)
-            ax1.scatter(range(len(benergies)),benergies)
+            ax1.scatter(list(range(len(benergies))),benergies)
             plt.xlabel('Rank')
             plt.ylabel('Total Energy, eV')
             plt.title('Energy of Best Structures in Optimization')

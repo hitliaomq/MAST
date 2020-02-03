@@ -15,7 +15,7 @@ import pymatgen
 from pymatgen.analysis import ewald
 from pymatgen.io.vasp import Oszicar, Outcar, Poscar
 from pymatgen.core.structure import Structure
-import GenSC
+from . import GenSC
 '''
 class writer :
         def __init__(self, *writers) :
@@ -107,10 +107,10 @@ if __name__ == "__main__":
     import shutil, os
   
 
-    print '\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
-    print '% Defect Formation Energy vs. Madelung Potential %'
-    print '%    from MAST (MAterials Simulation Toolbox)    %'
-    print '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n'
+    print('\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+    print('% Defect Formation Energy vs. Madelung Potential %')
+    print('%    from MAST (MAterials Simulation Toolbox)    %')
+    print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n')
  
     string = os.getcwd()
     for i in range(1,len(string)+1):
@@ -123,8 +123,8 @@ if __name__ == "__main__":
     Eform_orig = dict()
     Eform_raw = dict()
     scalingsize = dfe.input_options.get_item('structure','scaling')
-    ingredients = dfe.recipe_plan.ingredients.keys()
-    for size_label in scalingsize.keys():
+    ingredients = list(dfe.recipe_plan.ingredients.keys())
+    for size_label in list(scalingsize.keys()):
         dfe = DFE('..')
         dfe._calculate_defect_formation_energies("[%s]"%scalingsize[size_label][0],tags)
         Ef = dfe.get_defect_formation_energies("[%s]"%scalingsize[size_label][0],tags)
@@ -135,17 +135,17 @@ if __name__ == "__main__":
                     struct = Poscar.from_file('../%s/POSCAR'%folder).structure
                     v_m[size_label] = CalcV_M(struct)
                     break
-    sizes = Eform_orig.keys()
+    sizes = list(Eform_orig.keys())
     sizes.sort()
     chempot = dfe.input_options.get_item('chemical_potentials')
-    conditions = chempot.keys()
-    defects = Eform_orig[sizes[0]][conditions[0]].keys()
+    conditions = list(chempot.keys())
+    defects = list(Eform_orig[sizes[0]][conditions[0]].keys())
     defects.sort()
     elements = chempot[conditions[0]]
     string=''
     eform_raw = dict()
     eform = dict()
-    for ele in elements.keys():
+    for ele in list(elements.keys()):
         string+='{0:^8}'.format('mu_%s'%ele)
     for DEF in defects:
         fp.write( "Table for defect %s:\n"%DEF )
@@ -178,13 +178,13 @@ if __name__ == "__main__":
         fp.write(''.join([i*8*(5+len(elements)) for i in '='])+"\n") 
         for con in conditions:
             mu = ""
-            for ele in elements.keys():
+            for ele in list(elements.keys()):
                 mu+="{0:^8}".format('%.2f'%chempot[con][ele])
             fp.write("{0:^8}{1:^8}{2:^8}{3:^8}{4:^8}{5:^8}\n".format(con,mu,"%.2f"%slpintcpt[con][1],"%.2f"%slpintcpt[con][0],"%.3f"%slpintcpt[con][2],"%.3f"%slpintcpt[con][3]))
             fp.write(''.join([i*8*(5+len(elements)) for i in '-'])+"\n")
         fp.write("\n")
     fp.close()
-    print (open('DFE_vs_VM.log','r').read())
+    print((open('DFE_vs_VM.log','r').read()))
 
 
     # for CON in conditions:
@@ -200,7 +200,7 @@ if __name__ == "__main__":
     efermi=np.linspace(0.0,6.0,num=100)
     for CON in conditions:
         plt.figure()
-        for DEF in charge_defects.keys():
+        for DEF in list(charge_defects.keys()):
             eforms=np.zeros(100)
             for i in range(100):
                 intercept = []

@@ -30,6 +30,6 @@ fe = en
 for sym,u in [('C',-7.371),('Si',-5.3062)]:
 	nc=len([atm for atm in structure if atm.symbol==sym])
 	fe-= float(nc)*float(u)
-print 'SiC Interstitial'
-print '    Potential Energy = '+repr(en)
-print '    Formation Energy = '+repr(fe)
+print('SiC Interstitial')
+print('    Potential Energy = '+repr(en))
+print('    Formation Energy = '+repr(fe))

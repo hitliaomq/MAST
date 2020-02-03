@@ -22,27 +22,27 @@ def crossover_switch(child1, child2, Optimizer):
     passflag = True
     scheme = Optimizer.cx_scheme
     try:
-        exec "from MAST.structopt_stem.crossover.{0} import {0}".format(scheme)
+        exec("from MAST.structopt_stem.crossover.{0} import {0}".format(scheme))
         nchild1, nchild2 = eval('{0}(child1, child2, Optimizer)'.format(scheme))
-    except NameError, e:
+    except NameError as e:
         logger.warning('Specified Crossover not one of the available options. Please check documentation and spelling! Crossover : {0}. {1}'.format(Optimizer.cx_scheme,e), exc_info=True)
-        print 'Name Error:', e
+        print('Name Error:', e)
         passflag = False
-    except Exception, e:
+    except Exception as e:
         logger.error('Error in Crossover fuction : {0}. {1}'.format(Optimizer.cx_scheme,e), exc_info=True)
-        print 'Exception: ', e
+        print('Exception: ', e)
         passflag = False
     if not passflag:
         try:
             from MAST.structopt_stem.crossover.cxtp import cxtp
             nchild1, nchild2 = cxtp(child1, child2, Optimizer)
             passflag = True
-        except NameError, e:
+        except NameError as e:
             logger.error('Error attempting to load back up cxTP Crossover.  Something very wrong!! {1}'.format(e), exc_info=True)
-            print 'CXTP Name Error: ', e
-        except Exception, e:
+            print('CXTP Name Error: ', e)
+        except Exception as e:
             logger.error('Error in cxtp Crossover {0}'.format(e), exc_info=True)
-            print 'Exception: ',e
+            print('Exception: ',e)
     if passflag:
         child1=nchild1
         child2=nchild2

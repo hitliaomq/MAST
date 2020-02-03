@@ -1,12 +1,12 @@
 '''Functions for use in optimizer'''
-import crossover
-import fingerprinting
-import fitness
-import generate
-import inp_out
-import moves
-import predator
-import selection
-import switches
-import tools
-from Optimizer import Optimizer
+from . import crossover
+from . import fingerprinting
+from . import fitness
+from . import generate
+from . import inp_out
+from . import moves
+from . import predator
+from . import selection
+from . import switches
+from . import tools
+from .Optimizer import Optimizer

@@ -36,5 +36,5 @@ if __name__ == '__main__':
         myreturn = main(arg1)
     else:
         myreturn = main()
-    print myreturn
+    print(myreturn)
     sys.exit()

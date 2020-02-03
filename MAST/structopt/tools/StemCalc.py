@@ -38,7 +38,7 @@ class ConvStem():
         else:
             self.tmp_dir=os.path.realpath(tmp_dir)
             if not os.path.isdir(self.tmp_dir):
-                os.mkdir(self.tmp_dir, 0755)
+                os.mkdir(self.tmp_dir, 0o755)
         #Get the probe function based on input parameters
         self.psf = get_probe_function(self.parameters)
         if calc_exp:

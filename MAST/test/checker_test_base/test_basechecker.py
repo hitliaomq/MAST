@@ -14,7 +14,7 @@ from MAST.utility import MASTFile
 import shutil
 import subprocess
 testname="checker_test_base"
-print "************************CURDIR:", os.getcwd()
+print("************************CURDIR:", os.getcwd())
 testdir = dirutil.get_test_dir(testname)
 
 class TestBasechecker(unittest.TestCase):
@@ -54,12 +54,12 @@ class TestBasechecker(unittest.TestCase):
         mybc=BaseChecker(allowed,name='files')
         mybc.softlink_a_file('childdir','alphatest')
         myfiles=dirutil.walkfiles("childdir")
-        print myfiles
+        print(myfiles)
         #self.assertTrue("childdir/CHGCAR" in myfiles)
         listme=subprocess.Popen("ls -l childdir",stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         listres=listme.communicate()[0]
         listme.wait()
-        print listres
+        print(listres)
         self.assertTrue("files/alphatest" in listres)
         #self.testclass.softlink_a_file(childpath, filename)
     def test_softlink_a_file_emptyparentfile(self):
@@ -68,12 +68,12 @@ class TestBasechecker(unittest.TestCase):
         mybc=BaseChecker(allowed,name='files')
         mybc.softlink_a_file('childdir','emptyfile')
         myfiles=dirutil.walkfiles("childdir")
-        print myfiles
+        print(myfiles)
         #self.assertTrue("childdir/CHGCAR" in myfiles)
         listme=subprocess.Popen("ls -l childdir",stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         listres=listme.communicate()[0]
         listme.wait()
-        print listres
+        print(listres)
         self.assertTrue("files/emptyfile" in listres)
     def test_softlink_a_file_no_parent_file(self):
         allowed=dict()
@@ -87,17 +87,17 @@ class TestBasechecker(unittest.TestCase):
         mybc=BaseChecker(allowed,name='files')
         mybc.softlink_a_file('childdir','alphatest')
         myfiles=dirutil.walkfiles("childdir")
-        print myfiles
+        print(myfiles)
         #self.assertTrue("childdir/CHGCAR" in myfiles)
         listme=subprocess.Popen("ls -l childdir",stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         listres=listme.communicate()[0]
         listme.wait()
-        print listres
+        print(listres)
         self.assertFalse("files/alphatest" in listres)
         self.assertTrue("childdir/alphatest" in myfiles)
         #self.testclass.softlink_a_file(childpath, filename)
     def test_softlink_a_file_child_softlink_exists(self):
-        print "CURDIR: ", os.getcwd()
+        print("CURDIR: ", os.getcwd())
         allowed=dict()
         allowed['name']=(str,"","Directory name")
         os.chdir("childdir")
@@ -107,12 +107,12 @@ class TestBasechecker(unittest.TestCase):
         mybc=BaseChecker(allowed,name='files')
         mybc.softlink_a_file('childdir','alphatest')
         myfiles=dirutil.walkfiles("childdir")
-        print myfiles
+        print(myfiles)
         #self.assertTrue("childdir/CHGCAR" in myfiles)
         listme=subprocess.Popen("ls -l childdir",stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         listres=listme.communicate()[0]
         listme.wait()
-        print listres
+        print(listres)
         self.assertTrue("files/another_alphatest" in listres)
         self.assertTrue("childdir/alphatest" in myfiles)
         #self.testclass.softlink_a_file(childpath, filename)
@@ -152,12 +152,12 @@ class TestBasechecker(unittest.TestCase):
         mybc=BaseChecker(allowed,name='files')
         mybc.copy_a_file('childdir','third_alphatest','alphatest')
         myfiles=dirutil.walkfiles("childdir")
-        print myfiles
+        print(myfiles)
         #self.assertTrue("childdir/CHGCAR" in myfiles)
         listme=subprocess.Popen("ls -l childdir",stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
         listres=listme.communicate()[0]
         listme.wait()
-        print listres
+        print(listres)
         self.assertTrue("files/another_alphatest" in listres)
         self.assertTrue("childdir/alphatest" in myfiles)
         #self.testclass.softlink_a_file(childpath, filename)

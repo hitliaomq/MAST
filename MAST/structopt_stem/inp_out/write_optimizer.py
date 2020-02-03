@@ -149,7 +149,7 @@ def write_optimizer(Optimizer, optfile, restart=True):
                 optfile.write("'{0}':{1},\n".format(one,optpar))
         except:
             optfile.write("'{0}':{1},\n".format(one,None))
-            print 'Cannot write parameter: {0}'.format(one)
+            print('Cannot write parameter: {0}'.format(one))
     #Write Optimizer parameters
     for one in parametersettings:
         try:
@@ -163,7 +163,7 @@ def write_optimizer(Optimizer, optfile, restart=True):
                 optfile.write("'{0}':{1},\n".format(one,optpar))
         except:
             optfile.write("'{0}':{1},\n".format(one,None))
-            print 'Cannot write parameter: {0}'.format(one)
+            print('Cannot write parameter: {0}'.format(one))
     #Write Optimizer attributes
     for one in attributelist:
         try:
@@ -177,7 +177,7 @@ def write_optimizer(Optimizer, optfile, restart=True):
                 optfile.write("'{0}':{1},\n".format(one,optpar))
         except:
             optfile.write("'{0}':{1},\n".format(one,None))
-            print 'Cannot write attribute: {0}'.format(one)
+            print('Cannot write attribute: {0}'.format(one))
     #Write Optimizer output files
     flist = []
     try:

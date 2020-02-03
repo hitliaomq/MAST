@@ -30,7 +30,7 @@ def immediate_subdirs(existdir, verbose=0):
             subdirs.append(myentry)
     subdirs.sort()
     if verbose == 1:
-        print "subdirectories:", subdirs
+        print("subdirectories:", subdirs)
     return subdirs
 
 
@@ -241,23 +241,23 @@ def search_for_metadata_file(metastring="",dirname="", metafilename="metadata.tx
         onesplit=metaitem.strip().split("=")
         metaparse[onesplit[0].strip()]=onesplit[1].strip()
     metamatch=list()
-    mustmatch=len(metaparse.keys())
+    mustmatch=len(list(metaparse.keys()))
     for mtry in allmetas:
         mokay=0
         mymeta = Metadata(metafile=mtry)
-        for metatag,metaval in metaparse.iteritems():
+        for metatag,metaval in metaparse.items():
             searchresult = mymeta.search_data(metatag)
             if searchresult[1] == metaval:
                 mokay=mokay+1
             else:
                 if verbose == 1:
-                    print metatag, searchresult
+                    print(metatag, searchresult)
         if mokay == mustmatch:
             metamatch.append(mtry)
     if verbose==1:
-        print allmetas
-        print metaparse
-        print metamatch
+        print(allmetas)
+        print(metaparse)
+        print(metamatch)
     return metamatch
 
 def list_methods(myclass=None, printout=1):
@@ -275,7 +275,7 @@ def list_methods(myclass=None, printout=1):
         parsedlist.append(myentry[0])
     if printout > 0:
         for myentry in parsedlist:
-            print myentry
+            print(myentry)
     return parsedlist
 
 def dir_is_in_scratch(mydir):

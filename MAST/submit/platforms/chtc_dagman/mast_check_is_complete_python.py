@@ -28,8 +28,8 @@ def parse_arguments():
     recipe_name = recipe_name_raw
     ing_name = ing_name_raw
     sys.stdout.write("Parse arguments.\n")
-    print "RECIPE: %s" % recipe_name
-    print "ING: %s" % ing_name
+    print("RECIPE: %s" % recipe_name)
+    print("ING: %s" % ing_name)
     return recipe_name, ing_name
 
 def main():
@@ -38,7 +38,7 @@ def main():
     my_recipe_plan = mymon.set_up_recipe_plan(recipe_name, 1)
     my_recipe_plan.ingred_to_check = ing_name
     is_complete = my_recipe_plan.complete_ingredient(ing_name)
-    print "COMPLETE: %s" % is_complete
+    print("COMPLETE: %s" % is_complete)
     if is_complete:
         my_recipe_plan.check_recipe_status()
         return 0

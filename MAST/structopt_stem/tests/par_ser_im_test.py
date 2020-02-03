@@ -28,7 +28,7 @@ parameters = {'structure' : 'Cluster',
             'allenergyfile' : True,
             'BestIndsList' : True}
 if rank==0:
-    print 'Running Serial...'
+    print('Running Serial...')
     parameters['filename'] = 'Test-Serial'
     A = Optimizer(parameters)
     A.run()
@@ -36,16 +36,16 @@ if rank==0:
 else:
     done = False
 done = MPI.COMM_WORLD.bcast(done,root=0)
-print done
+print(done)
 
 
-print 'Running parallel...'
+print('Running parallel...')
 parameters['filename'] = 'Test-Parallel'
 parameters['parallel'] = True
 A = Optimizer(parameters)
 A.algorithm_parallel()
 
-print 'Running Island_Method'
+print('Running Island_Method')
 parameters['filename'] = 'Test-IM'
 parameters['algorithm_type'] = 'Island_Method'
 parameters['migration_percent'] = 0.1

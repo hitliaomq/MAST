@@ -18,10 +18,10 @@ def main(api="", queryid=""):
             some VASP input files.
     """
     if api == "":
-        print "Must have an API key from materialsproject.org"
+        print("Must have an API key from materialsproject.org")
         return None
     if queryid == "":
-        print "No MP structure ID given. Exiting."
+        print("No MP structure ID given. Exiting.")
         return None
     rest_adapter = MPRester(api)
     entries=list()
@@ -33,10 +33,10 @@ def main(api="", queryid=""):
     
     myentry = rest_adapter.mpquery(criteria={'material_id':queryid}, properties=proplist)
     if len(myentry) == 0:
-        print "Could not find entry for %s as material_id. Trying entry_id." % queryid
+        print("Could not find entry for %s as material_id. Trying entry_id." % queryid)
         myentry = rest_adapter.mpquery(criteria={'entry_id':queryid}, properties=proplist)
     if len(myentry) == 0:
-        print "Could not find entry for %s" % queryid
+        print("Could not find entry for %s" % queryid)
         return None
     entries.extend(myentry)
 
@@ -70,7 +70,7 @@ def main(api="", queryid=""):
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print "Not enough inputs."
-        print main.__doc__
+        print("Not enough inputs.")
+        print(main.__doc__)
         sys.exit()
     main(sys.argv[1],sys.argv[2])

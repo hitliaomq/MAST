@@ -33,7 +33,7 @@ def cxtpc(ind1, ind2, Optimizer):
     indi1.set_scaled_positions(posi1)
     indi2.set_scaled_positions(posi2)
     if debug:
-        print 'DEBUG CX: CXPT1 = ',cxpoint1,'CXPT2 = ',cxpoint2
+        print('DEBUG CX: CXPT1 = ',cxpoint1,'CXPT2 = ',cxpoint2)
     ind1[0] = indi1
     ind2[0] = indi2
     return ind1, ind2

@@ -217,7 +217,7 @@ class StructureExtensions(MASTObj):
         idx = 0
         while idx < listlen:
             atomnum = numlist[idx]
-            if not atomnum in elstart.keys():
+            if not atomnum in list(elstart.keys()):
                 elstart[atomnum] = idx
             idx = idx + 1
         return elstart
@@ -381,7 +381,7 @@ class StructureExtensions(MASTObj):
             newsite=PeriodicSite(oldspecie, newcoords, mylattice)
             newsites.append(newsite)
             cct=cct+1
-        goodstruc.remove_sites(range(0,lengoodsites))
+        goodstruc.remove_sites(list(range(0,lengoodsites)))
         for cct in range(0, lengoodsites):
             goodstruc.append(newsites[cct].specie,
                 newsites[cct].frac_coords)

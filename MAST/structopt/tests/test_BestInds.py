@@ -27,4 +27,4 @@ def test_BestInds():
 
     diff = [abs(bfits[i]-bfits[i+1]) for i in range(len(bfits)-1)]
     if min(diff) < tolerance:
-        print 'Error in BestInds test'
+        print('Error in BestInds test')

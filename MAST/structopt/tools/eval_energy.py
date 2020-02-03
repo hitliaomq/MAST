@@ -92,7 +92,7 @@ def eval_energy(Optimizer, individ):
             totalsol = indiv.copy()
             nat = len(totalsol)
         else:
-            print 'WARNING: In EvalEnergy. Optimizer.structure not recognized'
+            print('WARNING: In EvalEnergy. Optimizer.structure not recognized')
             logger.warning('Optimizer.structure not recognized')
         
         # Check for atoms that are too close or out of constrained location
@@ -158,7 +158,7 @@ def eval_energy(Optimizer, individ):
                     totalsol, energy, pressure, volume, STR = run_energy_eval(totalsol, Optimizer.calc_method, Optimizer.fixed_region, Optimizer.fitness_scheme, STR, Optimizer.static_calc)
                 else:
                     totalsol, energy, pressure, volume, STR = run_energy_eval(totalsol, Optimizer.calc_method, False, Optimizer.fitness_scheme, STR)
-        except Exception, e:
+        except Exception as e:
             logger.critical('Error in energy evaluation: {0}'.format(e), exc_info=True)
             path = os.path.join(cwd,'TroubledLammps')
             if not os.path.exists(path):
@@ -329,7 +329,7 @@ def check_min_dist(totalsol, type='Defect', nat=None, min_len=0.7, STR=''):
                         totalsol.set_distance(i,j,min_len,fix=0.5)
                         STR+='--- WARNING: Atoms too close (<0.7A) - Implement Move ---\n'
     else:
-        print 'WARNING: In Check_Min_Dist in EvalEnergy: Structure Type not recognized'
+        print('WARNING: In Check_Min_Dist in EvalEnergy: Structure Type not recognized')
     return totalsol, STR
 
 def get_cluster_volume(cluster):

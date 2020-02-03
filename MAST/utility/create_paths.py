@@ -89,7 +89,7 @@ def MakeSupercell(xyz,size):
     for i in range(size[0]):
         for j in range(size[1]):
             for k in range(size[2]):
-                for ele in xyz.keys():
+                for ele in list(xyz.keys()):
                     for atom in range(len(xyz[ele])):
                         try: supercell[ele]
                         except: supercell[ele]=[]
@@ -108,8 +108,8 @@ def distance(A,B,vec):
 
 def neighbors(site,Nth,vec):  # Get nth neighbor of possible pairs of same/different site types
     pair={}
-    for i in site.keys():
-        for j in site.keys():
+    for i in list(site.keys()):
+        for j in list(site.keys()):
             val=[]
             for ii in range(len(site[i])):
                 for jj in range(len(site[j])):
@@ -124,11 +124,11 @@ def neighbors(site,Nth,vec):  # Get nth neighbor of possible pairs of same/diffe
             for k in range(len(dist)-1):
                 if dist[k+1][0]-dist[k][0]>1e-3:
                     if count==Nth: 
-                        if not j+'-'+i in pair.keys():
+                        if not j+'-'+i in list(pair.keys()):
                             pair[i+'-'+j]=[dist[k][1],dist[k][2]]
                     count=count+1
             if count==Nth: 
-                if not j+'-'+i in pair.keys():
+                if not j+'-'+i in list(pair.keys()):
                     pair[i+'-'+j]=[dist[k][1],dist[k][2]]            
             if count<Nth: return 'NaN' # Input cell too small, Nth nearest neighbor not found
     return pair            
@@ -147,13 +147,13 @@ def isline(A,M,B,vec):
     return flag
     
 def iscross(xyz,vec,site,site1,site2):  
-    for ele in xyz.keys():
+    for ele in list(xyz.keys()):
         for i in range(len(xyz[ele])): # check if the path crosses over a host atom
             coords=xyz[ele][i]
             if not distance(coords,site1,vec)==0 and not distance(coords,site2,vec)==0:
                 flag=isline(site1,coords,site2,vec)
 		if not flag==0: return 'a host lattice!'
-    for i in site.keys(): # check if the path crosses over another site
+    for i in list(site.keys()): # check if the path crosses over another site
         for j in range(len(site[i])):
             if not distance(site[i][j],site1,vec)==0 and not distance(site[i][j],site2,vec)==0: 
                 flag=isline(site1,site[i][j],site2,vec)
@@ -166,7 +166,7 @@ def get_path(site,xyz,vec,N):
         if neighbors(site,nb,vec)=='NaN':
             return 'NaN'
         else: pair=neighbors(site,nb,vec)
-        for i in pair.keys():
+        for i in list(pair.keys()):
             cross=iscross(xyz,vec,site,pair[i][0],pair[i][1])
             if cross==1:
                 path['T'].append([i,nb,pair[i][0],pair[i][1]])
@@ -193,12 +193,12 @@ def main(inp,N):
         vec=vec*size
         path=get_path(site,xyz,vec,N)         
     if False in (size==array([1,1,1])):
-        print 'The input cell size is too small to find all '+str(N)+' NN, so the size is expanded to '+str(size[0])+'x'+str(size[1])+'x'+str(size[2])+' supercell!'
+        print('The input cell size is too small to find all '+str(N)+' NN, so the size is expanded to '+str(size[0])+'x'+str(size[1])+'x'+str(size[2])+' supercell!')
     
-    print 'There are '+str(len(path['T'])+len(path['F']))+' paths in total.'
+    print('There are '+str(len(path['T'])+len(path['F']))+' paths in total.')
     if not len(path['F'])==0:
-        print 'But only '+str(len(path['T']))+' paths are possible.'
+        print('But only '+str(len(path['T']))+' paths are possible.')
         for i in range(len(path['F'])):
-            print 'Path '+path['F'][i][0]+'('+str(path['F'][i][1])+' NN) is removed because it is too close to '+path['F'][i][4]
+            print('Path '+path['F'][i][0]+'('+str(path['F'][i][1])+' NN) is removed because it is too close to '+path['F'][i][4])
      #   print 'These removed paths are labeled as POSCAR_F*.'
     return [vec,xyz,path]

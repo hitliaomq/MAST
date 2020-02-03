@@ -18,7 +18,7 @@ def metropolis(pop, nkeep, Optimizer):
 	fits = [ind.fitness for ind in pop]
 	#Identify the minimum fitness
 	minf = min(fits)
-	print fits
+	print(fits)
 	while len(newpop)<nkeep:
 		ind = random.choice(pop)
 		r=random.random()

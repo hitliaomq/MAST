@@ -47,7 +47,7 @@ class DefectFormationEnergy:
                 Ele = pmg.Structure.from_file('POSCAR').species
                 ele = dict()
                 for k in range(len(Ele)): 
-                    if not Ele[k] in ele.keys():
+                    if not Ele[k] in list(ele.keys()):
                         ele[Ele[k]] = 1
                     else: ele[Ele[k]] += 1
                 perfect[size]['ele'] = ele
@@ -57,7 +57,7 @@ class DefectFormationEnergy:
                 ele = dict()
                 os.system('rm POSCAR')
                 for k in range(len(Ele)): 
-                    if not Ele[k] in ele.keys():
+                    if not Ele[k] in list(ele.keys()):
                         ele[Ele[k]] = 1
                     else: ele[Ele[k]] += 1
                 defect[keywords[2]]['ele'][size] = ele
@@ -68,35 +68,35 @@ class DefectFormationEnergy:
     def calculate_dfe(self,GGA,HSE):
         [perfect,defect,PA] = self.read_CARs(GGA,HSE)
         Eform = defaultdict(lambda:defaultdict(lambda:defaultdict(lambda:defaultdict(defaultdict))))
-        for N in defect.keys():
-            for Q in defect[N].keys():
+        for N in list(defect.keys()):
+            for Q in list(defect[N].keys()):
                 if Q=='ele': continue
                 if Q[-2]=='p': charge = float(Q[-1])
                 elif Q[-2]=='n': charge = -float(Q[-1])
-                for S in defect[N][Q].keys():
+                for S in list(defect[N][Q].keys()):
                     eshift = self.pa.get_potential_alignment(PA[S],PA['%s_%s_%s'%(N,Q,S)])
                     if not 'HSE' in S: xc = GGA
                     else: xc = HSE
                     if not '_' in S: X = 'GGA'
                     else: X = 'HSE'
-                    for C in xc['chem_pot'].keys():
+                    for C in list(xc['chem_pot'].keys()):
                         chempot = xc['chem_pot'][C]
                         Eform[X][C][N][Q][S] = defect[N][Q][S]-perfect[S]['energy']+charge*(xc['gap']['efermi']+eshift)
                         for pe in perfect[S]['ele']:
                             Eform[X][C][N][Q][S] += perfect[S]['ele'][pe]*chempot[str(pe)]
-                        for de in defect[N]['ele'][S].keys():
+                        for de in list(defect[N]['ele'][S].keys()):
                             Eform[X][C][N][Q][S] -= defect[N]['ele'][S][de]*chempot[str(de)]
         return Eform
 
     def main(self,GGA,HSE):
         Eform = self.calculate_dfe(GGA,HSE)
-        for X in Eform.keys():
-            for C in Eform[X].keys():
+        for X in list(Eform.keys()):
+            for C in list(Eform[X].keys()):
                 fp = open('%s_%s.txt'%(C,X),'w')
-                for N in Eform[X][C].keys():
+                for N in list(Eform[X][C].keys()):
                     fp.write(N+'\n')
                     dfe = []
-                    charge = Eform[X][C][N].keys()
+                    charge = list(Eform[X][C][N].keys())
                     for i in range(len(charge)):
                         if charge[i][-2]=='p': charge[i]=int(charge[i][-1])
                         elif charge[i][-2]=='n': charge[i]=-int(charge[i][-1])
@@ -109,7 +109,7 @@ class DefectFormationEnergy:
                         Q = charge[q]
                         string = ''
                         if X=='GGA':
-                            if len(Eform.keys())==2:
+                            if len(list(Eform.keys()))==2:
                                 size=GGA['size']+['delta_E']
                             else: size=GGA['size']
                         elif X=='HSE': size=HSE['size']

@@ -61,7 +61,7 @@ def get_lattice_concentration(bulkfile,indivfile):
     for one in syms:
         numberofsym=len([atm for atm in solid if atm.symbol==one])
         nsyms.append(float(numberofsym)/float(nlatsites))
-    concentbulk=zip(syms,nsyms)
+    concentbulk=list(zip(syms,nsyms))
 
     #Get Lattice sites for individual
     onlatcon=[[-1,concentbulk]]
@@ -112,7 +112,7 @@ def get_lattice_concentration(bulkfile,indivfile):
         for one	in reducedsyms:
             numberofsym=len([atm for atm in latsyms if atm==one])
             concenti.append(float(numberofsym)/float(nlatsites))
-        concents=zip(reducedsyms,concenti)
+        concents=list(zip(reducedsyms,concenti))
         onlatcon.append([n,concents])
         n+=1
 

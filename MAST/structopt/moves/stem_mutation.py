@@ -91,7 +91,7 @@ def stem_mutation(indiv, Optimizer):
            x_pixel = remove_list_x[removecol]
            y_pixel = remove_list_y[removecol]
            removecol_atomnum = len(map_atom_pixel[x_pixel][y_pixel]) 
-       print x_pixel, y_pixel, map_atom_pixel[x_pixel][y_pixel]
+       print(x_pixel, y_pixel, map_atom_pixel[x_pixel][y_pixel])
        ind = map_atom_pixel[x_pixel][y_pixel][0]
        atomind_remove = ind
        Zmax = abs(R[ind][2]-cop)

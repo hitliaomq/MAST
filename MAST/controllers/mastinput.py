@@ -263,7 +263,7 @@ class MASTInput(MASTObj):
         elemmap = self.input_options.get_item('structure','element_map')
         if elemmap == None:
             return None
-        elkeys = elemmap.keys()
+        elkeys = list(elemmap.keys())
         elkeys.sort()
         elstr=""
         for elkey in elkeys:

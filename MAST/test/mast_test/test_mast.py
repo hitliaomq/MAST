@@ -12,9 +12,9 @@ testname ="mast_test"
 testdir = dirutil.get_test_dir(testname)
 oldcontrol = os.getenv("MAST_CONTROL")
 oldscratch = os.getenv("MAST_SCRATCH")
-print "Old directories:"
-print oldcontrol
-print oldscratch
+print("Old directories:")
+print(oldcontrol)
+print(oldscratch)
 
 
 class TestMAST(unittest.TestCase):
@@ -34,9 +34,9 @@ class TestMAST(unittest.TestCase):
 
     def test_check_indep_loop_no_loops(self):
         raise SkipTest
-        print "New paths:"
-        print os.getenv("MAST_CONTROL")
-        print os.getenv("MAST_SCRATCH")
+        print("New paths:")
+        print(os.getenv("MAST_CONTROL"))
+        print(os.getenv("MAST_SCRATCH"))
         mymast = MAST.mast.MAST(inputfile="basic_test.inp",outputfile="output.inp")
         mymast.check_independent_loops()
     def test_set_up_recipe(self):

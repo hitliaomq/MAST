@@ -28,7 +28,7 @@ def fitpred_bests(pop,Optimizer):
         except:
             Optimizer.BESTS=[]
         if len(Optimizer.BESTS) > 0:
-            idx = random.choice(range(len(Optimizer.BESTS)))
+            idx = random.choice(list(range(len(Optimizer.BESTS))))
             newpop.append(Optimizer.BESTS[idx])
             STR+='Predator: Adding in structure from Best List from position = {0} with fitness = {1}\n'.format(idx,Optimizer.BESTS[idx].fitness)
             newindices.append(len(pop)+count)

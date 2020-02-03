@@ -52,17 +52,17 @@ class TestWorkflows(unittest.TestCase):
             for myline in myfile.data:
                 if "defect_int1_stat" in myline:
                     myenergy=myline.split()[-1]
-                    self.assertEquals(myenergy, "-13.953")
+                    self.assertEqual(myenergy, "-13.953")
                     okays=okays+1
                 if "defect_vac1_stat" in myline:
                     myenergy=myline.split()[-1]
-                    self.assertEquals(myenergy, "-10.623")
+                    self.assertEqual(myenergy, "-10.623")
                     okays=okays+1
                 if "defect_sub1_stat" in myline:
                     myenergy=myline.split()[-1]
-                    self.assertEquals(myenergy, "-20.145")
+                    self.assertEqual(myenergy, "-20.145")
                     okays=okays+1
-            self.assertEquals(okays, 3)
+            self.assertEqual(okays, 3)
             return
         else:
             self.assertTrue(False)
@@ -80,12 +80,12 @@ class TestWorkflows(unittest.TestCase):
                 if myline[0:3] == "1.0":
                     myval = myline.split()[1].strip()
                     compareval = "%3.1E" % 8.09778E-7
-                    self.assertEquals("%3.1E" % float(myval),compareval)
+                    self.assertEqual("%3.1E" % float(myval),compareval)
                     #Not sure about 6.198170E-07.
                     #use results from 2014 pre structure-indexing
                     #and 2017 post-structure-indexing fixes, in savedoff
                     okays=okays+1
-            self.assertEquals(okays, 1)
+            self.assertEqual(okays, 1)
             return
         else:
             self.assertTrue(False)

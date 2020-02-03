@@ -208,13 +208,13 @@ class RecipePlan:
         """Update the children of an ingredient
         """
         upd_results=list()
-        for childname in self.update_methods[iname].keys():
+        for childname in list(self.update_methods[iname].keys()):
             upd_results.append(self.do_ingredient_methods(iname, "mast_update_children_method", childname))
         return upd_results
 
     def fast_forward_check_complete(self):
         """Check if runs are complete."""
-        for iname in self.ingredients.keys():
+        for iname in list(self.ingredients.keys()):
             if not (self.ingredients[iname] in ["C", "E", "skip"]):
                 if self.complete_ingredient(iname):
                     self.ingredients[iname] = "C"
@@ -230,7 +230,7 @@ class RecipePlan:
         """
         checklist=list()
         if self.ingred_to_check == "":
-            checklist = self.ingredients.keys()
+            checklist = list(self.ingredients.keys())
         else:
             checklist.append(self.ingred_to_check)
         for iname in checklist:
@@ -250,7 +250,7 @@ class RecipePlan:
         """
         checklist=list()
         if self.ingred_to_check == "":
-            checklist = self.ingredients.keys()
+            checklist = list(self.ingredients.keys())
         else:
             checklist.append(self.ingred_to_check)
         for iname in checklist:
@@ -299,7 +299,7 @@ class RecipePlan:
         """
         checklist=list()
         if self.ingred_to_check == "":
-            checklist = self.ingredients.keys()
+            checklist = list(self.ingredients.keys())
         else:
             checklist.append(self.ingred_to_check)
         for iname in checklist:
@@ -320,7 +320,7 @@ class RecipePlan:
         """
         checklist=list()
         if self.ingred_to_check == "":
-            checklist = self.ingredients.keys()
+            checklist = list(self.ingredients.keys())
         else:
             checklist.append(self.ingred_to_check)
         for iname in checklist:
@@ -357,7 +357,7 @@ class RecipePlan:
         """Print status and set the recipe status.
         """
 
-        total = len(self.ingredients.keys())
+        total = len(list(self.ingredients.keys()))
         totcomp=0
         totwait=0
         totproceed=0
@@ -365,7 +365,7 @@ class RecipePlan:
         totstage=0
         toterr=0
         totskip=0
-        ilist = self.ingredients.keys()
+        ilist = list(self.ingredients.keys())
         ilist.sort()
         statusfile = MASTFile()
         statusfile.data.append("#Statuses:\n")
@@ -428,7 +428,7 @@ class RecipePlan:
             Each .py's main function should then return a string as follows:
             "label (units);value"
         """
-        name_keys = self.summary_options.keys()
+        name_keys = list(self.summary_options.keys())
         mname_dict=dict()
         for name_key in name_keys:
             mname_dict[name_key] = self.summary_options[name_key]
@@ -448,12 +448,12 @@ class RecipePlan:
                         result_dict[myingred][method_key] = mymod.main(fullpath)
         summary = MASTFile()
         summary.data.append("RECIPE WORKING DIRECTORY: %s\n" % self.working_directory)
-        result_names = result_dict.keys()
+        result_names = list(result_dict.keys())
         result_names.sort()
         for result_name in result_names:
             #titlestring="t:%20s:" % result_name
             #valuestring="v:%20s:" % result_name
-            method_keys = result_dict[result_name].keys()
+            method_keys = list(result_dict[result_name].keys())
             method_keys.sort()
             for method_key in method_keys:
                 myresult = result_dict[result_name][method_key]
@@ -504,21 +504,21 @@ class RecipePlan:
         """Iterates through the ingredients dict and returns the ingredients one by one
         """
         raise MASTError(self.__class__.__name__, "This function is obsolete.")
-        for ingredient_name, ingredient_obj in self.ingredients.iteritems():
+        for ingredient_name, ingredient_obj in self.ingredients.items():
             yield ingredient_name, ingredient_obj
 
     def __iter__(self):
         """Iterates through the ingredients dict and returns the ingredients one by one
         """
         raise MASTError(self.__class__.__name__, "This function is obsolete.")
-        for ingredient_name, ingredient_obj in self.ingredients.iteritems():
+        for ingredient_name, ingredient_obj in self.ingredients.items():
             yield ingredient_obj
     def __repr__(self):
         """Print information."""
         rlines=""
         #rlines=rlines + "Recipe name: %s\n" % self.name
         rlines=rlines + "Ingredients: \n"
-        ikeys = self.ingredients.keys()
+        ikeys = list(self.ingredients.keys())
         ikeys.sort()
         for ikey in ikeys:
             rlines=rlines + "    %s\n" % ikey
@@ -549,7 +549,7 @@ class RecipePlan:
                 statsplit = statline.strip().split(':')
                 oneingred = statsplit[0].strip()
                 onestatus = statsplit[1].strip()
-                if oneingred in self.ingredients.keys():
+                if oneingred in list(self.ingredients.keys()):
                     self.ingredients[oneingred] = onestatus
                 else:
                     raise MASTError(self.__class__.__name__, "Ingredient %s is not in the original recipe's ingredients list." % oneingred)

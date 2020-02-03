@@ -46,7 +46,7 @@ class PotentialAlignment:
                     else:
                         raw_data.append(pot_line)
             elif 'ions per type' in line:
-                atom_numbers = map(int, line.split('=')[1].split())
+                atom_numbers = list(map(int, line.split('=')[1].split()))
             elif 'VRHFIN' in line:
                 atom_types.append(line.split()[1][1:-1])
             elif ' E-fermi :' in line:

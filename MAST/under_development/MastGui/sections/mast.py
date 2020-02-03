@@ -4,8 +4,8 @@
 # Maintainer: Kumaresh Visakan Murugan
 # Last updated: 2014-01-01
 ##############################################################
-from Tkinter import *
-import Tkinter as ttk
+from tkinter import *
+import tkinter as ttk
 
 
 class MastSection:
@@ -40,7 +40,7 @@ class MastSection:
 
         #display contents if present
         if self.has_summary:
-            for p_name, p_value in self.window_properties.iteritems():
+            for p_name, p_value in self.window_properties.items():
                 label_key = Label(self.summary_frame, text=p_name.upper() + " : ")
                 label_key.grid(row=0, column=0, sticky=E)
                 label_value = Label(self.summary_frame, text=p_value[0])
@@ -70,7 +70,7 @@ class MastSection:
         mast_frame.grid_columnconfigure(0, weight=1)
         mast_frame.grid_rowconfigure(1, weight=1)
 
-        for p_name, p_value in self.window_properties.iteritems():
+        for p_name, p_value in self.window_properties.items():
             label = Label(mast_frame, text=p_name.upper())
             label.grid(row=0, column=0, sticky=E, pady=10)
             text_val = StringVar()
@@ -85,7 +85,7 @@ class MastSection:
         save_button.grid(row=1, column=1, sticky=E, padx=20, pady=10)
 
     def print_value(self):
-        for p_name, p_value in self.window_properties.iteritems():
+        for p_name, p_value in self.window_properties.items():
             self.window_properties[p_name][0] = p_value[1].get()
         self.mast_window.destroy()
         self.mast_window = None

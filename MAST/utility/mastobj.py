@@ -59,10 +59,10 @@ class MASTObj(object):
         """
         keywords = dict()
 
-        for key, value in self.allowed_keys.items():
+        for key, value in list(self.allowed_keys.items()):
             keywords[key] = value[1]
 
-        for key, value in kwargs.items():
+        for key, value in list(kwargs.items()):
             if key not in self.allowed_keys:
                 error = 'Keyword %s for %s object not found' % \
                                    (key, self.__class__.__name__)
@@ -84,7 +84,7 @@ class MASTObj(object):
         """Prints a help message listing all the allowed keywords and any relevant information"""
         if (keyword == 'all'):
             string = ('%-20s%-20s%-20s%s\n' % ('Keyword', 'Type', 'Default', 'Comment'))
-            for key, value in self.allowed_keys.items():
+            for key, value in list(self.allowed_keys.items()):
                 string += ('%-20s%-20s%-20s%s\n' % (key, str(value[0]), str(value[1]), value[2]))
-            print string
+            print(string)
 

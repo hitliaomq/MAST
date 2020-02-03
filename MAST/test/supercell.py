@@ -1,10 +1,10 @@
 import pymatgen as mg
 from pymatgen.core.structure import Structure
 
-filename=raw_input('file name:')
-l=raw_input('x scale:')
-m=raw_input('y scale:')
-n=raw_input('z scale:')
+filename=input('file name:')
+l=input('x scale:')
+m=input('y scale:')
+n=input('z scale:')
 
 struct=mg.read_structure(filename)
 Structure.make_supercell(struct,[l,m,n])

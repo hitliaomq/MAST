@@ -128,10 +128,10 @@ class DefectFormationEnergyIngredient(DefectFormationEnergy):
     def calculate_defect_formation_energies(self):
         """Calculate all defect formation energies"""
         chempot = self.input_options.get_item('chemical_potentials')
-        for conditions, potentials in chempot.items():
-            print 'Conditions:  %s' % conditions.upper()
+        for conditions, potentials in list(chempot.items()):
+            print('Conditions:  %s' % conditions.upper())
             self.e_defects[conditions] = dict()
-            for mylabel in self.dirs.keys():
+            for mylabel in list(self.dirs.keys()):
                 self.calculate_single_defect_formation_energy(mylabel, conditions, potentials)
 
 
@@ -175,7 +175,7 @@ class DefectFormationEnergyIngredient(DefectFormationEnergy):
         structure = self.get_structure(ddir)
         if (label not in self.e_defects[conditions]):
             self.e_defects[conditions][label] = list()
-        print 'Calculating DFEs for defect %s with charge %3i.' % (label, charge)
+        print('Calculating DFEs for defect %s with charge %3i.' % (label, charge))
         def_species = dict()
         for site in structure.sites:
             if (site.specie not in def_species):
@@ -186,7 +186,7 @@ class DefectFormationEnergyIngredient(DefectFormationEnergy):
         # Find the differences in the number of each atom type
         # between the perfect and the defect
         struct_diff = dict()
-        for specie, number in def_species.items():
+        for specie, number in list(def_species.items()):
             try:
                 nperf = perf_species[str(specie)]
             except KeyError:
@@ -198,21 +198,21 @@ class DefectFormationEnergyIngredient(DefectFormationEnergy):
 
         # Calculate the base DFE energy
         e_def = energy - e_perf # E_defect - E_perf
-        print "TTM DEBUG: e_def: ", e_def
-        for specie, number in struct_diff.items():
+        print("TTM DEBUG: e_def: ", e_def)
+        for specie, number in list(struct_diff.items()):
             mu = potentials[str(specie)]
             #print str(specie), mu, number
             e_def -= (number * mu)
-            print "TTM DEBUG: number: ", number
-            print "TTM DEBUG: mu: ", mu
-            print "TTM DEBUG: e_def -= number*mu: ", e_def
-        print "TTM DEBUG: charge: ", charge
-        print "TTM DEBUG: alignment: ", alignment
-        print "TTM DEBUG: efermi: ", efermi
+            print("TTM DEBUG: number: ", number)
+            print("TTM DEBUG: mu: ", mu)
+            print("TTM DEBUG: e_def -= number*mu: ", e_def)
+        print("TTM DEBUG: charge: ", charge)
+        print("TTM DEBUG: alignment: ", alignment)
+        print("TTM DEBUG: efermi: ", efermi)
         e_def += charge * (efermi + alignment) # Add in the shift here!
-        print "TTM DEBUG: e_def += charge*(efermi + alignment): ", e_def
+        print("TTM DEBUG: e_def += charge*(efermi + alignment): ", e_def)
         #print '%-15s%-5i%12.5f%12.5f%12.5f%12.5f' % (label.split('_')[1], charge, energy, e_perf, efermi, alignment)
-        print 'DFE = %f' % e_def
+        print('DFE = %f' % e_def)
         self.e_defects[conditions][label].append( (charge, e_def) )
         return
 
@@ -231,7 +231,7 @@ class DefectFormationEnergyIngredient(DefectFormationEnergy):
             grepfermi = fileutil.grepme("%s/OUTCAR" % abspath, "E-fermi")
             lastfermi=grepfermi[-1]
             fermi = float(lastfermi.split()[2])
-            print "TTM DEBUG LAST FERMI: ", fermi
+            print("TTM DEBUG LAST FERMI: ", fermi)
             return fermi
         elif ('vasprun.xml' in os.listdir(abspath)):
             return Vasprun('%s/vasprun.xml' % abspath).efermi
@@ -257,10 +257,10 @@ class DefectFormationEnergyIngredient(DefectFormationEnergy):
         if ('OUTCAR' in os.listdir(abs_path_perf)):
             perfect_info = pa.read_outcar('%s/%s' % (abs_path_perf, 'OUTCAR'))
             defect_info = pa.read_outcar('%s/%s' % (abs_path_def, 'OUTCAR'))
-            print "TTM DEBUG: Perfect PA info: ", perfect_info
-            print "TTM DEBUG: Defected PA info: ", defect_info
+            print("TTM DEBUG: Perfect PA info: ", perfect_info)
+            print("TTM DEBUG: Defected PA info: ", defect_info)
             pa_output = pa.get_potential_alignment(perfect_info, defect_info)
-            print "TTM DEBUG: PA output: ", defect_info
+            print("TTM DEBUG: PA output: ", defect_info)
             return pa_output
 
     def get_defect_formation_energies(self):
@@ -282,18 +282,18 @@ class DefectFormationEnergyIngredient(DefectFormationEnergy):
             self._calculate_defect_formation_energies()
 
         myfile = MASTFile()
-        for conditions, defects in self.e_defects.items():
+        for conditions, defects in list(self.e_defects.items()):
             myfile.data.append('\n\nDefect formation energies for %s conditions.\n' % conditions.upper())
             myfile.data.append('%-20s | %10s\n' % ('Defect', 'DFE'))
             myfile.data.append('---------------------------------\n')
-            for defect, energies in defects.items():
+            for defect, energies in list(defects.items()):
                 for energy in energies:
                     myfile.data.append('%-14s(q=%2i) | %8.4f\n' % (defect, energy[0], energy[1]))
                 myfile.data.append(str()) # Add a blank line here
             myfile.data.append('---------------------------------\n')
         myfile.to_file(os.path.join(os.getcwd(),"dfe.txt"))
         for line in myfile.data:
-            print line.strip()
+            print(line.strip())
             self.logger.info(line.strip())
 
 

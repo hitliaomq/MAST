@@ -2,7 +2,7 @@ import copy
 try:
     from ase import Atom, Atoms
 except ImportError:
-    print "NOTE: ASE is not installed. To use Structopt Individual.py, ASE must be installed."
+    print("NOTE: ASE is not installed. To use Structopt Individual.py, ASE must be installed.")
 from MAST.structopt_stem.inp_out.write_individual import write_individual
 
 class Individual(object):
@@ -57,11 +57,11 @@ class Individual(object):
     def __setattr__( self, attr, value ):
         super( Individual, self ).__setattr__( attr, value )
     
-    def next(self):
+    def __next__(self):
         if self.index > len(self.data):
             raise StopIteration
         self.index=self.index+1
-        print "self.index",self.index
+        print("self.index",self.index)
         return self.data[self.index]
     
     def len(self):

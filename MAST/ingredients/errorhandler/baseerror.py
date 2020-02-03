@@ -69,9 +69,9 @@ class BaseError(MASTObj):
         myerror = ""
         os.chdir(mydir)
         self.logger.info("Checking errors for: %s" % mydir)
-        for hname in handlerdict.keys():
+        for hname in list(handlerdict.keys()):
             hinputs=""
-            if hname in handler_input_d.keys():
+            if hname in list(handler_input_d.keys()):
                 hinputs = handler_input_d[hname]
             else: #ignore errors whose inputs are not listed
                 self.logger.warning("Skipping error check %s because no input was specified." % hname)
@@ -97,7 +97,7 @@ class BaseError(MASTObj):
             if myerror.check():
                 self.logger.error("%s Error found in directory %s!" % (hname, self.keywords['name']))
                 errct = errct + 1
-                if "mast_auto_correct" in self.keywords['program_keys'].keys():
+                if "mast_auto_correct" in list(self.keywords['program_keys'].keys()):
                     if str(self.keywords['program_keys']['mast_auto_correct']).strip()[0].lower() == 'f':
                         self.logger.error("mast_auto_correct is false for this ingredient. Skipping correction.")
                         continue

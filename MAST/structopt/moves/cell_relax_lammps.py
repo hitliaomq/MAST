@@ -24,7 +24,7 @@ def cell_relax_lammps(indiv, Optimizer):
         try:
             parameters['pair_coeff'][0] += '\nfix 1 all box/relax iso 0.0 vmax 0.001'
         except KeyError:
-            print 'WARNING: LAMMPS Cell relax move trouble with potential. SKIPPING'
+            print('WARNING: LAMMPS Cell relax move trouble with potential. SKIPPING')
             Optimizer.output.write('WARNING: Minimizer quit.  LAMMPS Cell relax move trouble with potential - Box relaxation unsuccessful\n')
             passflag=False
     if passflag:

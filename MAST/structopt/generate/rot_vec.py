@@ -6,7 +6,7 @@ from math import pi as pi
 import random
 
 def rot_vec(pos_list, al, be, ga):
-   print 'HKK:: you ar in rot_vec' 
+   print('HKK:: you ar in rot_vec') 
 #   '''
 #   vec=np.array([0, 1, 0])
 #   al=pi/2
@@ -20,5 +20,5 @@ def rot_vec(pos_list, al, be, ga):
    rot_mat=np.array([[cos(be)*cos(ga), cos(al)*sin(ga)+sin(al)*sin(be)*cos(ga),sin(al)*sin(ga)-cos(al)*sin(be)*cos(ga)], [-cos(be)*sin(ga), cos(al)*cos(ga)-sin(al)*sin(be)*sin(ga),sin(al)*cos(ga)+cos(al)*sin(be)*sin(ga)],[sin(be), -sin(al)*cos(be),cos(al)*cos(be)]])
    rotvec=np.dot(rot_mat,vec)
    rotvec=rotvec.tolist()
-   print 'final', rotvec
+   print('final', rotvec)
    return rotvec

@@ -55,12 +55,12 @@ class TestRecipetemplateparser(unittest.TestCase):
         output_parsed = MASTFile()
         output_parsed.data = list(parsed_lines)
         output_parsed.to_file('workdir/personal_recipe_test_output.txt')
-        self.assertEquals(len(myrtp.chunks),5)
+        self.assertEqual(len(myrtp.chunks),5)
         #mypr = MASTFile(pr)
         #for line in mypr.data:
         #    print line.rstrip()
         compare_pr = MASTFile(os.path.join(testdir,'compare','personal_recipe_test_output.txt'))
-        self.assertEquals(parsed_lines, compare_pr.data)
+        self.assertEqual(parsed_lines, compare_pr.data)
         #self.testclass.parse()
 
     def test_parse_chunk(self):

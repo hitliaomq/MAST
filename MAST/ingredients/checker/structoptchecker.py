@@ -53,7 +53,7 @@ class StructoptChecker(BaseChecker):
                         'ingredients', 
                         'programkeys','structopt_allowed_keywords.py')
         allowed_list = self._structopt_get_allowed_keywords(allowedpath)
-        for key, value in self.keywords['program_keys'].iteritems():
+        for key, value in self.keywords['program_keys'].items():
             if not key[0:5] == "mast_":
                 keytry = key
                 if not (keytry in allowed_list):
@@ -74,13 +74,13 @@ class StructoptChecker(BaseChecker):
                                 #Leave remaining as strings
                                 value = value.strip()
                             except:
-                                print 'Trouble with input line: ', value
+                                print('Trouble with input line: ', value)
                     input_dict[keytry]=value
         if 'structopt_input_file' in input_dict:
             self.logger.info('Requested read from StructOpt input file at : {0}'.format(input_dict['structopt_input_file']))
             new_dict = inp_out.read_parameter_input(input_dict['structopt_input_file'],False)
             #Overwrite parameters from input file with parameters in mast input
-            for key, value in input_dict.iteritems():
+            for key, value in input_dict.items():
                 new_dict[key] = value
             input_dict = new_dict
             self.logger.info('New input_dict as read from StructOpt input file : {0}'.format(input_dict))
@@ -387,9 +387,9 @@ class StructoptChecker(BaseChecker):
                 self.flip_status_back()
                 os.chdir(ingpath)
                 Opti.write()
-            print "Submitting from submission list."
+            print("Submitting from submission list.")
             self.submit_from_submission_list()
-            print "Clearing submission list."
+            print("Clearing submission list.")
             queue_commands.clear_submission_list()
 #             mycwd=os.getcwd()
 #             os.chdir(dirutil.get_mast_control_path())
@@ -960,15 +960,15 @@ class StructoptChecker(BaseChecker):
                     path_oszicar = os.path.abspath('%s/VASP_replace/OSZICAR' % os.getenv("HOME"))
                     path_outcar = os.path.abspath('%s/VASP_replace/OUTCAR' % os.getenv("HOME"))
                     if count_opt_num >= 2:
-                        print 'HKK :: Evaluated following structure more than 3 times. Copying low fitness files'
-                        print 'HKK :: Checking Subfolders,',subfolder, 'Forced to complete'
+                        print('HKK :: Evaluated following structure more than 3 times. Copying low fitness files')
+                        print('HKK :: Checking Subfolders,',subfolder, 'Forced to complete')
                         shutil.copy(path_oszicar, subfolder)
                         shutil.copy(path_outcar, subfolder)
                         allcomplete = allcomplete + 1
                     else:
                         mychoping = ChopIngredient(name=subfolder, program=keywords['program'], program_keys = self.keywords['program_keys'],structure=self.keywords['structure'])
                         mychoping.copy_file_no_name_validation(copyfrom="CONTCAR", copyto="POSCAR")
-                        print 'HKK :: Checking Subfolders,',subfolder, 'Incomplete'
+                        print('HKK :: Checking Subfolders,',subfolder, 'Incomplete')
                         mychoping.run_singlerun()
             if allcomplete == len(subfolders) and (allcomplete > 0):
                 return True
@@ -1071,7 +1071,7 @@ class StructoptChecker(BaseChecker):
         control=dirutil.get_mast_control_path()
         submitlist=os.path.join(control, "submitlist")
         if not os.path.isfile(submitlist):
-            print "No submission list at %s" % submitlist
+            print("No submission list at %s" % submitlist)
             return
         submitfile=MASTFile(submitlist)
         #print 'HKK:: submitfile',submitfile
@@ -1087,7 +1087,7 @@ class StructoptChecker(BaseChecker):
                 continue
             if not os.path.isdir(subentry):
                 continue
-            elif subentry in submitted.keys():
+            elif subentry in list(submitted.keys()):
                 continue
             lastjobid = queue_commands.get_last_jobid(subentry)
             jstatus="not yet determined"

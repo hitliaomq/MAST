@@ -36,7 +36,7 @@ class TestEneVsVm(unittest.TestCase):
         struct = Poscar.from_file("POSCAR").structure
         dummystruct = Structure(struct.lattice,["F-"],[[0,0,0]])
         V_M_Ewald = EwaldSummation(dummystruct)
-        print "Recip:", V_M_Ewald._recip
-        print "Real:", V_M_Ewald._real
-        print "Point:", V_M_Ewald._point #differs from previous version due to pymatgen removing incorrect jellium term (pymatgen commit a79a351398f2d34846f5eb8f682977bc85bad0d9)
+        print("Recip:", V_M_Ewald._recip)
+        print("Real:", V_M_Ewald._real)
+        print("Point:", V_M_Ewald._point) #differs from previous version due to pymatgen removing incorrect jellium term (pymatgen commit a79a351398f2d34846f5eb8f682977bc85bad0d9)
         self.assertEqual(V_M,round(CalcV_M(struct),5)) 

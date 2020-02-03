@@ -23,7 +23,7 @@ def main():
     elif myopt.mode == "zip":
         zip_only_changed()
     else:
-        print "No option selected. Exiting."
+        print("No option selected. Exiting.")
     return
 
 def save_old_status_files():
@@ -120,7 +120,7 @@ def get_new_change_status_files():
             csfile = os.path.join(mastscratch, srecdir, singreddir, "change_status.txt")
             if os.path.isfile(csfile):
                 if not "%s/%s" % (srecdir, singreddir) in olddirs:
-                    if not srecdir in rdict.keys():
+                    if not srecdir in list(rdict.keys()):
                         rdict[srecdir]=dict()
                     rdict[srecdir]["MAIN"]="changed"
                     rdict[srecdir][singreddir]="send"
@@ -137,7 +137,7 @@ def get_new_mast_error_files():
     for srecdir in srecdirs:
         merrfile = os.path.join(mastscratch, srecdir, "MAST_ERROR")
         if os.path.isfile(merrfile):
-            if not srecdir in rdict.keys():
+            if not srecdir in list(rdict.keys()):
                 rdict[srecdir] = dict()
             rdict[srecdir]["MAIN"]="changed"
     return rdict
@@ -194,37 +194,37 @@ def merge_dictionaries_and_write_recipechangefile():
     rdict_error_files = get_new_mast_error_files()
     rchangefile = MASTFile()
     rdict=dict()
-    for recdir in rdict_status.keys():
-        if not recdir in rdict.keys():
+    for recdir in list(rdict_status.keys()):
+        if not recdir in list(rdict.keys()):
             rdict[recdir]=dict()
-        for ingreddir in rdict_status[recdir].keys():
-            if not ingreddir in rdict[recdir].keys():
+        for ingreddir in list(rdict_status[recdir].keys()):
+            if not ingreddir in list(rdict[recdir].keys()):
                 rdict[recdir][ingreddir] = rdict_status[recdir][ingreddir]
-    for recdir in rdict_change_status.keys():
-        if not recdir in rdict.keys():
+    for recdir in list(rdict_change_status.keys()):
+        if not recdir in list(rdict.keys()):
             rdict[recdir]=dict()
-        for ingreddir in rdict_change_status[recdir].keys():
-            if not ingreddir in rdict[recdir].keys():
+        for ingreddir in list(rdict_change_status[recdir].keys()):
+            if not ingreddir in list(rdict[recdir].keys()):
                 rdict[recdir][ingreddir] = rdict_change_status[recdir][ingreddir]
             else:
                 if rdict_change_status[recdir][ingreddir] == "send":
                     rdict[recdir][ingreddir] = "send" #update to send
-    for recdir in rdict_new_change_status.keys():
-        if not recdir in rdict.keys():
+    for recdir in list(rdict_new_change_status.keys()):
+        if not recdir in list(rdict.keys()):
             rdict[recdir]=dict()
-        for ingreddir in rdict_new_change_status[recdir].keys():
-            if not ingreddir in rdict[recdir].keys():
+        for ingreddir in list(rdict_new_change_status[recdir].keys()):
+            if not ingreddir in list(rdict[recdir].keys()):
                 rdict[recdir][ingreddir] = rdict_new_change_status[recdir][ingreddir]
             else:
                 if rdict_new_change_status[recdir][ingreddir] == "send":
                     rdict[recdir][ingreddir] = "send" #update to send
-    for recdir in rdict_error_files.keys():
-        if not recdir in rdict.keys():
+    for recdir in list(rdict_error_files.keys()):
+        if not recdir in list(rdict.keys()):
             rdict[recdir]=dict()
-        for ingreddir in rdict_error_files[recdir].keys():
+        for ingreddir in list(rdict_error_files[recdir].keys()):
             rdict[recdir][ingreddir] = rdict_error_files[recdir][ingreddir]
-    for rdir in rdict.keys():
-        for key, value in rdict[rdir].iteritems():
+    for rdir in list(rdict.keys()):
+        for key, value in rdict[rdir].items():
             rchangefile.data.append("%s:%s:%s\n" % (rdir,key,value))
     mastcontrol=dirutil.get_mast_control_path()
     rchangefile.to_file(os.path.join(mastcontrol,"recipechangefile.txt"))

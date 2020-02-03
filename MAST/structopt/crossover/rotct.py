@@ -45,11 +45,11 @@ def rotct(ind1, ind2, Optimizer):
         n+=1
     indi2.rotate(rax,a=rang,center='COM', rotate_cell=False)
     if debug: 
-        print 'Group1 size = ', len(group1)
-        print 'Position = ', [0,0,0]
-        print 'Angle = ', rang
-        print 'Axis = ', rax
-        print 'Number of tries = ', n+1
+        print('Group1 size = ', len(group1))
+        print('Position = ', [0,0,0])
+        print('Angle = ', rang)
+        print('Axis = ', rax)
+        print('Number of tries = ', n+1)
     #Apply concentration forcing if needed
     group2 = Atoms(cell=ind2[0].get_cell(),pbc=ind2[0].get_pbc())
     indices2 = []
@@ -120,7 +120,7 @@ def rotct(ind1, ind2, Optimizer):
         write_xyz(Optimizer.debugfile, other1,'other1')
         write_xyz(Optimizer.debugfile, group2,'group2')
         write_xyz(Optimizer.debugfile, other2,'other2')
-        print 'Length of group1 = ',len(group1),'Length of group2',len(group2)
+        print('Length of group1 = ',len(group1),'Length of group2',len(group2))
     
     
     #DEBUG: Check structure of atoms exchanged

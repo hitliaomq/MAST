@@ -27,7 +27,7 @@ def get_O2_entropy(temp,pressure):
     temp_mod = temp/1000
     
     if temp < 100:
-        print 'Low Temperature!'
+        print('Low Temperature!')
         return
     if temp >= 100 and temp < 700:
         A = 31.32234
@@ -54,7 +54,7 @@ def get_O2_entropy(temp,pressure):
         F = 5.337651
         G = 237.6185
     if temp > 6000:
-        print 'High Temperature!'
+        print('High Temperature!')
         return
     #Entropy of oxygen gas (J/mol*K, 298~6000K): Shomate Equation
     S_O2 = ( A*math.log(temp_mod) + B*temp_mod + C*math.pow(temp_mod,2)/2 + D*math.pow(temp_mod,3)/3 - (E/(2*math.pow(temp_mod,2))) + G )/eV
@@ -78,7 +78,7 @@ def get_O2_entropy(temp,pressure):
     #print S_O2
     
 #    print 'Temp = ', temp, ' [K], Pres = ', pressure, ' [bar], Entropy = ', S_O2, '[eV].'
-    print 'Temp = ', temp, ' [K], Entropy = ', S_O2, '[eV].'  
+    print('Temp = ', temp, ' [K], Entropy = ', S_O2, '[eV].')  
     #return S_O2
 
 #get_O2_entropy(1000,1)
@@ -92,7 +92,7 @@ step_size_press = ( max_press - min_press )/steps
 temp_list = []
 press_list = []
 
-for i in xrange(0,steps+1):
+for i in range(0,steps+1):
     temp_list.append(min_temp + step_size_temp*i)
     press_list.append(min_press + step_size_press*i)
 

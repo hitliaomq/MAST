@@ -105,7 +105,7 @@ class BaseIngredient(MASTObj):
             self.metafile.write_data('ingredient type', self.__class__.__name__)
             #if 'mast_charge' in self.keywords['program_keys']:
             #    self.metafile.write_data('charge', self.keywords['program_keys']['mast_charge'])
-            for key, value in self.meta_dict.items():
+            for key, value in list(self.meta_dict.items()):
                 self.metafile.write_data(key, value)
 
         except OSError:
@@ -136,7 +136,7 @@ class BaseIngredient(MASTObj):
                     self.logger.error("Ingredient directory already has 5 error zip files. A manual look is required.")
                     self.change_my_status("E")
                     return False
-                if 'mast_auto_correct' in self.keywords['program_keys'].keys():
+                if 'mast_auto_correct' in list(self.keywords['program_keys'].keys()):
                     if str(self.keywords['program_keys']['mast_auto_correct']).strip()[0].lower() == 'f':
                         self.change_my_status("E")
                     else:

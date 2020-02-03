@@ -152,7 +152,7 @@ def setup_calculator(Optimizer):
                 logger.warn('No LAMMPS potential recognized. Setting up LAMMPS calculator with Lennard Jones potential')
             parameters={}
             filesL=None
-            print 'WARNING: No LAMMPS potential recognized. Assuming Lennard Jones Potential'
+            print('WARNING: No LAMMPS potential recognized. Assuming Lennard Jones Potential')
         if Optimizer.lammps_min != None:
             if debug:
                 logger.info('Adding local energy minimizer to LAMMPS calculator')

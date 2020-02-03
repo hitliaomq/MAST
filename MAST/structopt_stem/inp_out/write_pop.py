@@ -1,7 +1,7 @@
 try:
     from ase import Atoms, Atom
 except ImportError:
-    print "NOTE: ASE is not installed. To use Structopt write_pop.py, ASE must be installed."
+    print("NOTE: ASE is not installed. To use Structopt write_pop.py, ASE must be installed.")
 from MAST.structopt_stem.inp_out.write_xyz import write_xyz
 
 def write_pop(Optimizer,pop):

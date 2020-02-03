@@ -27,7 +27,7 @@ class TestInput(unittest.TestCase):
         raise SkipTest
         myip = InputParser(inputfile='mast.inp')
         myoptions=myip.parse()
-        print myoptions
+        print(myoptions)
         self.assertEqual(True,True)
 
     def test_inputpythoncreator(self):

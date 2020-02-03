@@ -22,11 +22,11 @@ def stem_cost_rotation(indiv, Optimizer):
     cwd = os.getcwd()
     try:
         outs = eval_energy(Optimizer,indiv)
-    except Exception, e:
+    except Exception as e:
         logger.warn('Error in energy evaluation: {0}'.format(e), exc_info=True)
         stro = 'ERROR: Problem in Energy Evaluation'
-        print stro
-        print e
+        print(stro)
+        print(e)
         stro += '\n' + repr(e)
         os.chdir(cwd)
         f=open('problem-structures.xyz','a')
@@ -35,8 +35,8 @@ def stem_cost_rotation(indiv, Optimizer):
         write_xyz(f,totalsol,data='Starting structure hindex={0}'.format(indiv.history_index))
         indiv.energy = 10000
         f.close()
-        print '    Writing structure to problemstructures.xyz file. Structure (hindex) : '+indiv.history_index
-        print '    Setting individual energy to 50000.'
+        print('    Writing structure to problemstructures.xyz file. Structure (hindex) : '+indiv.history_index)
+        print('    Setting individual energy to 50000.')
         outs = [10000, starting.bulki, starting, stro]
     indiv.energy = outs[0]
     stro=outs[3]
@@ -46,8 +46,8 @@ def stem_cost_rotation(indiv, Optimizer):
     if abs(fit) > Optimizer.energy_cutoff_factor*(len(indiv[0])+len(indiv.bulki)):
         message = 'Warning: Found oddly large energy from Lammps in structure HI={0}'.format(indiv.history_index)
         logger.warn(message)
-        print message
-        print '    Setting fitness to 10000'
+        print(message)
+        print('    Setting fitness to 10000')
     if math.isnan(fit):
         logger.warn('Found NAN energy structure HI={0}'.format(indiv.history_index))
         indiv.energy = 10000
@@ -87,5 +87,5 @@ def get_z_directions(atoms):
 def find_optimal_psi_degree(atoms, debug):
     chisq = Optimizer.stemcalc.run(indiv[0])
     if debug:
-        print angle
+        print(angle)
     return chisq, atomsn

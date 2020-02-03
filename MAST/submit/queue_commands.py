@@ -63,7 +63,7 @@ def submit_from_submission_list():
     """
     submitlist=os.path.join(mast_control, "submitlist")
     if not os.path.isfile(submitlist):
-        print "No submission list at %s" % submitlist
+        print("No submission list at %s" % submitlist)
         return
     submitfile=MASTFile(submitlist)
     subentries=list(submitfile.data)
@@ -78,7 +78,7 @@ def submit_from_submission_list():
             continue
         if not os.path.isdir(subentry):
             continue
-        elif subentry in submitted.keys():
+        elif subentry in list(submitted.keys()):
             continue
         lastjobid = get_last_jobid(subentry)
         jstatus="not yet determined"
@@ -95,9 +95,9 @@ def submit_from_submission_list():
         if submittedokay:
             submitted[subentry]=status
         else: #probably ran into queue limit or account limit
-            print "   "
-            print "No further MAST submissions for this cycle of the mast command."
-            print "Check $MAST_CONTROL/submitlist for remaining jobs."
+            print("   ")
+            print("No further MAST submissions for this cycle of the mast command.")
+            print("Check $MAST_CONTROL/submitlist for remaining jobs.")
             break
     print_submitted_dict(submitted)
     os.chdir(mast_control)
@@ -166,11 +166,11 @@ def clear_submission_list(submitted=""):
         return
     submitlist=os.path.join(mast_control, "submitlist")
     if not os.path.isfile(submitlist):
-        print "No submission list at %s" % submitlist
+        print("No submission list at %s" % submitlist)
         return
     submitfile=MASTFile(submitlist)
     retain_these = list()
-    submittedlist = submitted.keys()
+    submittedlist = list(submitted.keys())
     for subline in submitfile.data:
         if subline.strip() in submittedlist: #was submitted successfully
             pass
@@ -197,7 +197,7 @@ def print_submitted_dict(submitted):
     else:
         subprintfile=MASTFile()
     subrecentfile=MASTFile()
-    keylist=submitted.keys()
+    keylist=list(submitted.keys())
     keylist.sort()
     subprintfile.data.append(time.asctime()+ "\n")
     subrecentfile.data.append(time.asctime()+ "\n")
@@ -236,7 +236,7 @@ def extract_submitted_jobid(string):
     try:
         myjobid = my_queue_commands.extract_submitted_jobid(string)
     except (ValueError, TypeError):
-        print "Exception for submission:"
+        print("Exception for submission:")
         traceback.print_exc(file=sys.stdout)
         return None
     return myjobid

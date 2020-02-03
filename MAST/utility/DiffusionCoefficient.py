@@ -142,7 +142,7 @@ class ParsingInputFiles(object):
             return Hdir[keyword]
         except TypeError:
             ene = {}
-            for key in Hdir[keyword].keys():
+            for key in list(Hdir[keyword].keys()):
                 try: 
                     ene[key]=float(Hdir[keyword][key])
                 except ValueError: 
@@ -167,7 +167,7 @@ class ParsingInputFiles(object):
         enebarr = dict()
         enesaddle = dict()
         eneend = dict()
-        for freq in Edir.keys():
+        for freq in list(Edir.keys()):
             if not len(Edir[freq])==1: 
                 try: enesaddle[freq]=float(Edir_saddle[freq])
                 except ValueError:
@@ -176,7 +176,7 @@ class ParsingInputFiles(object):
                     pt = -1
                     while not 'E0' in line[pt]: pt = pt - 1
                     enesaddle[freq] = float(self.getinfo(line[pt])[4])
-        for freq in Edir.keys():
+        for freq in list(Edir.keys()):
             if not len(Edir[freq])==1: 
                 try: eneend[freq]=float(Edir_min[freq])
                 except ValueError:
@@ -185,7 +185,7 @@ class ParsingInputFiles(object):
                     pt = -1
                     while not 'E0' in line[pt]: pt = pt - 1
                     eneend[freq] = float(self.getinfo(line[pt])[4])
-        for freq in Edir.keys():
+        for freq in list(Edir.keys()):
             if len(Edir[freq])==1: enebarr[freq] = Edir[freq][0]
             else: enebarr[freq] = enesaddle[freq] - eneend[freq] 
         return enebarr
@@ -200,7 +200,7 @@ class ParsingInputFiles(object):
         v = dict()
         v_num = dict()
         v_denom = dict()
-        for freq in vdir.keys():
+        for freq in list(vdir.keys()):
             if len(vdir[freq])==1: v[freq] = vdir[freq][0]
             else:
                 if os.path.isfile(vdir_num[freq]+'_FREQ') and os.path.isfile(vdir_num[freq]+'_FREQ'): # Reading data from FREQ files
@@ -227,7 +227,7 @@ class ParsingInputFiles(object):
                             denom_num+=1
                         j+=1
                     if not num_num==denom_num+1: 
-                        print 'WARNING: Numbers of non-zero frequencies at local minimum and at saddle point do not match! Please double-check the FREQ files of %s and %s'%(vdir_num[freq],vdir_denom[freq])
+                        print('WARNING: Numbers of non-zero frequencies at local minimum and at saddle point do not match! Please double-check the FREQ files of %s and %s'%(vdir_num[freq],vdir_denom[freq]))
 
                 else: # Reading data from OUTCAR files
                     nthzlist = fileutil.grepme(vdir_num[freq]+'_OUTCAR', "2PiTHz")
@@ -241,10 +241,10 @@ class ParsingInputFiles(object):
                             if 'f/i' in dthzlist[i]: im_denom+=1
                             if 'f/i' in nthzlist[i]: im_num+=1
                         if not im_num==0: 
-                            print 'WARNING: Imaginary frequency found in the local minimum! Please check the OUTCAR of %s!'%vdir_num[freq]
+                            print('WARNING: Imaginary frequency found in the local minimum! Please check the OUTCAR of %s!'%vdir_num[freq])
                         elif im_denom==0:
-                            print 'WARNING: No imaginary frequency found in the saddle point! Please check the OUTCAR of %s!'%vdir_denom[freq]
-                            print 'ATTEMPTING TO CORRECT:'
+                            print('WARNING: No imaginary frequency found in the saddle point! Please check the OUTCAR of %s!'%vdir_denom[freq])
+                            print('ATTEMPTING TO CORRECT:')
                             numlist=list()
                             for cct in range(num_num):
                                 thzfloat = float(dthzlist[cct].split()[3])
@@ -255,20 +255,20 @@ class ParsingInputFiles(object):
                             rangemin = dthz_mean - dthz_std
                             removeidx=list()
                             for cct in range(num_num):
-                                print numlist[cct]
+                                print(numlist[cct])
                                 if (numlist[cct] < rangemin):
                                     removeidx.append(cct)
                             if len(removeidx) == 1:
-                                print "Removing ", dthzlist[removeidx[0]]
+                                print("Removing ", dthzlist[removeidx[0]])
                                 dthzlist.pop(removeidx[0])
                                 denom_num = denom_num - 1
                                 im_denom = im_denom + 1
                             else:
-                                print "Could not determine a correction."
+                                print("Could not determine a correction.")
                         elif im_denom>1:
-                            print 'WARNING: More than 1 imaginary frequencies found in the saddle point! Please check the OUTCAR of %s!'%vdir_denom[freq]
+                            print('WARNING: More than 1 imaginary frequencies found in the saddle point! Please check the OUTCAR of %s!'%vdir_denom[freq])
                     else:
-                        print 'WARNING: Numbers of frequencies at local minimum and at saddle point are not equal! Please check the OUTCAR of %s and %s!'%(vdir_num[freq],vdir_denom[freq])
+                        print('WARNING: Numbers of frequencies at local minimum and at saddle point are not equal! Please check the OUTCAR of %s and %s!'%(vdir_num[freq],vdir_denom[freq]))
                     v_num[freq]=v_denom[freq]=1.0
                     for i in range(num_num):
                         if not 'f/i' in nthzlist[i]:
@@ -311,13 +311,13 @@ class DiffCoeff(ParsingInputFiles):
         values['type'] = model
         if model==8: values['c'] = self.get_latt(model,latt)['c']
 
-        for i in vdir.keys(): 
+        for i in list(vdir.keys()): 
             if not len(vdir[i])==1:
                 try: vdir_num[i]=float(vdir[i][0])
                 except ValueError: vdir_num[i] = vdir[i][0]
                 try: vdir_denom[i]=float(vdir[i][1])
                 except ValueError: vdir_denom[i] = vdir[i][1]
-        for i in Edir.keys():
+        for i in list(Edir.keys()):
             if not len(Edir[i])==1:
                 try: Edir_saddle[i]=float(Edir[i][1])
                 except ValueError: Edir_saddle[i] = Edir[i][1]
@@ -348,40 +348,40 @@ class DiffCoeff(ParsingInputFiles):
             HB = values['HB'] 
         # print all system information
         if model==5:
-            print "FCC Five-Frequency Dilute Diffusion Model"
-            print "FCC lattice constant [Angstrom]: {0:.4f}".format(a*10**8)
-            print "Energy Barriers [eV]:       E0: {E0:.4f}  E1: {E1:.4f}  E2: {E2:.4f}  E3: {E3:.4f}  E4: {E4:.4f}".format(**enebarr)
-            print "Attempt Frequencies [THz]:  v0: {v0:.4f}  v1: {v1:.4f}  v2: {v2:.4f}  v3: {v3:.4f}  v4: {v4:.4f}".format(**v)
-            print "Vacancy Formation Energy [eV]: {0:.4f}\n".format(HVf)
-            print ""
+            print("FCC Five-Frequency Dilute Diffusion Model")
+            print("FCC lattice constant [Angstrom]: {0:.4f}".format(a*10**8))
+            print("Energy Barriers [eV]:       E0: {E0:.4f}  E1: {E1:.4f}  E2: {E2:.4f}  E3: {E3:.4f}  E4: {E4:.4f}".format(**enebarr))
+            print("Attempt Frequencies [THz]:  v0: {v0:.4f}  v1: {v1:.4f}  v2: {v2:.4f}  v3: {v3:.4f}  v4: {v4:.4f}".format(**v))
+            print("Vacancy Formation Energy [eV]: {0:.4f}\n".format(HVf))
+            print("")
         if model==8:
-            print "HCP Eight-Frequency Dilute Diffusion Model"
-            print "HCP basal lattice constant  [Angstrom]: {0:.4f}".format(a*10**8)
-            print "HCP c-axis lattice constant [Angstrom]: {0:.4f}".format(c*10**8)
-            print "Energy Barriers [eV]:       Ea: {Ea:.4f}  Eb: {Eb:.4f}  Ec: {Ec:.4f}  EX: {EX:.4f}  E'a: {Eap:.4f}  E'b: {Ebp:.4f}  E'c: {Ecp:.4f}  E'X: {EXp:.4f}".format(**enebarr)
-            print "Attempt Frequencies [THz]:  va: {va:.4f}  vb: {vb:.4f}  vc: {vc:.4f}  vX: {vX:.4f}  v'a: {vap:.4f}  v'b: {vbp:.4f}  v'c: {vcp:.4f}  v'X: {vXp:.4f}".format(**v)
-            print "Vacancy Formation Energy [eV]: {0:.4f}".format(HVf)
-            print "Vacancy-Solute Binding Energy [eV]:  {0:.4f}\n".format(HB)
+            print("HCP Eight-Frequency Dilute Diffusion Model")
+            print("HCP basal lattice constant  [Angstrom]: {0:.4f}".format(a*10**8))
+            print("HCP c-axis lattice constant [Angstrom]: {0:.4f}".format(c*10**8))
+            print("Energy Barriers [eV]:       Ea: {Ea:.4f}  Eb: {Eb:.4f}  Ec: {Ec:.4f}  EX: {EX:.4f}  E'a: {Eap:.4f}  E'b: {Ebp:.4f}  E'c: {Ecp:.4f}  E'X: {EXp:.4f}".format(**enebarr))
+            print("Attempt Frequencies [THz]:  va: {va:.4f}  vb: {vb:.4f}  vc: {vc:.4f}  vX: {vX:.4f}  v'a: {vap:.4f}  v'b: {vbp:.4f}  v'c: {vcp:.4f}  v'X: {vXp:.4f}".format(**v))
+            print("Vacancy Formation Energy [eV]: {0:.4f}".format(HVf))
+            print("Vacancy-Solute Binding Energy [eV]:  {0:.4f}\n".format(HB))
         if model==9:
-            print "BCC Nine-Frequency Dilute Diffusion Model"
-            print "BCC lattice constant [Angstrom]: {0:.4f}".format(a*10**8)
-            print "Energy Barriers [eV]:       E0: {E0:.4f}      E2: {E2:.4f}      E3: {E3:.4f}  E4: {E4:.4f}  E'3: {E3p:.4f}  E'4: {E4p:.4f}".format(**enebarr)
-            print "Energy Barriers [eV]:       E''3: {E3pp:.4f}  E''4: {E4pp:.4f}  E5: {E5:.4f}  E6: {E6:.4f}".format(**enebarr)
-            print "Attempt Frequencies [THz]:  v0: {v0:.4f}      v2: {v2:.4f}      v3: {v3:.4f}  v4: {v4:.4f}  v'3: {v3p:.4f}  v'4: {v4p:.4f}".format(**v)
-            print "Attempt Frequencies [THz]:  v''3: {v3pp:.4f}  v''4: {v4pp:.4f}  v5: {v5:.4f}  v6: {v6:.4f}".format(**v)
-            print "Vacancy Formation Energy [eV]: {0:.4f}\n".format(HVf)
-            print ""
+            print("BCC Nine-Frequency Dilute Diffusion Model")
+            print("BCC lattice constant [Angstrom]: {0:.4f}".format(a*10**8))
+            print("Energy Barriers [eV]:       E0: {E0:.4f}      E2: {E2:.4f}      E3: {E3:.4f}  E4: {E4:.4f}  E'3: {E3p:.4f}  E'4: {E4p:.4f}".format(**enebarr))
+            print("Energy Barriers [eV]:       E''3: {E3pp:.4f}  E''4: {E4pp:.4f}  E5: {E5:.4f}  E6: {E6:.4f}".format(**enebarr))
+            print("Attempt Frequencies [THz]:  v0: {v0:.4f}      v2: {v2:.4f}      v3: {v3:.4f}  v4: {v4:.4f}  v'3: {v3p:.4f}  v'4: {v4p:.4f}".format(**v))
+            print("Attempt Frequencies [THz]:  v''3: {v3pp:.4f}  v''4: {v4pp:.4f}  v5: {v5:.4f}  v6: {v6:.4f}".format(**v))
+            print("Vacancy Formation Energy [eV]: {0:.4f}\n".format(HVf))
+            print("")
         if model==14:
-            print "FCC 14-Frequency Concentrated Diffusion Model"
-            print "FCC lattice constant [Angstrom]: {0:.4f}".format(a*10**8)
-            print "Energy Barriers [eV]:       E0: {E0:.4f}    E1: {E1:.4f}    E2: {E2:.4f}    E3: {E3:.4f}    E4: {E4:.4f}".format(**enebarr)
-            print "Energy Barriers [eV]:       E11: {E11:.4f}  E12: {E12:.4f}  E13: {E13:.4f}  E14: {E14:.4f}".format(**enebarr)
-            print "Energy Barriers [eV]:       E23: {E23:.4f}  E24: {E24:.4f}  E33: {E33:.4f}  E34: {E34:.4f}  E44: {E44:.4f}".format(**enebarr)
-            print "Attempt Frequencies [THz]:  v0: {v0:.4f}    v1: {v1:.4f}    v2: {v2:.4f}    v3: {v3:.4f}    v4: {v4:.4f}".format(**v)
-            print "Attempt Frequencies [THz]:  v11: {v11:.4f}  v12: {v12:.4f}  v13: {v13:.4f}  v14: {v14:.4f}".format(**v)
-            print "Attempt Frequencies [THz]:  v23: {v23:.4f}  v24: {v24:.4f}  v33: {v33:.4f}  v34: {v34:.4f}  v44: {v44:.4f}".format(**v)
-            print "Vacancy Formation Energy [eV]: {0:.4f}\n".format(HVf)
-            print ""
+            print("FCC 14-Frequency Concentrated Diffusion Model")
+            print("FCC lattice constant [Angstrom]: {0:.4f}".format(a*10**8))
+            print("Energy Barriers [eV]:       E0: {E0:.4f}    E1: {E1:.4f}    E2: {E2:.4f}    E3: {E3:.4f}    E4: {E4:.4f}".format(**enebarr))
+            print("Energy Barriers [eV]:       E11: {E11:.4f}  E12: {E12:.4f}  E13: {E13:.4f}  E14: {E14:.4f}".format(**enebarr))
+            print("Energy Barriers [eV]:       E23: {E23:.4f}  E24: {E24:.4f}  E33: {E33:.4f}  E34: {E34:.4f}  E44: {E44:.4f}".format(**enebarr))
+            print("Attempt Frequencies [THz]:  v0: {v0:.4f}    v1: {v1:.4f}    v2: {v2:.4f}    v3: {v3:.4f}    v4: {v4:.4f}".format(**v))
+            print("Attempt Frequencies [THz]:  v11: {v11:.4f}  v12: {v12:.4f}  v13: {v13:.4f}  v14: {v14:.4f}".format(**v))
+            print("Attempt Frequencies [THz]:  v23: {v23:.4f}  v24: {v24:.4f}  v33: {v33:.4f}  v34: {v34:.4f}  v44: {v44:.4f}".format(**v))
+            print("Vacancy Formation Energy [eV]: {0:.4f}\n".format(HVf))
+            print("")
         try:
             temp = self.get_item_name('temp')['temp']
             tempstart = temp[0]
@@ -391,7 +391,7 @@ class DiffCoeff(ParsingInputFiles):
         if model==5:
             with open('Diffusivity.txt','w+') as fp:
                 fp.write('1000/T[K^(-1)]    D_solute[cm^2/s]\n')
-            print '1000/T[K^(-1)]    D_solute[cm^2/s]'
+            print('1000/T[K^(-1)]    D_solute[cm^2/s]')
             D = []
             f0 = 0.7815
             t = tempstart
@@ -415,7 +415,7 @@ class DiffCoeff(ParsingInputFiles):
                 D.append(Dself*f2*jfreq['v2']*jfreq['v4']/f0/jfreq['v0']/jfreq['v3'])
                 with open('Diffusivity.txt','a+') as fp:
                     fp.write('%f   %E\n'%(t,D[i]))
-                print '%f   %E'%(t,D[i])
+                print('%f   %E'%(t,D[i]))
                 t = t + tempstep    
                 i = i + 1
             if plotdisplay.lower() == "none": #No plot display
@@ -436,7 +436,7 @@ class DiffCoeff(ParsingInputFiles):
         if model==9:
             with open('Diffusivity.txt','w+') as fp:
                 fp.write('1000/T[K^(-1)]    D_solute[cm^2/s]\n')
-            print '1000/T[K^(-1)]    D_solute[cm^2/s]'
+            print('1000/T[K^(-1)]    D_solute[cm^2/s]')
             D = []
             f0 = 0.7272
             FF = 0.512
@@ -456,7 +456,7 @@ class DiffCoeff(ParsingInputFiles):
                 D.append(a**2*Vacconc*f2*jfreq['v2']*jfreq['v4p']/jfreq['v3p'])
                 with open('Diffusivity.txt','a+') as fp:
                     fp.write('%f   %E\n'%(t,D[i]))
-                print '%f   %E'%(t,D[i])
+                print('%f   %E'%(t,D[i]))
                 t = t + tempstep    
                 i = i + 1
             if plotdisplay.lower() == "none": #No plot display
@@ -480,10 +480,10 @@ class DiffCoeff(ParsingInputFiles):
                 fp.write('D_solute(c) = D_solute(0) * [ 1 + B1*c + ...]\n')
                 fp.write('c = solute concentration [atomic fraction]\n\n')
                 fp.write('1000/T[K^(-1)]    D_solute[cm^2/s]    b1        b2        B1\n')
-            print 'D_host(c) = D_host(0) * [ 1 + b1*c + b2*c^2 + ...]'
-            print 'D_solute(c) = D_solute(0) * [ 1 + B1*c + ...]'
-            print 'c = solute concentration [atomic fraction]\n'
-            print '1000/T[K^(-1)]    D_solute[cm^2/s]    b1        b2        B1'
+            print('D_host(c) = D_host(0) * [ 1 + b1*c + b2*c^2 + ...]')
+            print('D_solute(c) = D_solute(0) * [ 1 + B1*c + ...]')
+            print('c = solute concentration [atomic fraction]\n')
+            print('1000/T[K^(-1)]    D_solute[cm^2/s]    b1        b2        B1')
             D = []
             b1 = []
             b2 = []
@@ -513,7 +513,7 @@ class DiffCoeff(ParsingInputFiles):
                 B1.append(-6 - 12*((jfreq['v23']/jfreq['v24'])*(jfreq['v4']/jfreq['v3'])) + (jfreq['v4']/jfreq['v3'])*(4*(jfreq['v21']/jfreq['v2'])*(jfreq['v23']/jfreq['v24'])*(jfreq['v4']/jfreq['v3']) + 14*(jfreq['v23']/jfreq['v2'])))
                 with open('Diffusivity.txt','a+') as fp:
                     fp.write('%f   %E    %f    %f    %f\n'%(t,D[i],b1[i],b2[i],B1[i]))
-                print '%f   %E    %f    %f    %f'%(t,D[i],b1[i],b2[i],B1[i])
+                print('%f   %E    %f    %f    %f'%(t,D[i],b1[i],b2[i],B1[i]))
                 t = t + tempstep    
                 i = i + 1
             if plotdisplay.lower() == "none": #No plot display
@@ -534,7 +534,7 @@ class DiffCoeff(ParsingInputFiles):
         elif model==8:
             with open('Diffusivity.txt','w+') as fp:
                 fp.write('1000/T[K^(-1)]    D_basal[cm^2/s]    D_c-axis[cm^2/s]\n')
-            print '1000/T[K^(-1)]    D_basal[cm^2/s]    D_c-axis[cm^2/s]'
+            print('1000/T[K^(-1)]    D_basal[cm^2/s]    D_c-axis[cm^2/s]')
             Dperp = []
             Dpara = []
             F = 0.736
@@ -561,7 +561,7 @@ class DiffCoeff(ParsingInputFiles):
                 Dpara.append(c**2*f1z*jfreq['vXp']*C2*0.75)
                 with open('Diffusivity.txt','a+') as fp:
                     fp.write('%f   %E   %E\n'%(t,Dperp[i],Dpara[i]))
-                print '%f   %E   %E'%(t,Dperp[i],Dpara[i])
+                print('%f   %E   %E'%(t,Dperp[i],Dpara[i]))
                 t = t + tempstep
                 i = i + 1
             if plotdisplay.lower() == "none":

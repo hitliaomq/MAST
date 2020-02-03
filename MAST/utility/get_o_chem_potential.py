@@ -29,9 +29,9 @@ import sys
 ################
 
 if len(sys.argv) < 3:
-    print "Run with the first parameter as temperature in K"
-    print "and the second parameter as oxygen partial pressure in atm."
-    print "Example: python get_o_chem_potential.py 1073 0.21"
+    print("Run with the first parameter as temperature in K")
+    print("and the second parameter as oxygen partial pressure in atm.")
+    print("Example: python get_o_chem_potential.py 1073 0.21")
     sys.exit()
 
 temp_K = float(sys.argv[1])
@@ -102,9 +102,9 @@ Cp_eVperK = heat_capacity/1000.0/kJpermol_in_eVperatom
 H_eV = enthalpy/kJpermol_in_eVperatom
 S_eVperK = entropy/1000.0/kJpermol_in_eVperatom
 
-print "Cp (J/mol*K)", heat_capacity, " (eV/atomK): ", Cp_eVperK
-print "H0-H0_298.15 (kJ/mol)", enthalpy, " (eV/atom): ", H_eV
-print "S0 (J/mol*K)", entropy, " (eV/atomK): ", S_eVperK
+print("Cp (J/mol*K)", heat_capacity, " (eV/atomK): ", Cp_eVperK)
+print("H0-H0_298.15 (kJ/mol)", enthalpy, " (eV/atom): ", H_eV)
+print("S0 (J/mol*K)", entropy, " (eV/atomK): ", S_eVperK)
 
 pascals_in_atm = 101325
 pressure_Pa = pressure_atm*101325.0
@@ -144,6 +144,6 @@ mu_O = 0.5 * mu_O2
 #mu_O2_adjusted = first_term + second_term + mpadjust + third_term
 #mu_O_adjusted = 0.5 * mu_O2_adjusted
 
-print "mu_O2 (eV): ", mu_O2
-print "mu_O (eV): ", mu_O
+print("mu_O2 (eV): ", mu_O2)
+print("mu_O (eV): ", mu_O)
 

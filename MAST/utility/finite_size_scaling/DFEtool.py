@@ -9,7 +9,7 @@ if __name__=="__main__":
     HSE = inp['HSE']
     method = inp['method']
     DefectFormationEnergy().main(GGA,HSE)
-    for chempot in GGA['chem_pot'].keys(): 
+    for chempot in list(GGA['chem_pot'].keys()): 
         CubicScaling(inputfile='%s_%s.txt'%(chempot,GGA['tag']),method=method).main()
         DefectLevels(inputfile='%s_%s.txt'%(chempot,method),XC=[GGA,HSE]).main()
     import os,shutil

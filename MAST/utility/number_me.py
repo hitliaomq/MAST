@@ -25,17 +25,17 @@ import os
 import sys
 
 if len(sys.argv) < 3:
-    print "Not enough inputs."
-    print doc.__doc__
+    print("Not enough inputs.")
+    print(doc.__doc__)
     sys.exit(-1)
 
 myname = sys.argv[1]
 if not os.path.isfile(myname):
-    print "No such file %s" % myname
+    print("No such file %s" % myname)
     sys.exit(-1)
 newname = sys.argv[2]
 if os.path.isfile(newname):
-    print "Cannot overwrite existing file %s" % newname
+    print("Cannot overwrite existing file %s" % newname)
     sys.exit(-1)
 
 openfile = open(myname, 'rb')
@@ -50,4 +50,4 @@ for myline in mylines:
 newfile = open(newname, 'wb')
 newfile.writelines(numberedlines)
 newfile.close()
-print "Done! Check output in %s" % newname
+print("Done! Check output in %s" % newname)

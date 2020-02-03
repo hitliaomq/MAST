@@ -27,7 +27,7 @@ def swap_int(indiv, Optimizer):
         natomsswap=0
     Optimizer.output.write('Number of swaps = '+repr(natomsswap)+'\n')
     syms=[sym for sym,c in indiv.swaplist]
-    if debug: print 'Starting swaplist = '+repr(indiv.swaplist)
+    if debug: print('Starting swaplist = '+repr(indiv.swaplist))
     
     #Extend to bulk
     if Optimizer.structure=='Defect':
@@ -80,7 +80,7 @@ def swap_int(indiv, Optimizer):
             elif indiv.swaplist[i][0]==sym1:
                 indiv.swaplist[i][1]-=1
     Optimizer.output.write('New swaplist for individual: '+repr(indiv.swaplist)+'\n')
-    if debug: print 'New swaplist = '+repr(indiv.swaplist)
+    if debug: print('New swaplist = '+repr(indiv.swaplist))
     #Sanity check
     sanchn = [[sym,0] for sym in syms]
     for i in range(len(sanchn)):
@@ -90,8 +90,8 @@ def swap_int(indiv, Optimizer):
     
     if debug:
         for i in range(len(sanch)):
-            print 'INTSWAP: Starting Atom structure '+repr(sanch[i][0])+' = '+repr(sanch[i][1])
-            print 'INTSWAP: After Mutation Atom structure '+repr(sanchn[i][0])+' = '+repr(sanchn[i][1])
+            print('INTSWAP: Starting Atom structure '+repr(sanch[i][0])+' = '+repr(sanch[i][1]))
+            print('INTSWAP: After Mutation Atom structure '+repr(sanchn[i][0])+' = '+repr(sanchn[i][1]))
             
     if Optimizer.structure=='Defect':
         indiv[0]=indatms[0:brmark].copy()

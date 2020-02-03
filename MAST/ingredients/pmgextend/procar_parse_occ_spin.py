@@ -10,7 +10,7 @@
 Classes for reading/manipulating/writing VASP ouput files.
 """
 
-from __future__ import division
+
 
 __author__ = "Tam Mayeshiba from vasp_output by Shyue Ping Ong"
 __date__ = "April 8, 2012"
@@ -22,7 +22,7 @@ import math
 import itertools
 import warnings
 import xml.sax.handler
-import StringIO
+import io
 from collections import defaultdict
 import logging
 
@@ -89,14 +89,14 @@ class ProcarOcc(object):
                     elif foundtimes == 2:
                         usekey = 'down'
                     else:
-                        print "Error: foundtimes > 2!"
+                        print("Error: foundtimes > 2!")
                         return
                 elif ionexpr.match(l) and self.headers is None:
                     self.headers = l.split()
                     self.headers.pop(0)
                 elif expr.match(l):
                     linedata = dataexpr.findall(l)
-                    linefloatdata = map(float, linedata)
+                    linefloatdata = list(map(float, linedata))
                     index = int(linefloatdata.pop(0))
                     if index in self.occonly[usekey]:
                         if myocc==1:

@@ -59,7 +59,7 @@ def read_Ltraj_file(filename,atomlist=False,timestep=-1,atomlist=False,ratomlist
                         at=Atom(symbol=sym,position=[float(sp[2]),float(sp[3]),float(sp[4])])
                         a.append(at)
                     else:
-                        symn = random.choice(range(1,100))
+                        symn = random.choice(list(range(1,100)))
                         at=Atom(symbol=symn,position=[float(sp[2]),float(sp[3]),float(sp[4])])
                         a.append(at)
                         atnum.append(sp[1])

@@ -56,7 +56,7 @@ def swap_int_local(indiv, Optimizer):
     # Identify symbols that can be swapped
     syms=[sym for sym,c in indiv.swaplist]
     slist = copy.deepcopy(indiv.swaplist)
-    if debug: print 'Starting swaplist = '+repr(indiv.swaplist)
+    if debug: print('Starting swaplist = '+repr(indiv.swaplist))
     #Sanity check
     sanch = [[sym,0] for sym in syms]
     for i in range(len(sanch)):
@@ -96,8 +96,8 @@ def swap_int_local(indiv, Optimizer):
         sanchn[i][1]=nc
     if debug:
         for i in range(len(sanch)):
-            print 'INTSWAP: Starting Atom structure '+repr(sanch[i][0])+' = '+repr(sanch[i][1])
-            print 'INTSWAP: After Mutation Atom structure '+repr(sanchn[i][0])+' = '+repr(sanchn[i][1])
+            print('INTSWAP: Starting Atom structure '+repr(sanch[i][0])+' = '+repr(sanch[i][1]))
+            print('INTSWAP: After Mutation Atom structure '+repr(sanchn[i][0])+' = '+repr(sanchn[i][1]))
     Optimizer.output.write(repr(indiv[0])+'\n')
     muttype='SCL'+repr(natomsswap)
     if indiv.energy==0:

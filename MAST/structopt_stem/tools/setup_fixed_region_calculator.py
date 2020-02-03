@@ -2,7 +2,7 @@ from MAST.structopt_stem.tools.lammps import LAMMPS
 try:
     from ase.calculators.vasp import Vasp
 except ImportError:
-    print "NOTE: ASE is not installed. To use Structopt setup_fixed_region_calculator.py, ASE must be installed."
+    print("NOTE: ASE is not installed. To use Structopt setup_fixed_region_calculator.py, ASE must be installed.")
 def setup_fixed_region_calculator(Optimizer):
     """Function to set up a fixed region calculator for use with LAMMPS and ASE
     """

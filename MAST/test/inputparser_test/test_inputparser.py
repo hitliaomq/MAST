@@ -46,8 +46,8 @@ class TestInputparser(unittest.TestCase):
     def test_parse(self):
         myip = InputParser(inputfile="neb_with_phonons.inp")
         myoptions = myip.parse()
-        print myoptions.options.keys()
-        self.assertItemsEqual(myoptions.options.keys(),['mast','structure','defects','recipe','ingredients','neb'])
+        print(list(myoptions.options.keys()))
+        self.assertItemsEqual(list(myoptions.options.keys()),['mast','structure','defects','recipe','ingredients','neb'])
         #ofile = MASTFile()
         #ofile.data = str(myoptions)
         #ofile.to_file(os.path.join(os.getcwd(),"long_input_options_output.txt"))
@@ -56,8 +56,8 @@ class TestInputparser(unittest.TestCase):
     def test_parse_defect_formation(self):
         myip = InputParser(inputfile="defect_formation_energy.inp")
         myoptions = myip.parse()
-        print myoptions.options.keys()
-        self.assertItemsEqual(myoptions.options.keys(),['mast','structure','defects','recipe','ingredients','chemical_potentials','summary'])
+        print(list(myoptions.options.keys()))
+        self.assertItemsEqual(list(myoptions.options.keys()),['mast','structure','defects','recipe','ingredients','chemical_potentials','summary'])
         #ofile = MASTFile()
         #ofile.data = str(myoptions)
         #ofile.to_file(os.path.join(os.getcwd(),"long_input_options_output.txt"))
@@ -74,8 +74,8 @@ class TestInputparser(unittest.TestCase):
         mdict=dict()
         mdict['mast']=dict()
         mdict['mast']['system_name'] = "SystemName!"
-        self.assertItemsEqual(myoptions.options.keys(), ['mast'])
-        self.assertItemsEqual(myoptions.options['mast'].keys(), ['system_name','mast_auto_correct'])
+        self.assertItemsEqual(list(myoptions.options.keys()), ['mast'])
+        self.assertItemsEqual(list(myoptions.options['mast'].keys()), ['system_name','mast_auto_correct'])
         self.assertEqual(myoptions.options['mast']['system_name'],mdict['mast']['system_name']) 
         self.assertEqual(myoptions.get_item('mast', 'mast_auto_correct'), "True")
         #print myoptions.options['mast']
@@ -116,7 +116,7 @@ class TestInputparser(unittest.TestCase):
         mdict['structure'] = dict()
         mdict['structure']['posfile']="POSCAR_startpos"
         #mdict['structure']['posfile'] = os.path.join(testdir, "POSCAR_startpos")
-        self.assertItemsEqual(myoptions.options.keys(), ['structure'])
+        self.assertItemsEqual(list(myoptions.options.keys()), ['structure'])
         self.assertEqual(myoptions.options['structure']['posfile'],mdict['structure']['posfile']) 
         myip = InputParser(inputfile="neb_with_phonons.inp")
         minput = MASTFile("%s/structure_posfile_lines_nosuch.txt" % testdir)
@@ -135,14 +135,14 @@ class TestInputparser(unittest.TestCase):
             cleanlines.append(line.strip())
         myoptions = InputOptions()
         myip.parse_defects_section('defects',cleanlines,myoptions)
-        print myoptions.options['defects']
+        print(myoptions.options['defects'])
         #Test coordinates first, to avoid dictionary-equal error on comparing arryas
         self.assertTrue(np.array_equal(myoptions.options['defects']['defects']['defect_3']['subdefect_1']['coordinates'],np.array([0.,0.,0.],'float')))
         self.assertTrue(np.array_equal(myoptions.options['defects']['defects']['Vac@Al-Sub@Fe']['subdefect_1']['coordinates'],np.array([0.,0.,0.],'float')))
         self.assertTrue(np.array_equal(myoptions.options['defects']['defects']['Vac@Al-Sub@Fe']['subdefect_2']['coordinates'],np.array([0.5,0.5,0.],'float')))
         self.assertTrue(np.array_equal(myoptions.options['defects']['defects']['AntiGe@Fe']['subdefect_1']['coordinates'],np.array([0.1,0.3,0.4],'float')))
         self.assertTrue(np.array_equal(myoptions.options['defects']['defects']['MgInt']['subdefect_1']['coordinates'],np.array([0.,0.2,0.3],'float')))
-        self.assertItemsEqual(myoptions.options['defects']['defects']['Vac@Al-Sub@Fe']['phonon'].keys(),['host1','sub2'])
+        self.assertItemsEqual(list(myoptions.options['defects']['defects']['Vac@Al-Sub@Fe']['phonon'].keys()),['host1','sub2'])
         #Have to blank out the numpy arrays so that the rest of the diff'ing will work
         myoptions.options['defects']['defects']['defect_3']['subdefect_1']['coordinates']='blank'
         myoptions.options['defects']['defects']['Vac@Al-Sub@Fe']['subdefect_1']['coordinates']='blank'
@@ -209,7 +209,7 @@ class TestInputparser(unittest.TestCase):
 
     def test_parse_recipe_section(self):
         myip = InputParser(inputfile="neb_with_phonons.inp")
-        print testdir
+        print(testdir)
         minput = MASTFile("%s/recipe_neb.txt" % testdir)
         cleanlines = list()
         for line in minput.data:
@@ -230,7 +230,7 @@ class TestInputparser(unittest.TestCase):
             cleanlines.append(line.strip())
         myoptions = InputOptions()
         myip.parse_ingredients_section('ingredients',cleanlines,myoptions)
-        print myoptions
+        print(myoptions)
         mdict=dict()
         mdict['global']=dict()
         mdict['global']['mast_complete_method']='complete_singlerun'
@@ -273,7 +273,7 @@ class TestInputparser(unittest.TestCase):
             cleanlines.append(line.strip())
         myoptions = InputOptions()
         myip.parse_neb_section('neb',cleanlines,myoptions)
-        print myoptions
+        print(myoptions)
         mdict=dict()
         mdict['nebs']=dict()
         mdict['nebs']['vac1-vac2']=dict()
@@ -306,7 +306,7 @@ class TestInputparser(unittest.TestCase):
             cleanlines.append(line.strip())
         myoptions = InputOptions()
         myip.parse_chemical_potentials_section('chemical_potentials',cleanlines,myoptions)
-        print myoptions
+        print(myoptions)
         mdict=dict()
         mdict['As rich']=dict()
         mdict['As rich']['As']=3.5
@@ -327,7 +327,7 @@ class TestInputparser(unittest.TestCase):
             cleanlines.append(line.strip())
         myoptions = InputOptions()
         myip.parse_phonon_section('phonon',cleanlines,myoptions)
-        print myoptions
+        print(myoptions)
         mdict=dict()
         mdict['perfect']=dict()
         mdict['perfect']['phonon_center_site']='0.5 0.5 0'
@@ -347,7 +347,7 @@ class TestInputparser(unittest.TestCase):
     def test_perform_element_mapping(self):
         myip = InputParser(inputfile="element_mapping.inp")
         myoptions = myip.parse()
-        self.assertItemsEqual(myoptions.options.keys(),['mast','structure','defects','recipe','ingredients','neb','chemical_potentials'])
+        self.assertItemsEqual(list(myoptions.options.keys()),['mast','structure','defects','recipe','ingredients','neb','chemical_potentials'])
         self.assertEqual(myoptions.options['defects']['defects']['group1']['subdefect_1']['symbol'],'Xe')
         self.assertEqual(myoptions.options['defects']['defects']['group1']['subdefect_2']['symbol'],'Ar')
         self.assertEqual(myoptions.options['defects']['defects']['group2']['subdefect_1']['symbol'],'Ar')

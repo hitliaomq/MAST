@@ -32,6 +32,6 @@ for file in flist:
     for sym,u in [('Cr',-3.8363),('Fe',-4.21224)]:
         nc=len([atm for atm in structure if atm.symbol==sym])
         fe-= float(nc)*float(u)
-    print 'FeCr Interstitial - ' + file
-    print '    Potential Energy = '+repr(en)
-    print '    Formation Energy = '+repr(fe)
+    print('FeCr Interstitial - ' + file)
+    print('    Potential Energy = '+repr(en))
+    print('    Formation Energy = '+repr(fe))

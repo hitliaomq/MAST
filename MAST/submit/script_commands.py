@@ -85,7 +85,7 @@ def write_submit_script(keywords):
     my_template = MASTFile("%s/submit/platforms/%s/submit_template.sh" % (mast_install, mast_platform))
     newdata = list()
     for myline in my_template.data:
-        for mykey in newkey.keys():
+        for mykey in list(newkey.keys()):
             querykey = "?" + mykey + "?"
             if querykey in myline:
                 myline = myline.replace(querykey, newkey[mykey])

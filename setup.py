@@ -14,8 +14,8 @@ import re
 ###Python version check
 #print "Python version detected: %s" % sys.version_info
 if sys.version_info[0] < 2 or (sys.version_info[0] == 2 and sys.version_info[1] < 7) or (sys.version_info[0] == 2 and sys.version_info[1] == 7 and sys.version_info[2] < 3):
-    print "Python Version %d.%d.%d found" % (sys.version_info[0], sys.version_info[1], sys.version_info[2])
-    print "Python version >= 2.7.1 needed!"
+    print("Python Version %d.%d.%d found" % (sys.version_info[0], sys.version_info[1], sys.version_info[2]))
+    print("Python version >= 2.7.1 needed!")
     sys.exit(0)
 
 ###Version load, adapted from http://stackoverflow.com/questions/2058802/how-can-i-get-the-version-defined-in-setup-py-setuptools-in-my-package/3619714#3619714
@@ -32,7 +32,7 @@ else:
     if mo:
         verstr = mo.group(1)
     else:
-        print "unable to find version in %s" % (VERSIONFILE,)
+        print("unable to find version in %s" % (VERSIONFILE,))
         raise RuntimeError("if %s.py exists, it is required to be well-formed" % (VERSIONFILE,))
 
 
@@ -40,8 +40,8 @@ else:
 
 myhome = os.getenv("HOME")
 mysetuppath = os.path.dirname(os.path.abspath(__file__))
-print "HOME: %s" % myhome
-print "SETUP PATH: %s" % mysetuppath
+print("HOME: %s" % myhome)
+print("SETUP PATH: %s" % mysetuppath)
 
 def get_total_package_data():
     """Get total package data:
@@ -122,10 +122,10 @@ def get_total_package_data():
     #        pass
 
 
-    mykeys = mydict.keys()
+    mykeys = list(mydict.keys())
     mykeys.sort()
     for key in mykeys:
-        print key,": ", mydict[key]
+        print(key,": ", mydict[key])
     return mydict
 setup(
         name="MAST",
@@ -173,14 +173,14 @@ setup(
         #cmdclass={'build_py': build_py}
 )
 
-print "***************************"
-print "        ATTENTION!         "
-print "***************************"
-print "Please see the MAST documentation at http://pythonhosted.org/MAST"
-print "in order to set up the following environment variables:"
-print "MAST_SCRATCH"
-print "MAST_ARCHIVE"
-print "MAST_CONTROL"
-print "MAST_PLATFORM"
-print "(optionally, VASP_PSP_DIR)"
+print("***************************")
+print("        ATTENTION!         ")
+print("***************************")
+print("Please see the MAST documentation at http://pythonhosted.org/MAST")
+print("in order to set up the following environment variables:")
+print("MAST_SCRATCH")
+print("MAST_ARCHIVE")
+print("MAST_CONTROL")
+print("MAST_PLATFORM")
+print("(optionally, VASP_PSP_DIR)")
 

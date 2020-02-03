@@ -56,7 +56,7 @@ class AtomIndex(MASTObj):
         """Write undefected atom indices, including scaled indices.
             Also write an undefected manifest file.
         """
-        scales = self.scaling.keys()
+        scales = list(self.scaling.keys())
         scales.append("")
         for scaling_label in scales:
             if scaling_label == "":
@@ -115,9 +115,9 @@ class AtomIndex(MASTObj):
         defect_dict=self.input_options.get_item('defects','defects')
         if defect_dict == None:
             return None
-        dlabels=defect_dict.keys()
+        dlabels=list(defect_dict.keys())
         
-        scales = self.scaling.keys()
+        scales = list(self.scaling.keys())
         scales.append("")
         for scaling_label in scales:
             alist=list(self.read_manifest_file("%s/manifest_%s__" % (self.sdir, scaling_label)))
@@ -128,7 +128,7 @@ class AtomIndex(MASTObj):
             for dlabel in dlabels:
                 dlist = list(alist)
                 manname=os.path.join(self.sdir,"manifest_%s_%s_" % (scaling_label, dlabel))
-                dsubkeys=defect_dict[dlabel].keys()
+                dsubkeys=list(defect_dict[dlabel].keys())
                 for dsubkey in dsubkeys:
                     if "subdefect_" in dsubkey:
                         dtype=defect_dict[dlabel][dsubkey]['type']
@@ -249,14 +249,14 @@ class AtomIndex(MASTObj):
         scaling_matches=list()
         for aname in idxnames:
             if verbose > 0:
-                print aname
+                print(aname)
             ameta=Metadata(metafile=aname)
             aidx=ameta.read_data("atom_index")
             amastfile = MASTFile(aname)
             for aline in amastfile.data:
                 aline = aline.strip()
                 if verbose > 0:
-                    print aline
+                    print(aline)
                 asplit = aline.split(" = ") # need spaces because of charge tags
                 if len(asplit) < 2: #no coordinates
                     continue
@@ -264,29 +264,29 @@ class AtomIndex(MASTObj):
                 atom_ofc = asplit[1].strip()
                 if not "frac_coords" in alinekey:
                     if verbose > 0:
-                        print "skip line: not frac coords"
+                        print("skip line: not frac coords")
                     continue
                 if alinekey == "original_frac_coords":
                     if include_orig == "no":
                         if verbose > 0:
-                            print "skip line: original frac coords"
+                            print("skip line: original frac coords")
                         continue
                 else:
                     if include_orig == "only":
                         if verbose > 0:
-                            print "skip line: not original frac coords"
+                            print("skip line: not original frac coords")
                         continue
                 if ";" in atom_ofc:
                     atom_ofc = atom_ofc.split(';')[-1].strip() # get most updated
                 atom_ofc_arr=np.array(atom_ofc[1:-1].split(),'float')
                 if verbose > 0:
-                    print atom_ofc_arr
+                    print(atom_ofc_arr)
                 #if np.allclose(atom_ofc_arr,coord,rtol,tol):
                 if len(find_in_coord_list_pbc([atom_ofc_arr],coord,tol)) > 0:
                     coord_matches.append(aidx)
                 else:
                     if verbose > 0:
-                        print "no match for tol %3.3f; rejected" % tol
+                        print("no match for tol %3.3f; rejected" % tol)
         if element == "":
             elem_matches = list(coord_matches)
         else:
@@ -323,9 +323,9 @@ class AtomIndex(MASTObj):
         defect_dict=self.input_options.get_item('defects','defects')
         if defect_dict == None:
             return None
-        dlabels=defect_dict.keys()
+        dlabels=list(defect_dict.keys())
         
-        scales = self.scaling.keys()
+        scales = list(self.scaling.keys())
         scales.append("")
         for scaling_label in scales:
             if scaling_label == "":
@@ -334,7 +334,7 @@ class AtomIndex(MASTObj):
                 mySE=SE(struc_work1=self.startstr.copy(), scaling_size=self.scaling[scaling_label]["mast_size"])
             for dlabel in dlabels:
                 pdict=dict(defect_dict[dlabel]["phonon"])
-                for phonon_label in pdict.keys():
+                for phonon_label in list(pdict.keys()):
                     pcoordsraw = pdict[phonon_label]['phonon_center_site']
                     pthresh = pdict[phonon_label]['threshold']
                     pcrad = pdict[phonon_label]['phonon_center_radius']
@@ -358,9 +358,9 @@ class AtomIndex(MASTObj):
         neb_dict=self.input_options.get_item('neb','nebs')
         if neb_dict == None:
             return None
-        nlabels=neb_dict.keys()
+        nlabels=list(neb_dict.keys())
         
-        scales = self.scaling.keys()
+        scales = list(self.scaling.keys())
         scales.append("")
         for scaling_label in scales:
             if scaling_label == "":
@@ -427,9 +427,9 @@ class AtomIndex(MASTObj):
         neb_dict=self.input_options.get_item('neb','nebs')
         if neb_dict == None:
             return None
-        nlabels=neb_dict.keys()
+        nlabels=list(neb_dict.keys())
         
-        scales = self.scaling.keys()
+        scales = list(self.scaling.keys())
         scales.append("")
         for scaling_label in scales:
             if scaling_label == "":
@@ -438,7 +438,7 @@ class AtomIndex(MASTObj):
                 mySE=SE(struc_work1=self.startstr.copy(), scaling_size=self.scaling[scaling_label]["mast_size"])
             for nlabel in nlabels:
                 pdict = dict(neb_dict[nlabel]["phonon"])
-                for phonon_label in pdict.keys():
+                for phonon_label in list(pdict.keys()):
                     pcoordsraw = pdict[phonon_label]['phonon_center_site']
                     pthresh = pdict[phonon_label]['threshold']
                     pcrad = pdict[phonon_label]['phonon_center_radius']
@@ -612,7 +612,7 @@ class AtomIndex(MASTObj):
         
         newstr = mystr.copy()
         lenoldsites = len(newstr.sites)
-        newstr.remove_sites(range(0, lenoldsites))
+        newstr.remove_sites(list(range(0, lenoldsites)))
 
         for midx in manlist:
             scrambledidx = scrambledlist.index(midx)
@@ -634,7 +634,7 @@ class AtomIndex(MASTObj):
         [coordlist, elemlist]=self.make_coordinate_and_element_list_from_manifest(manname, ingfrom)
         newstr = mystr.copy()
         lenoldsites = len(newstr.sites)
-        newstr.remove_sites(range(0, lenoldsites))
+        newstr.remove_sites(list(range(0, lenoldsites)))
         for cct in range(0, len(coordlist)):
             newstr.append(elemlist[cct], 
                             coordlist[cct],

@@ -3,13 +3,13 @@ import os
 try:
     from ase import Atom, Atoms
 except ImportError:
-    print "NOTE: ASE is not installed. To use Structopt get_defect_restart_indiv.py, ASE must be installed."
+    print("NOTE: ASE is not installed. To use Structopt get_defect_restart_indiv.py, ASE must be installed.")
 from MAST.structopt_stem.generate.defect import gen_solid
 from MAST.structopt_stem.tools.find_defects import find_defects
 try:
     from MAST.structopt_stem.generate.Individual import Individual
 except NameError:
-    print "NOTE: ASE is not installed. ASE must be installed for Structopt Individual.py to work correctly."
+    print("NOTE: ASE is not installed. ASE must be installed for Structopt Individual.py to work correctly.")
 try:
 	from mpi4py import MPI
 except:

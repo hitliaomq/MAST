@@ -13,6 +13,6 @@ def best(pop, nkeep, Optimizer=None):
     if nkeep <= len(pop):
         npop = get_best(pop,nkeep)
     else:
-        print 'WARNING: selection.best nkeep > pop. Returning pop'
+        print('WARNING: selection.best nkeep > pop. Returning pop')
         npop = pop
     return npop

@@ -4,8 +4,8 @@
 # Maintainer: Kumaresh Visakan Murugan
 # Last updated: 2014-01-01
 ##############################################################
-from Tkinter import *
-import Tkinter as ttk
+from tkinter import *
+import tkinter as ttk
 from verticalScrolledFrame import VerticalScrolledFrame 
 
 
@@ -42,7 +42,7 @@ class DefectsSection:
             content_lines += "posfile %s\n\n" % self.defects_info['posfile'][0]
 
         if self.defects_info['namemap'][0]:
-            for d_id, d_name in self.defects_info['namemap'][0].iteritems():
+            for d_id, d_name in self.defects_info['namemap'][0].items():
                 content_lines += "begin %s\n" % d_name
                 if self.defects_info['elementmap'][0][d_id]:
                     for idx, elt in enumerate(self.defects_info['elementmap'][0][d_id]):
@@ -83,7 +83,7 @@ class DefectsSection:
                pos_value = Label(self.summary_frame, text=self.defects_info['posfile'][0])
                pos_value.grid(row=1, column=3, sticky=W, pady=5)
 
-           for rownum in xrange(self.num_defect_fields):
+           for rownum in range(self.num_defect_fields):
                if rownum == 0:
                    continue
                if self.defects_info['elementmap'][0]['D' + str(rownum)][0].strip() == "":
@@ -152,7 +152,7 @@ class DefectsSection:
         self.defects_entities_frame.grid(row=2, column=0, columnspan=2, padx=10, pady=10) 
         #create field headers 
 
-        for rownum in xrange(self.num_defect_fields):
+        for rownum in range(self.num_defect_fields):
             self.create_defect_fields(self.defects_entities_frame, rownum)  
 
         self.add_button = Button(self.defects_entities_frame, text="Add more defects", command=self.add_elements)
@@ -165,10 +165,10 @@ class DefectsSection:
     def save(self):
         self.defects_info['coord_type'][0] = self.defects_info['coord_type'][1].get()
         self.defects_info['posfile'][0]    = self.defects_info['posfile'][1].get() 
-        for rownum in xrange(self.num_defect_fields):
+        for rownum in range(self.num_defect_fields):
             self.defects_info['namemap'][0]['D'+str(rownum)]    = self.defects_info['namemap'][1]['D'+str(rownum)].get()
             num_fields = self.fields_hash.get('D' + str(rownum), 0)
-            for i in xrange(num_fields):
+            for i in range(num_fields):
                 if 'D' + str(rownum) in self.defects_info['elementmap'][0]:
                     if i < len(self.defects_info['elementmap'][0]['D' + str(rownum)]):
                         self.defects_info['elementmap'][0]['D' + str(rownum)][i] = self.defects_info['elementmap'][1]['D'+str(rownum)][i].get()
@@ -215,7 +215,7 @@ class DefectsSection:
 
     def create_defect_fields(self, frame, rownum):
         elements_map = self.structure_section.get_elements_map()
-        elements_options = ["%s (%s)" % (value, key) for key, value in elements_map.iteritems()]
+        elements_options = ["%s (%s)" % (value, key) for key, value in elements_map.items()]
 
         num_fields = self.fields_hash.get('D' + str(rownum), 1)
         self.fields_hash['D' + str(rownum)] = num_fields
@@ -243,7 +243,7 @@ class DefectsSection:
         name_val.grid(row=1, column=0, pady=10, padx=10, sticky=W)
         self.defects_info['namemap'][1]['D' + str(rownum)] = name_text
 
-        for i in xrange(num_fields):
+        for i in range(num_fields):
             self.create_individual_fields(d_frame, elements_options, rownum, i + 1)
 
     def create_individual_fields(self, d_frame, elements_options, defect_id, rownum):

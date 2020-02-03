@@ -69,7 +69,7 @@ class RecipeSetup(MASTObj):
         else:
             self.logger.debug('Copying over defaults from ingredients_global for ingredient %s.' % ingredient_type)
             ing_opt = self.input_options.get_item('ingredients', ingredient_type)
-            for glob_key, glob_value in global_defaults.items():
+            for glob_key, glob_value in list(global_defaults.items()):
                 if glob_key not in ing_opt:
                     ing_opt[glob_key] = glob_value
             self.input_options.set_item('ingredients', ingredient_type, ing_opt)
@@ -88,10 +88,10 @@ class RecipeSetup(MASTObj):
             for datum in mydata:
                 if 'defect_label' in datum:
                     defect_label = datum.split(':')[-1].strip()
-                    if not 'defects' in self.input_options.options.keys():
+                    if not 'defects' in list(self.input_options.options.keys()):
                         raise MASTError(self.__class__.__name__, "No defects section in input file. Error setting up recipe %s." % self.work_dir)
                     defdict = self.input_options.get_item('defects','defects')
-                    if not defect_label in defdict.keys():
+                    if not defect_label in list(defdict.keys()):
                         raise MASTError(self.__class__.__name__, "No such label %s found in the defects section dictionary." % defect_label)
                     mydefdict = dict()
                     mydefdict['mast_defect_settings'] = defdict[defect_label]
@@ -112,10 +112,10 @@ class RecipeSetup(MASTObj):
             for datum in mydata:
                 if 'neb_label' in datum:
                     neb_label = datum.split(':')[-1].strip()
-                    if not 'neb' in self.input_options.options.keys():
+                    if not 'neb' in list(self.input_options.options.keys()):
                         raise MASTError(self.__class__.__name__, "No neb section in input file. Error setting up recipe %s." % self.work_dir)
                     nebdict = self.input_options.get_item('neb','nebs')
-                    if not neb_label in nebdict.keys():
+                    if not neb_label in list(nebdict.keys()):
                         raise MASTError(self.__class__.__name__, "No such label %s found in the neb section dictionary." % neb_label)
                     mynebdict = dict()
                     mynebdict['mast_neb_settings'] = nebdict[neb_label]
@@ -137,9 +137,9 @@ class RecipeSetup(MASTObj):
                     defdict = self.input_options.get_item('defects','defects')
                     nebdict = self.input_options.get_item('neb','nebs')
                     phdict=dict()
-                    if def_or_neb_label in defdict.keys():
+                    if def_or_neb_label in list(defdict.keys()):
                         phdict['mast_phonon_settings'] = defdict[def_or_neb_label]['phonon'][phonon_key]
-                    elif def_or_neb_label in nebdict.keys():
+                    elif def_or_neb_label in list(nebdict.keys()):
                         phdict['mast_phonon_settings'] = nebdict[def_or_neb_label]['phonon'][phonon_key]
                     else:
                         raise MASTError(self.__class__.__name__, "Neither defect nor neb dictionaries have phonon key %s for ingredient %s." % (phonon_key, name))
@@ -147,7 +147,7 @@ class RecipeSetup(MASTObj):
                     break
             if phonon_label == "":
                 raise MASTError(self.__class__.__name__, "No phonon label for %s found in ingredient's metadata.txt" % ingredient_name)
-        if 'chemical_potentials' in self.input_options.options.keys():
+        if 'chemical_potentials' in list(self.input_options.options.keys()):
             chempotdict=dict()
             chempotdict['mast_chemical_potentials']=self.input_options.options['chemical_potentials']
             pkey_d.update(chempotdict)
@@ -170,11 +170,11 @@ class RecipeSetup(MASTObj):
         """
         raise NotImplementedError
         mdict=self.input_options.get_item("ingredients", ingredtype)
-        if methodtype in mdict.keys():
+        if methodtype in list(mdict.keys()):
             return mdict[methodtype]
         else:
             mdict=self.input_options.get_item("ingredients","global")
-            if methodtype in mdict.keys():
+            if methodtype in list(mdict.keys()):
                 return mdict[methodtype]
             else:
                 return None
@@ -188,7 +188,7 @@ class RecipeSetup(MASTObj):
         [how_to_update, parents_to_check, how_to_run] = ru.read_recipe(self.recipe_file)
 
         recipe_obj = RecipePlan(self.work_dir)
-        ingredlist = how_to_run.keys()
+        ingredlist = list(how_to_run.keys())
         for ingred in ingredlist:
             self.update_top_meta_for_ingred(ingred)
             ingredtype = how_to_run[ingred]
@@ -201,7 +201,7 @@ class RecipeSetup(MASTObj):
             recipe_obj.run_methods[ingred] = self.get_method_list(ingredtype, "mast_run_method")
             recipe_obj.complete_methods[ingred] = self.get_method_list(ingredtype, "mast_complete_method")
             recipe_obj.update_methods[ingred] = dict()
-            for ichild in how_to_update[ingred].keys():
+            for ichild in list(how_to_update[ingred].keys()):
                 updingredtype = how_to_update[ingred][ichild]
                 recipe_obj.update_methods[ingred][ichild] = self.get_method_list(updingredtype, "mast_update_children_method")
             recipe_obj.parents_to_check = dict(parents_to_check)
@@ -218,7 +218,7 @@ class RecipeSetup(MASTObj):
         scaling = self.input_options.get_item('scaling')
         scalingsize = None
         if scaling: 
-            for sckeys in scaling.keys():
+            for sckeys in list(scaling.keys()):
                 if sckeys in myingred:
                     scalingsize = sckeys
             if scalingsize:
@@ -325,11 +325,11 @@ class RecipeSetup(MASTObj):
             [[method1name, arg1, arg2,...],[method2name...],...]
         """
         ioptdict=self.input_options.get_item("ingredients", ingredtype)
-        if methodtype in ioptdict.keys():
+        if methodtype in list(ioptdict.keys()):
             unparsed = ioptdict[methodtype]
         else:
             globaldict=self.input_options.get_item("ingredients","global")
-            if methodtype in globaldict.keys():
+            if methodtype in list(globaldict.keys()):
                 unparsed = globaldict[methodtype]
             else:
                 raise MASTError(self.__class__.__name__,"No method type %s in either ingredient type %s or global ingredient." % (methodtype, ingredtype))
@@ -358,7 +358,7 @@ class RecipeSetup(MASTObj):
     def get_summary_options(self):
         """Get the summary options and give them to the recipe plan."""
         sum_opts = dict()
-        if 'summary' in self.input_options.options.keys():
+        if 'summary' in list(self.input_options.options.keys()):
             sumkeys = self.input_options.get_section_keys("summary")
             for sumkey in sumkeys:
                 sum_opts[sumkey] = self.input_options.get_item("summary",sumkey)

@@ -58,7 +58,7 @@ def read_parameter_input(input, logger):
                                 #Leave remaining as strings
                                 parameters[p.strip()] = v.strip()
                             except:
-                                print 'Trouble with input line: ', one
+                                print('Trouble with input line: ', one)
     if 'parallel' not in parameters:
         parameters['parallel'] = False
     else:
@@ -236,7 +236,7 @@ def read_parameter_input(input, logger):
     else:
         parameters['debug'] = list(parameters['debug'])
         if 'None' not in parameters['debug']: 
-            print '***** DEBUGGING RUN *****'
+            print('***** DEBUGGING RUN *****')
     if 'algorithm_type' not in parameters:
         parameters['algorithm_type'] = algtype
         if rank==0:
@@ -844,16 +844,16 @@ class dummy_logger():
     def __init__(self):
         return
     def critical(self,message):
-        print 'CRITICAL: {0}'.format(message)
+        print('CRITICAL: {0}'.format(message))
         return
     def debug(self,message):
-        print 'DEBUG: {0}'.format(message)
+        print('DEBUG: {0}'.format(message))
         return
     def warning(self,message):
-        print 'WARNING: {0}'.format(message)
+        print('WARNING: {0}'.format(message))
         return
     def info(self,message):
-        print 'MESSAGE: {0}'.format(message)
+        print('MESSAGE: {0}'.format(message))
         return
 
 class dummy_logger_no_write():

@@ -50,8 +50,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'MAST'
-copyright = u'2014-2017, University of Wisconsin-Madison Compuational Materials Group'
+project = 'MAST'
+copyright = '2014-2017, University of Wisconsin-Madison Compuational Materials Group'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -193,8 +193,8 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'MAST.tex', u'MAST Documentation',
-   u'University of Wisconsin-Madison Computational Materials Group', 'manual'),
+  ('index', 'MAST.tex', 'MAST Documentation',
+   'University of Wisconsin-Madison Computational Materials Group', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -223,8 +223,8 @@ latex_logo = '_static/MAST_logo_200px.png'
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'mast', u'MAST Documentation',
-     [u'CMG'], 1)
+    ('index', 'mast', 'MAST Documentation',
+     ['CMG'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -237,8 +237,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'MAST', u'MAST Documentation',
-   u'CMG', 'MAST', 'One line description of project.',
+  ('index', 'MAST', 'MAST Documentation',
+   'CMG', 'MAST', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -255,10 +255,10 @@ texinfo_documents = [
 # -- Options for Epub output ---------------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'MAterials Simulation Toolkit (MAST)'
-epub_author = u'MAST Development Team'
-epub_publisher = u'University of Wisconsin Compuational Materials Group'
-epub_copyright = u'2015, UW-CMG'
+epub_title = 'MAterials Simulation Toolkit (MAST)'
+epub_author = 'MAST Development Team'
+epub_publisher = 'University of Wisconsin Compuational Materials Group'
+epub_copyright = '2015, UW-CMG'
 
 # The language of the text. It defaults to the language option
 # or en if the language is not set.

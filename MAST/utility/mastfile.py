@@ -79,7 +79,7 @@ class MASTFile:
             tryme = basicname + str(ct) + suffix
             ct = ct + 1
             if ct > max: #TTM 11/23/11 increase max threshold
-                print 'Over', max, 'of the same file. Erroring out.'
+                print('Over', max, 'of the same file. Erroring out.')
                 return
         self.to_file(tryme)
         return tryme #TTM 20121109 return the file name
@@ -87,7 +87,7 @@ class MASTFile:
     def to_stdout(self):
         """Writes to stdout"""
         for line in self.data:
-            print line
+            print(line)
 
     #TTM+block 10/5/11 created (Pgetline)
     def get_line_number(self, line_number):
@@ -186,17 +186,17 @@ class MASTFile:
         try:
             lineno = int(lineno)
         except (ValueError, TypeError):
-            print 'Invalid line number.'
+            print('Invalid line number.')
             raise RuntimeError('Line number does not exist')
 
         try:
             mode = str.upper(mode)
         except (ValueError, TypeError):
-            print 'Invalid mode.'
+            print('Invalid mode.')
             raise RuntimeError('Selected mode does not exist')
 
         if mode not in ['D','R','I']:
-            print 'Only D-delete, R-replace, I-insert supported.'
+            print('Only D-delete, R-replace, I-insert supported.')
             return
 
         dataidx = lineno - 1 #sync line number to matrix elements
@@ -205,11 +205,11 @@ class MASTFile:
         after=[]
 
         if (dataidx > origlen - 1):
-            print 'File does not contain', lineno, 'lines.'
+            print('File does not contain', lineno, 'lines.')
             return
 
         if (dataidx < 0):
-            print 'Negative line number cannot be found.'
+            print('Negative line number cannot be found.')
             return
         #
         if (dataidx == 0):

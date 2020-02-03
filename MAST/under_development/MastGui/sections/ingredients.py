@@ -4,8 +4,8 @@
 # Maintainer: Kumaresh Visakan Murugan
 # Last updated: 2014-01-01
 ##############################################################
-from Tkinter import *
-from ttk import Combobox
+from tkinter import *
+from tkinter.ttk import Combobox
 from verticalScrolledFrame import VerticalScrolledFrame 
 
 
@@ -40,7 +40,7 @@ class IngredientsSection:
             content_lines += "end\n\n"
 
         if self.ingredients_info['ingredients'][0]:
-            for ing_key, ing_data in self.ingredients_info['ingredients'][0].iteritems():
+            for ing_key, ing_data in self.ingredients_info['ingredients'][0].items():
                 content_lines += "begin %s\n" % ing_data[0]
                 content_lines += "%s\n" % ing_data[1]
                 content_lines += "end\n\n"
@@ -91,7 +91,7 @@ class IngredientsSection:
         self.ingredients_frame.grid_columnconfigure(0, weight=1)
 
         #ingredients frames
-        for rownum in xrange(self.num_ing_fields):
+        for rownum in range(self.num_ing_fields):
             self.create_ingredient_fields(self.ingredients_frame, rownum) 
 
         self.add_button = Button(self.ingredients_frame, text="Add more Ingredients", command=self.add_ingredients)
@@ -112,7 +112,7 @@ class IngredientsSection:
 
     def save(self):
         self.ingredients_info['global'][0] = self.ingredients_info['global'][1].get("1.0", END)
-        for rownum in xrange(self.num_ing_fields):
+        for rownum in range(self.num_ing_fields):
             self.ingredients_info['ingredients'][0][rownum] = [self.ingredients_info['ingredients'][1][rownum][0].get(), self.ingredients_info['ingredients'][1][rownum][1].get("1.0", END)]
 
         self.window.destroy()
@@ -204,7 +204,7 @@ class IngredientsSection:
         return frame
 
     def add_param(self, add_button, parent, box_type):
-        print "success"
+        print("success")
         add_button.grid_remove()
         self.create_param_box(parent, box_type)
        

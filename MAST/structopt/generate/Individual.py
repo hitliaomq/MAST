@@ -48,7 +48,7 @@ class Individual(object):
     def __setattr__( self, attr, value ):
         super( Individual, self ).__setattr__( attr, value )
     
-    def next(self):
+    def __next__(self):
         if self.index > len(self.data):
             raise StopIteration
         self.index=self.index+1
